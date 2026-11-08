@@ -125,3 +125,13 @@ Assignments now start a shared server simulation automatically. Units follow roa
 All three units use the squadroom on East Access Road beside Decker Student Health Services, at **42.0853645, -75.9646999**. Coordinates come from the station place pin in [Harpur’s Ferry’s contact map](https://harpursferry.org/contact); the [university resource listing](https://www.binghamton.edu/student-conduct/binghamton-student-code.pdf) identifies East Access Road. These are the station pin coordinates, not the map viewport center.
 
 After completing or cancelling the last active job, a unit drives home using the same routing and simulation as incident trips. Queued calls take priority. Returning units remain available, and a new assignment interrupts the return from their current position. Return routes persist across restarts; existing snapshots receive the corrected home station automatically. At least two cars parked at base collapse into a squadroom button; open it to select an individual car.
+
+### Staged fleet demos
+
+Open demo controls with **⌘D / Ctrl+D** and choose a **Fleet** scenario:
+
+- **Returning from hospitals:** two available units driving back to the squad room from Lourdes and Wilson, and Medic 3 on scene.
+- **Mixed active incidents:** one available unit at the squad room, one transporting, and one on scene.
+- **All busy with a queue:** units en route, transporting, and on scene, plus a queued job.
+
+Starting a fleet scenario replaces the current demo, teleports the units into position, and begins a scripted incoming call. Staged jobs use the normal simulation, routes, dispatch and queue behavior. The original intake-only scenarios remain available. **Clear** cancels pending intake updates, removes incidents and tasks, and returns all three units to the squad room. Run `pnpm demo:check` to verify setup and cleanup.

@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle } from "@/components/ui/sheet";
 import { DEMO_SCENARIOS, type DispatchUiState } from "@/lib/client/useDispatchUi";
+import { fleetDemoScenario } from "@/lib/demo/scenarios";
 
 export function DemoPanel({ s }: { s: DispatchUiState }) {
   const [open, setOpen] = useState(false);
@@ -35,7 +36,7 @@ export function DemoPanel({ s }: { s: DispatchUiState }) {
         }}
       >
         <SheetHeader className="gap-1 p-0 pr-8">
-          <SheetTitle className="dispatch-section-title">Demo Incident</SheetTitle>
+          <SheetTitle className="dispatch-section-title">Demo Scenarios</SheetTitle>
           <SheetDescription className="text-xs leading-relaxed">
             Scripted inputs · fictional incidents
           </SheetDescription>
@@ -52,14 +53,19 @@ export function DemoPanel({ s }: { s: DispatchUiState }) {
               ))}
             </SelectContent>
           </Select>
+          {fleetDemoScenario(scenario) && (
+            <p className="text-xs text-muted-foreground">
+              {fleetDemoScenario(scenario)!.description} Replaces the current demo.
+            </p>
+          )}
         </div>
         <div className="flex gap-2">
           <Button size="sm" className="h-9 flex-1" disabled={!s.canAct} onClick={() => void s.startDemo(scenario)}>
             <Play data-icon="inline-start" />
-            {s.demoPending ? "Starting…" : "Start sample incident"}
+            {s.demoPending ? "Starting…" : "Start scenario"}
           </Button>
           <Button size="sm" variant="outline" className="h-9" disabled={!s.canAct} onClick={() => void s.reset()}>
-            <RotateCcw data-icon="inline-start" /> Reset
+            <RotateCcw data-icon="inline-start" /> Clear
           </Button>
         </div>
         {s.demoMessage && <p role="status" className="text-xs text-muted-foreground">{s.demoMessage}</p>}

@@ -8,6 +8,7 @@ import {
 } from "./useDispatchState";
 import { selectedCall, selectedCandidate } from "./dispatch-view";
 import { createCommandRunner, type CommandAction } from "./command-action";
+import { FLEET_DEMO_SCENARIOS, fleetDemoScenario } from "@/lib/demo/scenarios";
 
 type Operation = {
   status: "pending" | "uncertain" | "acknowledged" | "error";
@@ -16,6 +17,7 @@ type Operation = {
   message: string;
 };
 export const DEMO_SCENARIOS = [
+  ...FLEET_DEMO_SCENARIOS,
   { id: "fall-unconscious", label: "Fall · staged intake" },
   { id: "busy-first-call", label: "Initial Bravo incident" },
   { id: "breathing-charlie", label: "Breathing difficulty" },
@@ -129,7 +131,9 @@ export function useDispatchUi() {
       )
         throw new Error();
       setDemoMessage(
-        "Scripted demo started. Incident updates will appear as the scenario progresses.",
+        fleetDemoScenario(scenario)
+          ? "Fleet staged. A new sample call is incoming. Clear returns all units to the squad room."
+          : "Scripted demo started. Incident updates will appear as the scenario progresses.",
       );
     } catch {
       setDemoMessage(

@@ -11,6 +11,7 @@
     "contracts:check": "tsx scripts/check-contracts.ts",
     "contracts:export": "tsx scripts/export-schemas.ts",
     "simulation:check": "tsx scripts/check-simulation.ts",
+    "demo:check": "tsx scripts/check-demo-fleet.ts",
     "recommendations:check": "tsx scripts/check-recommendations.ts",
     "recommendations:http": "tsx scripts/check-recommendations-http.ts",
     "dispatch:check": "tsx scripts/check-dispatch-ui.ts && tsx scripts/check-dispatch-render.tsx"
