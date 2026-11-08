@@ -1,0 +1,468 @@
+{
+  "metrics": {
+    "test": {
+      "Qwen base (r3 evaluation)": {
+        "n": 300,
+        "schema_valid": 1.0,
+        "coverage": 0.87,
+        "acuity_exact": 0.7133,
+        "acuity_within1": 0.8367,
+        "nmi_precision": null,
+        "nmi_recall": 0.0,
+        "rec_match": 0.8106,
+        "acuity_reason_consistent": 0.9467,
+        "acuity_reason_grounded": 1.0,
+        "suit_acc": 0.9173,
+        "reasons_grounded": 0.7273,
+        "exception_cases": 10,
+        "exception_rec_match": 0.3,
+        "latency_p50_ms": null,
+        "latency_p95_ms": null,
+        "quality_gate_pass": false,
+        "gate_pass": false
+      },
+      "Qwen fine-tuned r1": {
+        "n": 300,
+        "schema_valid": 1.0,
+        "coverage": 0.95,
+        "acuity_exact": 0.8833,
+        "acuity_within1": 0.93,
+        "nmi_precision": 0.7059,
+        "nmi_recall": 1.0,
+        "rec_match": 0.8902,
+        "acuity_reason_consistent": 1.0,
+        "acuity_reason_grounded": 1.0,
+        "suit_acc": 0.9362,
+        "reasons_grounded": 1.0,
+        "exception_cases": 10,
+        "exception_rec_match": 0.0,
+        "latency_p50_ms": 2457,
+        "latency_p95_ms": 3146,
+        "gate_pass": false
+      },
+      "Qwen fine-tuned r3 (new)": {
+        "n": 300,
+        "schema_valid": 1.0,
+        "coverage": 0.9867,
+        "acuity_exact": 0.9167,
+        "acuity_within1": 0.96,
+        "nmi_precision": 0.9444,
+        "nmi_recall": 0.9444,
+        "rec_match": 0.9432,
+        "acuity_reason_consistent": 1.0,
+        "acuity_reason_grounded": 1.0,
+        "suit_acc": 0.9798,
+        "reasons_grounded": 1.0,
+        "exception_cases": 10,
+        "exception_rec_match": 0.0,
+        "latency_p50_ms": null,
+        "latency_p95_ms": null,
+        "quality_gate_pass": false,
+        "gate_pass": false
+      },
+      "GPT-5.4-mini": {
+        "n": 300,
+        "schema_valid": 1.0,
+        "coverage": 0.91,
+        "acuity_exact": 0.8567,
+        "acuity_within1": 0.8967,
+        "nmi_precision": 0.7143,
+        "nmi_recall": 0.4167,
+        "rec_match": 0.8864,
+        "acuity_reason_consistent": 0.9928,
+        "acuity_reason_grounded": 1.0,
+        "suit_acc": 0.9747,
+        "reasons_grounded": 0.9968,
+        "exception_cases": 10,
+        "exception_rec_match": 0.4,
+        "latency_p50_ms": 1054,
+        "latency_p95_ms": 1268,
+        "gate_pass": false
+      },
+      "GPT-6 Luna": {
+        "n": 300,
+        "schema_valid": 1.0,
+        "coverage": 0.9067,
+        "acuity_exact": 0.88,
+        "acuity_within1": 0.9,
+        "nmi_precision": 0.7,
+        "nmi_recall": 0.3889,
+        "rec_match": 0.9015,
+        "acuity_reason_consistent": 1.0,
+        "acuity_reason_grounded": 1.0,
+        "suit_acc": 0.9722,
+        "reasons_grounded": 0.9968,
+        "exception_cases": 10,
+        "exception_rec_match": 0.7,
+        "latency_p50_ms": 1775,
+        "latency_p95_ms": 2230,
+        "gate_pass": false
+      }
+    },
+    "paraphrase": {
+      "Qwen base (r3 evaluation)": {
+        "n": 150,
+        "schema_valid": 1.0,
+        "coverage": 1.0,
+        "acuity_exact": 0.7733,
+        "acuity_within1": 0.9333,
+        "nmi_precision": null,
+        "nmi_recall": null,
+        "rec_match": 0.8333,
+        "acuity_reason_consistent": 0.9867,
+        "acuity_reason_grounded": 0.9933,
+        "suit_acc": 0.9089,
+        "reasons_grounded": 0.6689,
+        "exception_cases": 7,
+        "exception_rec_match": 0.1429,
+        "latency_p50_ms": null,
+        "latency_p95_ms": null,
+        "quality_gate_pass": false,
+        "gate_pass": false
+      },
+      "Qwen fine-tuned r1": {
+        "n": 150,
+        "schema_valid": 1.0,
+        "coverage": 0.9933,
+        "acuity_exact": 0.94,
+        "acuity_within1": 0.96,
+        "nmi_precision": 0.0,
+        "nmi_recall": null,
+        "rec_match": 0.9267,
+        "acuity_reason_consistent": 1.0,
+        "acuity_reason_grounded": 1.0,
+        "suit_acc": 0.9822,
+        "reasons_grounded": 1.0,
+        "exception_cases": 7,
+        "exception_rec_match": 0.0,
+        "latency_p50_ms": 2687,
+        "latency_p95_ms": 3192,
+        "gate_pass": false
+      },
+      "Qwen fine-tuned r3 (new)": {
+        "n": 150,
+        "schema_valid": 1.0,
+        "coverage": 1.0,
+        "acuity_exact": 0.9333,
+        "acuity_within1": 0.9667,
+        "nmi_precision": null,
+        "nmi_recall": null,
+        "rec_match": 0.9333,
+        "acuity_reason_consistent": 1.0,
+        "acuity_reason_grounded": 1.0,
+        "suit_acc": 0.9889,
+        "reasons_grounded": 1.0,
+        "exception_cases": 7,
+        "exception_rec_match": 0.1429,
+        "latency_p50_ms": null,
+        "latency_p95_ms": null,
+        "quality_gate_pass": false,
+        "gate_pass": false
+      },
+      "GPT-5.4-mini": {
+        "n": 150,
+        "schema_valid": 1.0,
+        "coverage": 0.9867,
+        "acuity_exact": 0.88,
+        "acuity_within1": 0.9667,
+        "nmi_precision": 0.0,
+        "nmi_recall": null,
+        "rec_match": 0.9,
+        "acuity_reason_consistent": 1.0,
+        "acuity_reason_grounded": 1.0,
+        "suit_acc": 0.9867,
+        "reasons_grounded": 0.9955,
+        "exception_cases": 7,
+        "exception_rec_match": 0.4286,
+        "latency_p50_ms": 1083,
+        "latency_p95_ms": 1320,
+        "gate_pass": false
+      },
+      "GPT-6 Luna": {
+        "n": 150,
+        "schema_valid": 1.0,
+        "coverage": 0.9867,
+        "acuity_exact": 0.8933,
+        "acuity_within1": 0.9733,
+        "nmi_precision": 0.0,
+        "nmi_recall": null,
+        "rec_match": 0.9133,
+        "acuity_reason_consistent": 1.0,
+        "acuity_reason_grounded": 0.9932,
+        "suit_acc": 0.9867,
+        "reasons_grounded": 0.9899,
+        "exception_cases": 7,
+        "exception_rec_match": 0.5714,
+        "latency_p50_ms": 1831,
+        "latency_p95_ms": 2438,
+        "gate_pass": false
+      }
+    },
+    "demo": {
+      "Qwen base (r3 evaluation)": {
+        "n": 40,
+        "schema_valid": 1.0,
+        "coverage": 0.85,
+        "acuity_exact": 0.625,
+        "acuity_within1": 0.825,
+        "nmi_precision": null,
+        "nmi_recall": 0.0,
+        "rec_match": 0.8571,
+        "acuity_reason_consistent": 0.95,
+        "acuity_reason_grounded": 0.925,
+        "suit_acc": 0.981,
+        "reasons_grounded": 0.7333,
+        "exception_cases": 2,
+        "exception_rec_match": 0.0,
+        "latency_p50_ms": null,
+        "latency_p95_ms": null,
+        "quality_gate_pass": false,
+        "gate_pass": false
+      },
+      "Qwen fine-tuned r1": {
+        "n": 40,
+        "schema_valid": 1.0,
+        "coverage": 1.0,
+        "acuity_exact": 0.9,
+        "acuity_within1": 0.975,
+        "nmi_precision": 1.0,
+        "nmi_recall": 1.0,
+        "rec_match": 0.9429,
+        "acuity_reason_consistent": 1.0,
+        "acuity_reason_grounded": 1.0,
+        "suit_acc": 0.9714,
+        "reasons_grounded": 1.0,
+        "exception_cases": 2,
+        "exception_rec_match": 0.0,
+        "latency_p50_ms": 2836,
+        "latency_p95_ms": 3214,
+        "gate_pass": false
+      },
+      "Qwen fine-tuned r3 (new)": {
+        "n": 40,
+        "schema_valid": 1.0,
+        "coverage": 1.0,
+        "acuity_exact": 0.925,
+        "acuity_within1": 0.975,
+        "nmi_precision": 1.0,
+        "nmi_recall": 1.0,
+        "rec_match": 0.9429,
+        "acuity_reason_consistent": 1.0,
+        "acuity_reason_grounded": 1.0,
+        "suit_acc": 0.9714,
+        "reasons_grounded": 1.0,
+        "exception_cases": 2,
+        "exception_rec_match": 0.0,
+        "latency_p50_ms": null,
+        "latency_p95_ms": null,
+        "quality_gate_pass": false,
+        "gate_pass": false
+      },
+      "GPT-5.4-mini": {
+        "n": 40,
+        "schema_valid": 1.0,
+        "coverage": 0.95,
+        "acuity_exact": 0.775,
+        "acuity_within1": 0.925,
+        "nmi_precision": 1.0,
+        "nmi_recall": 0.6,
+        "rec_match": 0.9143,
+        "acuity_reason_consistent": 0.9459,
+        "acuity_reason_grounded": 1.0,
+        "suit_acc": 0.9905,
+        "reasons_grounded": 0.9905,
+        "exception_cases": 2,
+        "exception_rec_match": 0.0,
+        "latency_p50_ms": 1073,
+        "latency_p95_ms": 1376,
+        "gate_pass": false
+      },
+      "GPT-6 Luna": {
+        "n": 40,
+        "schema_valid": 1.0,
+        "coverage": 0.95,
+        "acuity_exact": 0.825,
+        "acuity_within1": 0.925,
+        "nmi_precision": 1.0,
+        "nmi_recall": 0.6,
+        "rec_match": 0.9429,
+        "acuity_reason_consistent": 0.973,
+        "acuity_reason_grounded": 0.973,
+        "suit_acc": 0.9905,
+        "reasons_grounded": 0.981,
+        "exception_cases": 2,
+        "exception_rec_match": 0.5,
+        "latency_p50_ms": 1578,
+        "latency_p95_ms": 1885,
+        "gate_pass": false
+      }
+    }
+  },
+  "paired_correctness": {
+    "test": {
+      "Qwen base (r3 evaluation)": {
+        "acuity_exact": {
+          "r3_only_correct": 67,
+          "other_only_correct": 6
+        },
+        "rec_match": {
+          "r3_only_correct": 40,
+          "other_only_correct": 5
+        }
+      },
+      "Qwen fine-tuned r1": {
+        "acuity_exact": {
+          "r3_only_correct": 16,
+          "other_only_correct": 6
+        },
+        "rec_match": {
+          "r3_only_correct": 15,
+          "other_only_correct": 1
+        }
+      },
+      "GPT-5.4-mini": {
+        "acuity_exact": {
+          "r3_only_correct": 34,
+          "other_only_correct": 16
+        },
+        "rec_match": {
+          "r3_only_correct": 22,
+          "other_only_correct": 7
+        }
+      },
+      "GPT-6 Luna": {
+        "acuity_exact": {
+          "r3_only_correct": 30,
+          "other_only_correct": 19
+        },
+        "rec_match": {
+          "r3_only_correct": 21,
+          "other_only_correct": 10
+        }
+      }
+    },
+    "paraphrase": {
+      "Qwen base (r3 evaluation)": {
+        "acuity_exact": {
+          "r3_only_correct": 30,
+          "other_only_correct": 6
+        },
+        "rec_match": {
+          "r3_only_correct": 17,
+          "other_only_correct": 2
+        }
+      },
+      "Qwen fine-tuned r1": {
+        "acuity_exact": {
+          "r3_only_correct": 2,
+          "other_only_correct": 3
+        },
+        "rec_match": {
+          "r3_only_correct": 2,
+          "other_only_correct": 1
+        }
+      },
+      "GPT-5.4-mini": {
+        "acuity_exact": {
+          "r3_only_correct": 15,
+          "other_only_correct": 7
+        },
+        "rec_match": {
+          "r3_only_correct": 11,
+          "other_only_correct": 6
+        }
+      },
+      "GPT-6 Luna": {
+        "acuity_exact": {
+          "r3_only_correct": 13,
+          "other_only_correct": 7
+        },
+        "rec_match": {
+          "r3_only_correct": 9,
+          "other_only_correct": 6
+        }
+      }
+    },
+    "demo": {
+      "Qwen base (r3 evaluation)": {
+        "acuity_exact": {
+          "r3_only_correct": 12,
+          "other_only_correct": 0
+        },
+        "rec_match": {
+          "r3_only_correct": 3,
+          "other_only_correct": 0
+        }
+      },
+      "Qwen fine-tuned r1": {
+        "acuity_exact": {
+          "r3_only_correct": 1,
+          "other_only_correct": 0
+        },
+        "rec_match": {
+          "r3_only_correct": 0,
+          "other_only_correct": 0
+        }
+      },
+      "GPT-5.4-mini": {
+        "acuity_exact": {
+          "r3_only_correct": 7,
+          "other_only_correct": 1
+        },
+        "rec_match": {
+          "r3_only_correct": 1,
+          "other_only_correct": 0
+        }
+      },
+      "GPT-6 Luna": {
+        "acuity_exact": {
+          "r3_only_correct": 5,
+          "other_only_correct": 1
+        },
+        "rec_match": {
+          "r3_only_correct": 1,
+          "other_only_correct": 1
+        }
+      }
+    }
+  },
+  "sha256": {
+    "results/qwen-base-test.json": "3fa48752b6acb385ed1d0c13f7e2e23d688175b16f0c35d42580e4f762e2ebc9",
+    "results/qwen-r1-test.json": "7d5f8dc3153f5c4a20963830e450617859c278d00bf13eb4e6a9c55382e65523",
+    "results/qwen-r3-test.json": "5c8c82caac70783ccfc3fc63d64bad2d304c892b0eec37d0ebb81c0deb4adc45",
+    "results/gpt54mini-test.json": "d95413d614c7ff757a63470a96f877d370112dcd1e0702d3232fd949848d962b",
+    "results/gpt6luna-test.json": "c2d124d565208b493629bb6d9d9392c3c7b6562bb0605306e6c9229e327ba0de",
+    "results/qwen-base-paraphrase.json": "2b492d7fccbc29cd5a5fbb0f466e2a3d7ca91f212511f8b427baab894cf7fc2c",
+    "results/qwen-r1-paraphrase.json": "30b8afaea16cfa310e621c224e2f7c5f6f93126594b06bb14e289f1bc6203042",
+    "results/qwen-r3-paraphrase.json": "2c75a51ea4ac1b926729a74bd7990ef298983236e5d61a1bbe24aeb18456e1b1",
+    "results/gpt54mini-paraphrase.json": "cfa96ceed4e6c91606484d99a444e5ca8e8b968497b4983636c15bae0ab4a755",
+    "results/gpt6luna-paraphrase.json": "86f6381682f628a3a04dcb9f4109af36267e07430c1ba948356cb9bb43a69cfc",
+    "results/qwen-base-demo.json": "c2d2efdb5ed7d6ff4040537c7a9fdbf95c1a859ad2f729f3f7ab45dc972193d3",
+    "results/qwen-r1-demo.json": "11d9db351939278fd2cdb6965aae01c77435f40c31b133ca95586233c018d6e2",
+    "results/qwen-r3-demo.json": "6c24e49e86d7fe259910f1796e838066506b31965d44341e0afa0ba6ef4e0b1b",
+    "results/gpt54mini-demo.json": "b96622b3bcd0e716d4de509860b2cad317ff9ca413ac4d3483b9399ec5171111",
+    "results/gpt6luna-demo.json": "638d071561e784c4535ab74acff57679ff6acddb3545f91bcafb6b314cd5a635",
+    "results/gpt54-demo-only.json": "2d9a71ad881197b4c40c04f11898dc198a310002b2e6d37a342c02bda33f60f9",
+    "r3-config.json": "9fcdc15d26e7683ab3df14a0a2a31c84b592281142d3e75723f2ac6e6048b9a0"
+  },
+  "full_gpt54_demo_metrics": {
+    "n": 40,
+    "schema_valid": 1.0,
+    "coverage": 0.925,
+    "acuity_exact": 0.925,
+    "acuity_within1": 0.95,
+    "nmi_precision": 1.0,
+    "nmi_recall": 0.6,
+    "rec_match": 1.0,
+    "acuity_reason_consistent": 1.0,
+    "acuity_reason_grounded": 1.0,
+    "suit_acc": 0.9905,
+    "reasons_grounded": 0.9905,
+    "exception_cases": 2,
+    "exception_rec_match": 1.0,
+    "latency_p50_ms": 2276,
+    "latency_p95_ms": 2827,
+    "gate_pass": false
+  },
+  "r5_status": "training at inspection; no completed results"
+}

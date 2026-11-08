@@ -16,7 +16,7 @@ sys.path.insert(0, str(ROOT))
 sys.path.insert(0, str(ROOT / "data"))
 
 import rubric
-from generate import SHORT_SYSTEM, SYSTEM, build_response, mins, sample_candidates, user_content, verify
+from generate import SHORT_SYSTEM, SYSTEM, build_response, compact_reasons, sample_candidates, user_content, verify
 from verify import ask, same_meaning
 
 
@@ -56,33 +56,6 @@ TEXT_CASES = [
     ("Food came out after a brief choking episode. Patient is talking and breathing normally", "minor", (True,),
      (True,), "after a resolved choking episode"),
 ]
-
-
-def compact_reasons(req, resp, lab):
-    if resp["status"] != "ready":
-        return
-    candidates = {c["ambulanceId"]: c for c in req["candidates"]}
-    fastest = candidates.get(lab["fastestSuitable"])
-    for result in resp["candidates"]:
-        c = candidates[result["ambulanceId"]]
-        rec = c["ambulanceId"] == lab["recommendedAmbulanceId"]
-        arrival = c["arrivalInSeconds"]
-        eta = f"ETA {mins(arrival)} min" if arrival is not None else "ETA unknown"
-        if rec and lab["kind"] == "no_suitable":
-            why = "No ALS unit available; fastest BLS unit"
-        elif not result["crewSuitable"]:
-            why = f"BLS only, {lab['acuity']} needs ALS"
-        elif rec and lab["kind"] == "experience_exception":
-            delay = arrival - fastest["arrivalInSeconds"]
-            months = rubric.chief_months(c) - rubric.chief_months(fastest)
-            why = f"ALS, chief has {months} more months, {delay} s later"
-        elif lab["kind"] == "experience_exception" and c is fastest:
-            why = "ALS, faster with less experienced chief"
-        elif rec:
-            why = f"{c['careLevel']}, fastest suitable"
-        else:
-            why = c["careLevel"]
-        result["reason"] = f"{why}. {eta}."
 
 
 def example(rng, req, meta, system):

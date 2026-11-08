@@ -1,0 +1,42 @@
+{
+  "run_id": "r3-4b",
+  "base": "Qwen/Qwen3-4B-Instruct-2507",
+  "data": "runs/r3-4b/data",
+  "epochs": 1.5,
+  "max_steps": -1,
+  "lr": 0.0001,
+  "r": 16,
+  "alpha": 32,
+  "bs": 1,
+  "grad_accum": 16,
+  "max_len": 2560,
+  "bf16_lora": false,
+  "resume": false,
+  "init_adapter": "runs/r1/adapter",
+  "reload_only": false,
+  "save_steps": 100,
+  "base_revision": "cdbee75f17c01a7cc42f958dc650907174af0554",
+  "git": null,
+  "data_sha256": {
+    "train": "8c6223548e66df43fd7bf9e7504047a20dccbfbd4ea8cfe823d2143d4dc93a6a",
+    "val": "0848238b829beea8e759d4c26ef3b4676ef594f9653d0c372668712ef1fc567b",
+    "test": "48270ad5468908bca9b19355a9fcfd72a3bf7dac1787a7fd0c73bb111e6b44e1"
+  },
+  "prompt_sha256": "658a569706bee124a5211bb7051377b24bd21c6414e5c4a72be02086cf00434c",
+  "training_script_sha256": "cf56101982cc7436661cda12534ce9d66735b66a9d69ac3d335ddfefbb9f3cb4",
+  "token_len_sample_max": 1982,
+  "gpu": "NVIDIA H100 80GB HBM3 MIG 1g.10gb",
+  "started": "2026-11-07T22:47:56",
+  "training_slurm_job": 175969,
+  "serving_slurm_job": 176167,
+  "adapter_sha256": "a34d571b15f9f3165904724cdf75a821307e6ccc2c9539f35f3bbaeb2c3d1b8a",
+  "init_adapter_sha256": "bb5aacef7d90120f6eedadfe093dae8bc2d42d3ddcda7cd36ce5d9230c3a64d9",
+  "data_preparation_sha256": "4acfff9a268e2d4915e7edfa58e257749711c6ad8759e2a06e3f16f168b49127",
+  "rubric_sha256": "2977415bc8b08dd6d938068bc5d9640f39d361b0f50c005dbc9c2152b08c0b10",
+  "response_schema_sha256": "ee9ba08f1eeaf9ddaff6b52e46960bbaeac89d476698fce8521c1432b41af29b",
+  "eval_data_sha256": {
+    "test": "48270ad5468908bca9b19355a9fcfd72a3bf7dac1787a7fd0c73bb111e6b44e1",
+    "paraphrase": "074c9ac996a07a8f2c59aea6a3793c8d2c009622f5162f9bd2ae7e36eefbca71",
+    "demo": "3211874bdbb8fcb652a7be86f001a3b84d7810e3343133543b945e38d251e068"
+  }
+}

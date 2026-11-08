@@ -52,8 +52,11 @@ const disabled = (html: string) =>
   assert.match(html, /<button[^>]*disabled=""[^>]*>Assign/);
 let html = render();
 assert.match(html, /dispatcher/);
-assert.match(html, /Suggested acuity: Charlie/);
-assert.match(html, /Rule-based/);
+assert.doesNotMatch(html, /Assessment details|Suggested acuity:/);
+const modelCall = { ...call, acuity: { ...call.acuity!, source: "model" as const } };
+assert.match(render({ call: modelCall }), /Rule-based/);
+assert.match(render({ call: modelCall, set: { ...set, source: "model", modelId: "qwen3-4b-dispatch-lora" } }), /Model assessment · Qwen-4b-Dispatch/);
+assert.match(render({ call: modelCall, set: { ...set, source: "model", modelId: "another-model" } }), /Model assessment · another-model/);
 assert.match(html, /1 of 3/);
 assert.match(html, /Previous option/);
 assert.match(html, /Next option/);

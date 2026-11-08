@@ -37,7 +37,12 @@ if [ -n "${1:-}" ]; then
     LORA=(--enable-lora --max-lora-rank 16 --max-loras 1 --lora-modules "$ADAPTER_NAME=$ADAPTER")
   fi
 fi
-echo "SERVING on $(hostname):$PORT  base=$BASE adapter=${1:-none} merged=${SERVE_MERGED:-0}"
+RANKING=()
+if [[ "${SERVE_RANK_CANDIDATES:-0}" == 1 ]]; then
+  export PYTHONPATH="$PROJ${PYTHONPATH:+:$PYTHONPATH}"
+  RANKING=(--middleware serving.rank_dispatch.rank_dispatch)
+fi
+echo "SERVING on $(hostname):$PORT  base=$BASE adapter=${1:-none} merged=${SERVE_MERGED:-0} rank=${SERVE_RANK_CANDIDATES:-0}"
 if [[ "$PORT" == 8000 ]]; then
   hostname > "$PROJ/logs/serve-node.txt"
 fi
@@ -54,7 +59,7 @@ if [[ -n "${SERVE_WARMUP:-}" ]]; then
     for ((attempt = 0; attempt < 120; attempt++)); do
       if curl -fsS --max-time 2 "http://127.0.0.1:$PORT/health" >/dev/null 2>&1; then
         "$VENV_TRAIN/bin/python" -I eval/evaluate.py --system http --base-url "http://127.0.0.1:$PORT/v1" \
-          --model "$SERVED" --data fixtures/demo/demo.jsonl --limit 1 \
+          --model "$SERVED" --data fixtures/demo/demo.jsonl --limit 1 --skip-latency \
           --out "logs/warm-$SLURM_JOB_ID.json" "${WARMUP_ARGS[@]}"
         exit
       fi
@@ -67,4 +72,4 @@ exec "$VENV_SERVE/bin/vllm" serve "$LOAD" --served-model-name "$SERVED_BASE" \
   --host 0.0.0.0 --port "$PORT" \
   --quantization fp8 --dtype bfloat16 \
   --max-model-len 4096 --max-num-seqs 4 --gpu-memory-utilization 0.90 \
-  --enable-prefix-caching "${CHAT_TEMPLATE[@]}" "${LORA[@]}" "${SPEC[@]}" "${API_KEY_ARGS[@]}"
+  --enable-prefix-caching "${CHAT_TEMPLATE[@]}" "${LORA[@]}" "${SPEC[@]}" "${RANKING[@]}" "${API_KEY_ARGS[@]}"

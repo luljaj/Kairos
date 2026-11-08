@@ -49,6 +49,11 @@ export function TriageCard({ s, className }: { s: DispatchUiState; className?: s
   };
   const unit = candidate ? state.ambulances[candidate.ambulanceId] : null;
   const busy = !!unit && (!!unit.activeTaskId || unit.queuedTaskIds.length > 0 || unit.status === "busy");
+  const modelName = set?.modelId && [
+    "qwen3-4b-dispatch-lora",
+    "Qwen/Qwen3-4B-Instruct-2507",
+    "Qwen-4b-Dispatch",
+  ].includes(set.modelId) ? "Qwen-4b-Dispatch" : set?.modelId ?? "Unreported model";
   const recommended = !!candidate && candidate.ambulanceId === set?.recommendedAmbulanceId;
 
   return (
@@ -104,14 +109,6 @@ export function TriageCard({ s, className }: { s: DispatchUiState; className?: s
                 </div>
               </div>
             )}
-            <details className="text-xs text-muted-foreground">
-              <summary className="cursor-pointer">Assessment details</summary>
-              <div className="mt-2 flex flex-col gap-1">
-                <p>{set.summary ?? "Assessment received."}</p>
-                {set.acuity && <><p>Suggested acuity: {set.acuity}</p><p>{set.acuityReason}</p></>}
-                <p className="text-[11px]">{set.source === "model" ? `Model · ${set.modelId ?? "Unreported model"}` : "Rule-based · built-in assessment rules, not a model result"}{set.latencyMs !== null && ` · ${Math.round(set.latencyMs)} ms`}</p>
-              </div>
-            </details>
             {candidate?.capabilityMismatch && candidate.selectable && set.status === "ready" && (
               <label className="flex items-start gap-2 rounded-lg border border-urgent/40 p-3 text-xs text-urgent">
                 <input type="checkbox" className="mt-0.5" checked={confirmed} onChange={(event) => setConfirmedFor(event.target.checked ? confirmationKey : null)} />
@@ -123,7 +120,7 @@ export function TriageCard({ s, className }: { s: DispatchUiState; className?: s
       </CardContent>
       {set && call.status !== "closed" && (
         <CardFooter>
-          <span className="mr-auto text-xs text-muted-foreground">{call.acuity?.source === "dispatcher" ? "Set by dispatcher" : set.source === "model" ? "Model assessment" : "Rule-based"}</span>
+          <span className="mr-auto text-xs text-muted-foreground">{call.acuity?.source === "dispatcher" ? "Set by dispatcher" : set.source === "model" ? `Model assessment · ${modelName}` : "Rule-based"}</span>
           <Button size="sm" variant="ghost" disabled={!s.canAct} onClick={() => void s.refresh()}>Refresh</Button>
           <Button size="sm" className="press" variant={candidate?.capabilityMismatch ? "secondary" : "default"}
             disabled={!s.canAct || set.status !== "ready" || !candidate?.selectable || (candidate.capabilityMismatch && !confirmed)}

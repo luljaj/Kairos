@@ -1,7 +1,7 @@
 """Build runs/<run-id>/eval.md from eval JSONs written by evaluate.py.
 
 python eval/report.py --run runs/r1 --files runs/r1/eval-*.json
-File naming convention: eval-<system>-<set>.json, with ft reserved for the selected serving mode.
+File naming convention: eval-<system>-<set>.json, with ft for raw adapter results.
 """
 import argparse
 import json
@@ -13,7 +13,7 @@ COLS = [("schema_valid", "schema"), ("coverage", "coverage"), ("acuity_exact", "
         ("reasons_grounded", "grounded"), ("exception_rec_match", "exception rec"), ("latency_p50_ms", "p50 ms"),
         ("latency_p95_ms", "p95 ms")]
 SPLITS = ("test", "paraphrase", "demo")
-SYSTEMS = ("base", "baseunguided", "ft", "ftguided", "ftunguided", "ftshort", "rules")
+SYSTEMS = ("base", "baseunguided", "ft", "ftguided", "ftunguided", "ranked", "ftshort", "rules")
 
 
 def fmt(v):
@@ -28,6 +28,7 @@ def main():
     ap.add_argument("--files", nargs="+", required=True)
     ap.add_argument("--latency-path", default="sequential requests to the serving endpoint")
     ap.add_argument("--ignore-latency", action="store_true", help="use the test and demo quality thresholds")
+    ap.add_argument("--gate-system", choices=("ft", "ranked"), default="ft")
     a = ap.parse_args()
     cols = COLS[:-2] if a.ignore_latency else COLS
     res = {}
@@ -38,6 +39,10 @@ def main():
     out = ["# Evaluation", "",
            "**Labels come from a synthetic demo rubric (model/rubric.py + concept-labelled scenarios). These results "
            "say the model learned the rubric, not that it is clinically right.**", ""]
+    if a.gate_system == "ranked":
+        out += ["The ranked endpoint takes acuity, acuityReason and summary from the 4B adapter. "
+                "It computes crew suitability and ambulance ranking with the fleet rubric. "
+                "The ft rows show the raw adapter responses. The gates below apply to the ranked endpoint.", ""]
     gates = {}
     for sset in SPLITS:
         rows = [(s, res[(sset, s)]) for s in SYSTEMS if (sset, s) in res]
@@ -51,7 +56,7 @@ def main():
             decoding = ("guided" if meta["guided"] else "unguided") if meta["system"] == "http" else "—"
             out.append(f"| {s} | {decoding} | {m['n']} | " + " | ".join(fmt(m.get(k)) for k, _ in cols) + " |")
         out.append("")
-        ft = res.get((sset, "ft"))
+        ft = res.get((sset, a.gate_system))
         if ft is None:
             continue
         if sset == "paraphrase":

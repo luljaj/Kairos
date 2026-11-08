@@ -1,6 +1,6 @@
 # web/ — dispatch assistant (UI + backend)
 
-One Next.js 16 app (App Router, TypeScript), run as **one long-lived Node process**. State lives in server memory and is snapshotted to `data/state.json` (gitignored). Plans: `../plan/01-contracts.md`, `../plan/02-state-and-backend.md`.
+One Next.js 16 app (App Router, TypeScript), run as **one long-lived Node process**. State lives in server memory and is snapshotted to `data/state.json` (gitignored). See [architecture](../docs/architecture.md).
 
 ## Integrated dashboard
 
@@ -91,7 +91,7 @@ lib/server/      store, commands, voice intake, scripted caller, ETA and recomme
 lib/client/      useDispatchState() SSE hook + sendCommand()
 fixtures/        fleet.json (3 units, crew, hospitals), scenarios/*.json (scripted callers)
 app/api/         events (SSE) · commands · voice/tools/{update-incident,get-assignment} · demo/{reset,scripted-call}
-components/      DebugDashboard (placeholder until the real UI from plan/04)
+components/      dispatcher dashboard, map, cards, and debug interface
 ```
 
 ## API quick reference
@@ -105,18 +105,12 @@ curl -X POST localhost:3000/api/voice/tools/update-incident -H "x-tool-secret: $
   -H 'content-type: application/json' -d '{"conversationId":"c1","locationText":"14 Riverside Dr","facts":{"conscious":false}}'
 ```
 
-## Not built yet (TODOs in code)
+## Contract and deployment notes
 
-- Mapbox routing and animated vehicle simulation. Assignment currently uses estimated ETA and phases advance through the manual control.
-- Geocoding `locationText` → coords (scripted caller passes fixture coords).
-- `move_queued_task` (stretch).
-
-## Contract notes vs plan/01
-
-- `Route.estimated: boolean` added (plan/02 says straight-line routes are flagged).
-- State has `fleetRevision` (recorded on recommendation sets) and `hospitals`.
-- `get-assignment` returns estimated minutes when known. Pending calls can return `missingFields`.
-- `/api/commands` and `/api/demo/*` are unauthenticated; anyone with the tunnel URL can call them.
+- Routes include an `estimated` flag for fallback estimates.
+- State includes `fleetRevision` and hospital data; recommendations track fleet changes.
+- `get-assignment` returns estimated minutes when known and missing fields when intake needs clarification.
+- `/api/commands` and `/api/demo/*` are unauthenticated prototype endpoints. The voice tool secret does not secure these routes.
 
 ### Vehicle simulation
 

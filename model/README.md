@@ -1,48 +1,37 @@
-# model/ — fine-tuned dispatch judgement model
+# Qwen-4b-Dispatch
 
-**Taking over mid-hackathon? Start with [HANDOFF.md](HANDOFF.md).**
+Fine-tuned dispatch assessment model based on `Qwen/Qwen3-4B-Instruct-2507`.
 
-**Read first:** [../plan/05-model-finetune.md](../plan/05-model-finetune.md) is your full brief (task, rubric, data, training, serving, eval gate, deadlines). Background: [../plan/01-contracts.md](../plan/01-contracts.md) and [../plan/00-overview.md](../plan/00-overview.md) (fleet is always 3 ambulances).
-
-You own everything in this folder. Don't edit `web/` or `plan/`; if the contract needs changing, write the proposal in `model/CONTRACT_CHANGES.md` and tell Luka.
+- [Training stack and experiment history](../docs/training.md)
+- [Benchmark methodology and selected results](../docs/benchmarks.md)
+- [Serving configuration](SERVING.md)
+- [Guardrail behavior](../docs/architecture.md#deterministic-guardrails)
+- [Historical run log](STATUS.md)
 
 ## Layout
 
-```text
-schemas/
-  model-request.json        # backend -> model (JSON Schema 2020-12)
-  model-response.json       # model -> backend
-  examples/                 # valid request/response pairs (Delta case, needs_more_info case)
-rubric.py                   # TO CREATE: single source of labels (acuity, suitability, recommendation)
-prompt.md                   # TO CREATE: system prompt, identical for base and fine-tuned
-data/
-  generate.py               # TO CREATE: scenario generator
-  generated/                # gitignored output: train/val/test jsonl
-fixtures/demo/              # TO CREATE: ~30 hand-checked demo scenarios (eval only, never train)
-training/                   # LoRA training scripts and configs
-eval/                       # evaluation scripts (base vs fine-tuned vs rule fallback)
-serving/                    # vLLM launch scripts
-runs/<run-id>/              # gitignored: config, data hash, adapter, eval.md
-SERVING.md                  # TO CREATE: endpoint + model name the backend should use
-```
+| Directory / file | Purpose |
+|---|---|
+| `data/` | Concept-labelled scenario generation, verification, and follow-up preparation |
+| `training/` | QLoRA SFT, adapter reload checks, and optional merge |
+| `cluster/` | Slurm training, evaluation, and vLLM serving scripts |
+| `serving/` | Optional deterministic fleet-ranking middleware |
+| `eval/` | Scoring, reports, model comparisons, and archived provenance |
+| `benchmarks/` | Saved inputs, per-case outputs, and comparison reports |
+| `schemas/` | Model request and response JSON Schemas |
+| `fixtures/demo/` | Evaluation-only demo scenarios |
+| `prompt.md` | Runtime system prompt used by training and inference; keep this file |
+| `rubric.py` | Prototype labels, fleet rules, and keyword baseline |
+| `runs/` | Local/generated run artifacts; weights are not bundled |
 
-## Schemas
+The selected pipeline uses r3 for acuity and a deterministic guardrail for fleet ranking. Keep raw adapter and combined-pipeline metrics separate. The dispatcher makes the final assignment.
 
-The JSON Schemas here are **canonical for now**: the TypeScript (zod) contracts in `web/` don't exist yet and will be written to match these files. Response uses `anyOf` with a `status` const so vLLM guided decoding can consume it.
-
-The schema checks shape only. Your eval and the backend must also check: every `ambulanceId` is from the request, each exactly once, all covered, and `recommendedAmbulanceId` is one of them.
-
-Quick check that examples still validate after edits:
-
-```bash
-python -I -c "import json; from jsonschema import Draft202012Validator as V; rq=json.load(open('schemas/model-request.json')); rs=json.load(open('schemas/model-response.json')); [V(rq).validate(json.load(open(f'schemas/examples/request.{n}.json'))) or V(rs).validate(json.load(open(f'schemas/examples/response.{n}.json'))) for n in ['delta','needs-more-info']]; print('ok')"
-```
-
-## Status reports
-
-Append to `model/STATUS.md` at hours 6, 12 and 18: what works, what's blocked, GPU/serving details.
+Responses require both schema and semantic validation: candidate IDs must match the request, appear exactly once, and include the recommended ID. The acuity explanation must agree with the acuity level. See [contract notes](CONTRACT_CHANGES.md).
 
 ## OpenAI model comparisons
+
+Selected raw Qwen comparison: [r3 versus base Qwen, r1, GPT-5.4-mini, Luna, and the completed full GPT-5.4 demo](benchmarks/2026-11-08-r3-comparison/README.md).
+That archive predates completion of r5. The selected adapter remains r3; see [training history](../docs/training.md).
 
 Latest: [GPT-6 Luna, GPT-5.4-mini, and both Qwen baselines](benchmarks/2026-11-08-luna-comparison/README.md),
 including 490-case results, cache-aware costs, raw outputs and the test/demo/paraphrase definitions.

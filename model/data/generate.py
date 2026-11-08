@@ -233,6 +233,34 @@ def reason_for(rng, c, lab, acuity, fastest):
     return rng.choice([f"{care} crew, but slower; {eta}.", f"Suitable {care} crew, not the fastest; {eta}."])
 
 
+def compact_reasons(req, resp, lab):
+    if resp["status"] != "ready":
+        return
+    candidates = {c["ambulanceId"]: c for c in req["candidates"]}
+    fastest = candidates.get(lab["fastestSuitable"])
+    for result in resp["candidates"]:
+        c = candidates[result["ambulanceId"]]
+        rec = c["ambulanceId"] == lab["recommendedAmbulanceId"]
+        arrival = c["arrivalInSeconds"]
+        eta = f"ETA {round(arrival / 60)} min" if arrival is not None else "ETA unknown"
+        if rec and lab["kind"] == "no_suitable":
+            why = "No ALS unit available; fastest BLS unit"
+        elif not result["crewSuitable"]:
+            why = f"BLS only, {lab['acuity']} needs ALS"
+        elif rec and lab["kind"] == "experience_exception":
+            delay = arrival - fastest["arrivalInSeconds"]
+            months = rubric.chief_months(c) - rubric.chief_months(fastest)
+            comparison = f"{delay} s later" if delay else "same arrival"
+            why = f"ALS, chief has {months} more months, {comparison}"
+        elif lab["kind"] == "experience_exception" and c is fastest:
+            why = "ALS, less experienced chief"
+        elif rec:
+            why = f"{c['careLevel']}, fastest suitable"
+        else:
+            why = c["careLevel"]
+        result["reason"] = f"{why}. {eta}."
+
+
 NMI_UNRESPONSIVE = [
     "The complaint suggests the patient may be unresponsive; confirm consciousness before suggesting acuity.",
     "Possible unresponsiveness reported but consciousness is unknown; ask whether the patient is awake.",

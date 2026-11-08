@@ -67,3 +67,15 @@ Luka asked to focus on the 4B model and exclude latency from selection. The 1.7B
 `r3-4b` completed 371 steps and passed the adapter reload check. Its four-request concurrent evaluation reached 91.7% test acuity, 93.3% paraphrase acuity and 92.5% demo acuity, with 100% schema validity. It missed the 95% recommendation threshold on test (94.3%) and demo (94.3%), chiefly on the experience exception.
 
 `r5-4b` (Slurm 176291) continues from `r3-4b` with 600 matched fleet pairs and extra loss weight on the recommended ID. Request IDs are randomized across the training split. A preflight confirmed that the weighted token spans match all 4,520 training and 300 validation references. Evaluation requests are concurrent and scored for quality.
+
+## Nov 8, 04:12 EST — focused training complete
+
+`r5-4b` completed 354 steps with 5.78 GB peak GPU allocation and passed its reload check. Concurrent evaluation reached 90.7% test acuity, 94.7% paraphrase acuity and 92.5% demo acuity. Its raw recommendation accuracy was 93.2% on test and 94.3% on demo. The earlier `r3-4b` adapter has higher held-out test acuity and stronger needs-more-info recall.
+
+The ranked serving mode keeps the model's acuity, explanation and summary. It uses `rubric.recommend` to calculate fleet suitability and rank from the predicted acuity. The live evaluation will report this mode separately from the raw adapter.
+
+## Nov 8, 04:23 EST — hour 18 handoff
+
+The selected `r3-4b` endpoint passed the quality gates at four concurrent requests. Exact acuity was 92.0% on 300 held-out calls, 90.0% on 150 paraphrase challenges and 92.5% on 40 demo cases. Recommendation accuracy was 99.2%, 98.7% and 97.1%, respectively. All 490 responses were schema-valid. The raw adapter missed the recommendation gate. The ranked endpoint uses the trained 4B predictions for acuity and applies the deterministic fleet rubric to the supplied candidates.
+
+The ranked endpoint is live on `alphagpu02:32291` (Slurm 176520) through the laptop tunnel. The demo job (Slurm 176529) is scheduled for 09:00–15:00 EST with automatic warmup. See `SERVING.md` for the model name and tunnel commands and `runs/r3-4b/eval.md` for the base, rules, raw and ranked comparisons.

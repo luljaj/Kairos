@@ -1,6 +1,6 @@
 # Frontend integration handoff
 
-Implemented November 7, 2026 from `plan/09-frontend-recommendation-integration.md`.
+Integration record from November 7, 2026. Current system overview: [architecture](../docs/architecture.md).
 Tested application commit: `6d0e3d68333fb22d1075a6888c65e963590df92f` (including the verified Mapbox container sizing fix).
 The backend pipeline was integrated from `dc6d0ff`; current main's dashboard was incorporated before frontend changes.
 

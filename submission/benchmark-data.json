@@ -1,0 +1,103 @@
+{
+  "status": "Provisional submission graphic: completed r1 checkpoint; later training excluded.",
+  "source": "model/benchmarks/2026-11-08-luna-comparison",
+  "metric": "Exact rubric acuity match, including expected needs_more_info cases",
+  "records": [
+    {
+      "split": "test",
+      "model": "qwen_base",
+      "label": "Qwen 4B \u00b7 base",
+      "n": 300,
+      "acuity_correct": 209,
+      "acuity_percent": 69.66666666666667,
+      "recommendation_correct": 216,
+      "recommendation_n": 264,
+      "recommendation_percent": 81.81818181818181
+    },
+    {
+      "split": "test",
+      "model": "qwen_finetuned_r1",
+      "label": "Qwen 4B \u00b7 fine-tuned r1",
+      "n": 300,
+      "acuity_correct": 265,
+      "acuity_percent": 88.33333333333333,
+      "recommendation_correct": 235,
+      "recommendation_n": 264,
+      "recommendation_percent": 89.01515151515152
+    },
+    {
+      "split": "test",
+      "model": "gpt54mini",
+      "label": "GPT-5.4-mini",
+      "n": 300,
+      "acuity_correct": 257,
+      "acuity_percent": 85.66666666666667,
+      "recommendation_correct": 234,
+      "recommendation_n": 264,
+      "recommendation_percent": 88.63636363636364
+    },
+    {
+      "split": "test",
+      "model": "gpt6luna",
+      "label": "GPT-6 Luna",
+      "n": 300,
+      "acuity_correct": 264,
+      "acuity_percent": 88.0,
+      "recommendation_correct": 238,
+      "recommendation_n": 264,
+      "recommendation_percent": 90.15151515151516
+    },
+    {
+      "split": "paraphrase",
+      "model": "qwen_base",
+      "label": "Qwen 4B \u00b7 base",
+      "n": 150,
+      "acuity_correct": 116,
+      "acuity_percent": 77.33333333333333,
+      "recommendation_correct": 128,
+      "recommendation_n": 150,
+      "recommendation_percent": 85.33333333333333
+    },
+    {
+      "split": "paraphrase",
+      "model": "qwen_finetuned_r1",
+      "label": "Qwen 4B \u00b7 fine-tuned r1",
+      "n": 150,
+      "acuity_correct": 141,
+      "acuity_percent": 94.0,
+      "recommendation_correct": 139,
+      "recommendation_n": 150,
+      "recommendation_percent": 92.66666666666667
+    },
+    {
+      "split": "paraphrase",
+      "model": "gpt54mini",
+      "label": "GPT-5.4-mini",
+      "n": 150,
+      "acuity_correct": 132,
+      "acuity_percent": 88.0,
+      "recommendation_correct": 135,
+      "recommendation_n": 150,
+      "recommendation_percent": 90.0
+    },
+    {
+      "split": "paraphrase",
+      "model": "gpt6luna",
+      "label": "GPT-6 Luna",
+      "n": 150,
+      "acuity_correct": 134,
+      "acuity_percent": 89.33333333333333,
+      "recommendation_correct": 137,
+      "recommendation_n": 150,
+      "recommendation_percent": 91.33333333333333
+    }
+  ],
+  "limitations": [
+    "Synthetic rubric labels, not clinical ground truth.",
+    "Paraphrase challenge selected for keyword-rule disagreements; not a random sample.",
+    "All rows are held out from training; repeated evaluation during development limits independence.",
+    "Single runs; small differences do not establish model superiority.",
+    "API models used strict structured output; Qwen used guided decoding.",
+    "Recommendation denominator excludes gold needs_more_info cases."
+  ]
+}
