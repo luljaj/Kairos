@@ -10,7 +10,6 @@ import {
   CardTitle,
   CardDescription,
 } from "@/components/ui/card";
-import { Separator } from "@/components/ui/separator";
 import { useDispatchUi } from "@/lib/client/useDispatchUi";
 import { callTitle } from "@/lib/client/dispatch-view";
 import "./dispatch.css";
@@ -21,7 +20,6 @@ import {
   CallRow,
   FleetRow,
   KeySignals,
-  LiveCaption,
   UnitDetail,
 } from "./parts";
 import { TriageCard } from "./triage-card";
@@ -60,7 +58,7 @@ export function DispatchDashboard() {
           </span>}
         </div>
         {call && (
-          <Card key={call.id}>
+          <Card key={call.id} className="incident-card">
             <CardHeader>
               <CardDescription className="flex justify-between gap-2">
                 <span>
@@ -80,14 +78,12 @@ export function DispatchDashboard() {
                 {call.location.text ?? "Location unknown"}
               </CardDescription>
             </CardHeader>
-            <CardContent className="flex flex-col gap-4">
+            <CardContent className="incident-card-body flex flex-col gap-4" tabIndex={0} role="region" aria-label="Incident facts">
               <KeySignals call={call} />
-              <Separator />
-              <LiveCaption call={call} />
             </CardContent>
           </Card>
         )}
-        <Card layout="list">
+        <Card layout="list" className="queue-card">
           <CardHeader>
             <CardTitle variant="section">
               Queue

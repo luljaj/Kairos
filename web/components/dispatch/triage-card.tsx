@@ -52,15 +52,14 @@ export function TriageCard({ s, className }: { s: DispatchUiState; className?: s
   const recommended = !!candidate && candidate.ambulanceId === set?.recommendedAmbulanceId;
 
   return (
-    <Card className={cardClass}>
+    <Card className={cn(cardClass, "assessment-card")}>
       <CardHeader>
         <CardTitle className="flex min-w-0 items-center gap-2">
-          {call.status !== "closed" && <span className="live-dot shrink-0" />}
           <span className="truncate">{callTitle(call)}</span>
         </CardTitle>
         <CardDescription className="flex min-w-0 items-center gap-2">
           <AcuityMark acuity={call.acuity?.value ?? null} source={call.acuity?.source} />
-          <span>·</span><span className="truncate">{call.location.text ?? "Location unknown"}</span>
+          <span className="truncate">{call.location.text ?? "Location unknown"}</span>
         </CardDescription>
         {count > 0 && call.status !== "closed" && (
           <CardAction>
@@ -72,7 +71,7 @@ export function TriageCard({ s, className }: { s: DispatchUiState; className?: s
           </CardAction>
         )}
       </CardHeader>
-      <CardContent className="flex flex-col gap-3">
+      <CardContent className="assessment-card-body flex flex-col gap-3" tabIndex={0} role="region" aria-label="Assessment and candidate details">
         {call.status === "closed" ? <p>This incident is closed.</p> : !set ? (
           <p className="text-sm text-muted-foreground">Intake in progress · waiting for assessment.</p>
         ) : (
@@ -81,8 +80,8 @@ export function TriageCard({ s, className }: { s: DispatchUiState; className?: s
             {set.status === "stale" && <p role="status" className="text-sm text-urgent">Refreshing an outdated assessment. Acceptance is disabled.</p>}
             {set.status === "error" && <Button size="sm" variant="secondary" disabled={!s.canAct} onClick={() => void s.refresh()}>Retry assessment</Button>}
             {candidate && (
-              <div key={candidate.ambulanceId} className="swap flex flex-col gap-3" aria-live="polite">
-                <div className="flex items-end justify-between gap-4">
+              <div key={candidate.ambulanceId} className="flex flex-col gap-3" aria-live="polite">
+                <div className="flex items-start justify-between gap-4">
                   <div className="flex flex-col gap-1">
                     <span className={cn("text-xs font-medium", candidate.capabilityMismatch || !candidate.selectable ? "text-urgent" : recommended ? "text-success" : "text-muted-foreground")}>
                       {!candidate.selectable ? "Unavailable" : candidate.capabilityMismatch ? "Care-level mismatch" : busy ? "Queued after current job" : recommended ? "Recommended" : "Alternative"}
@@ -110,7 +109,7 @@ export function TriageCard({ s, className }: { s: DispatchUiState; className?: s
               <div className="mt-2 flex flex-col gap-1">
                 <p>{set.summary ?? "Assessment received."}</p>
                 {set.acuity && <><p>Suggested acuity: {set.acuity}</p><p>{set.acuityReason}</p></>}
-                <p className="text-[11px]">{set.source === "model" ? `Model · ${set.modelId ?? "Unreported model"}` : "Deterministic fallback · local assessment"}{set.latencyMs !== null && ` · ${Math.round(set.latencyMs)} ms`}</p>
+                <p className="text-[11px]">{set.source === "model" ? `Model · ${set.modelId ?? "Unreported model"}` : "Rule-based · built-in assessment rules, not a model result"}{set.latencyMs !== null && ` · ${Math.round(set.latencyMs)} ms`}</p>
               </div>
             </details>
             {candidate?.capabilityMismatch && candidate.selectable && set.status === "ready" && (
@@ -124,9 +123,7 @@ export function TriageCard({ s, className }: { s: DispatchUiState; className?: s
       </CardContent>
       {set && call.status !== "closed" && (
         <CardFooter>
-          <div className="flex flex-1 gap-1" aria-hidden>
-            {set.candidates.map((option, i) => <span key={option.ambulanceId} className={cn("h-0.5 flex-1 rounded-full bg-foreground/15 transition-colors duration-200", i === index && "bg-foreground/80")} />)}
-          </div>
+          <span className="mr-auto text-xs text-muted-foreground">{call.acuity?.source === "dispatcher" ? "Set by dispatcher" : set.source === "model" ? "Model assessment" : "Rule-based"}</span>
           <Button size="sm" variant="ghost" disabled={!s.canAct} onClick={() => void s.refresh()}>Refresh</Button>
           <Button size="sm" className="press" variant={candidate?.capabilityMismatch ? "secondary" : "default"}
             disabled={!s.canAct || set.status !== "ready" || !candidate?.selectable || (candidate.capabilityMismatch && !confirmed)}

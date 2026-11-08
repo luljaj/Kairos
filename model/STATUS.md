@@ -57,3 +57,13 @@ Slurm 175933 is training `r2-1p7b` on the same data on the other slice. This run
 `r1` reached 88.3% exact acuity on test, 94.0% on the paraphrase challenge and 90.0% on demo. With the one-line prompt it reached 80.7%, 86.0% and 82.5%, respectively. See `runs/r1/eval.md` for the comparison and latency. The original training split contained no text-only unconsciousness examples. `r3-4b` (Slurm 175969) continues from `r1` with 14 independently checked plain-language contrasts, 300 fleet pairs at the experience boundaries and shorter candidate reasons. The 3,940-example training split preserves the original validation and test files. Test, demo and paraphrase examples remain evaluation-only.
 
 `r2-1p7b` finished 376 steps at 10.1 s/step and 4.43 GB peak GPU allocation. It passed the 40-case demo gate with 92.5% acuity, 100% recommendation and 1.70 s p95. The held-out test and paraphrase scores were 84.3% and 81.3% acuity. The same follow-up data will be used to continue from the 1.7B adapter after its remaining comparisons.
+
+## Nov 8, 00:10 EST — 4B only
+
+Luka asked to focus on the 4B model and exclude latency from selection. The 1.7B follow-up (Slurm 176037) was cancelled. `r3-4b` continues with the schema, recommendation, acuity and paraphrase gates. The evaluation report will retain latency measurements for reference.
+
+## Nov 8, 01:16 EST — hour 12
+
+`r3-4b` completed 371 steps and passed the adapter reload check. Its four-request concurrent evaluation reached 91.7% test acuity, 93.3% paraphrase acuity and 92.5% demo acuity, with 100% schema validity. It missed the 95% recommendation threshold on test (94.3%) and demo (94.3%), chiefly on the experience exception.
+
+`r5-4b` (Slurm 176291) continues from `r3-4b` with 600 matched fleet pairs and extra loss weight on the recommended ID. Request IDs are randomized across the training split. A preflight confirmed that the weighted token spans match all 4,520 training and 300 validation references. Evaluation requests are concurrent and scored for quality.

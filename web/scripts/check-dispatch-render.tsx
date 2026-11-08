@@ -53,7 +53,7 @@ const disabled = (html: string) =>
 let html = render();
 assert.match(html, /dispatcher/);
 assert.match(html, /Suggested acuity: Charlie/);
-assert.match(html, /Deterministic fallback/);
+assert.match(html, /Rule-based/);
 assert.match(html, /1 of 3/);
 assert.match(html, /Previous option/);
 assert.match(html, /Next option/);

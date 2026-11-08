@@ -1,11 +1,13 @@
 """Compare an OpenAI model with saved r1 Qwen on identical held-out cases.
 
 Run from the repository: model/.venv/bin/python -I model/eval/compare_openai.py
-Sequential, resumable requests; API credentials are never written to artifacts.
+Bounded parallel, resumable requests; API credentials are never written to artifacts.
 """
 from __future__ import annotations
 
 import argparse
+from collections import deque
+from concurrent.futures import ThreadPoolExecutor
 import hashlib
 import json
 import os
@@ -93,6 +95,31 @@ def request_one(req, key, model):
                              "refusal": choice["message"].get("refusal")}
 
 
+def ordered_parallel(fn, items, concurrency):
+    """Keep at most concurrency requests in flight and yield in input order.
+
+    Ordered checkpoints remain a resumable prefix. On failure, cancel queued
+    work instead of submitting the rest of the benchmark.
+    """
+    pending = deque()
+    source = iter(items)
+    with ThreadPoolExecutor(max_workers=concurrency) as executor:
+        try:
+            for _ in range(concurrency):
+                item = next(source, None)
+                if item is None:
+                    break
+                pending.append(executor.submit(fn, item))
+            while pending:
+                yield pending.popleft().result()
+                item = next(source, None)
+                if item is not None:
+                    pending.append(executor.submit(fn, item))
+        finally:
+            for future in pending:
+                future.cancel()
+
+
 def write_report(out, results):
     model = results[0][2]["meta"]["model"]
     _, display_name, rates = MODEL_CONFIG[model]
@@ -131,7 +158,7 @@ def write_report(out, results):
         cost += writes * .025 / 1e6  # $0.125 write rate replaces the $0.10 input rate.
     lines += [f"OpenAI usage: {inp:,} input tokens ({cached:,} cached), {output:,} output tokens; estimated cost ${cost:.4f} at published standard rates.", "",
               f"Cache-write tokens: {writes:,}; Luna cache-write premium included when applicable.", "",
-              "Latency is end-to-end sequential wall time: OpenAI over the internet versus saved Qwen runs through the laptop SSH tunnel to one H100 MIG slice. Different hosting hardware; no retries included. First request is included.", "",
+              f"Latency is per-request wall time at OpenAI concurrency {results[0][2]['meta']['concurrency']}: OpenAI over the internet versus saved Qwen runs through the laptop SSH tunnel to one H100 MIG slice. Concurrent and sequential latencies are not directly comparable. Different hosting hardware; no retries included. First request is included.", "",
               "The synthetic bank was filtered with base Qwen. The paraphrase split deliberately contains keyword-rule disagreements; demo cases are curated. These sets are not an independent real-world benchmark.", "",
               f"OpenAI model reference: https://developers.openai.com/api/docs/models/{model}", ""]
     (out / "comparison.md").write_text("\n".join(lines))
@@ -144,9 +171,14 @@ def main():
     parser.add_argument("--out", type=Path)
     parser.add_argument("--baseline", type=Path, default=ROOT / "runs/r1")
     parser.add_argument("--limit", type=int, default=0, help="Smoke test only; use a separate output directory")
+    parser.add_argument("--concurrency", type=int, default=4,
+                        help="parallel requests (default: 4); use 1 for sequential latency comparisons")
     args = parser.parse_args()
+    if args.concurrency < 1:
+        parser.error("--concurrency must be at least 1")
     slug = MODEL_CONFIG[args.model][0]
-    args.out = args.out or ROOT / f"runs/{slug}-vs-r1"
+    args.out = args.out or ROOT / (f"runs/{slug}-vs-r1" +
+                                  (f"-c{args.concurrency}" if args.concurrency != 1 else ""))
     key = credential(args.env_file)
     args.out.mkdir(parents=True, exist_ok=True)
     results = []
@@ -167,7 +199,7 @@ def main():
                 "prompt_sha256": digest(SYSTEM.encode()), "schema_sha256": digest(json.dumps(response_schema()).encode()),
                 "baseline_sha256": digest((args.baseline / f"eval-ft-{split}.json").read_bytes()),
                 "reasoning_effort": "none", "max_completion_tokens": 600, "limit": args.limit,
-                "concurrency": 1, "system": "http", "guided": True}
+                "concurrency": args.concurrency, "system": "http", "guided": True}
         manifest = args.out / f"manifest-{split}.json"
         if manifest.exists() and json.loads(manifest.read_text()) != meta:
             raise SystemExit("Run configuration changed; choose a fresh --out directory")
@@ -176,18 +208,24 @@ def main():
         rows = [json.loads(line) for line in checkpoint.read_text().splitlines()] if checkpoint.exists() else []
         if [r["id"] for r in rows] != [i["meta"]["request"]["requestId"] for i in items[:len(rows)]]:
             raise SystemExit("Checkpoint IDs do not match input")
-        for item in items[len(rows):]:
+        def run(item):
             req, label = item["meta"]["request"], item["meta"]["label"]
             output, ms, extra = request_one(req, key, args.model)
             row = score(req, label, output)
             row.update(id=req["requestId"], gold_status=label["status"], gold_acuity=label.get("acuity"),
                        family=item["meta"].get("family"), latency_ms=ms, output=output, error=None, **extra)
+            return row
+
+        for row in ordered_parallel(run, items[len(rows):], args.concurrency):
             with checkpoint.open("a") as handle:
                 handle.write(json.dumps(row) + "\n")
             rows.append(row)
             if len(rows) % 10 == 0 or len(rows) == len(items):
                 print(f"{split}: {len(rows)}/{len(items)}; acuity={aggregate(rows)['acuity_exact']:.1%}", flush=True)
-        result = {"meta": meta, "metrics": aggregate(rows), "rows": rows}
+        metrics = aggregate(rows)
+        if args.concurrency > 1:
+            metrics["latency_note"] = f"measured at concurrency {args.concurrency}"
+        result = {"meta": meta, "metrics": metrics, "rows": rows}
         (args.out / f"eval-{slug}-{split}.json").write_text(json.dumps(result, indent=1))
         results.append((split, baseline, result))
         write_report(args.out, results)

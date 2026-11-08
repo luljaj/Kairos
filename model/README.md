@@ -64,16 +64,41 @@ Luna's cost includes reported cache-write tokens at the applicable write rate.
 
 This evaluates the same 40 demo, 300 test and 150 paraphrase cases as the saved
 fine-tuned Qwen 4B `runs/r1/eval-ft-*.json` results. It uses the full rubric prompt,
-strict schema decoding, no reasoning tokens and sequential requests. The OpenAI
+strict schema decoding, no reasoning tokens and four concurrent requests by default.
+Use `--concurrency 1` for sequential latency comparisons. The OpenAI
 schema requires a transport wrapper, which is removed before scoring. Both models
 use a 600-token output cap. Credentials come from `OPENAI_API_KEY` / `MODEL_API_KEY`
 in the environment, or `web/.env.local`; use `--env-file` to select another file.
 Credentials are never included in saved artifacts.
 
-Outputs go to `model/runs/gpt54mini-vs-r1/`, including `comparison.md`, raw scored
+Default parallel outputs go to `model/runs/gpt54mini-vs-r1-c4/` (sequential runs
+retain `model/runs/gpt54mini-vs-r1/`), including `comparison.md`, raw scored
 responses, token usage and configuration/data hashes. Repeating the command resumes
 saved rows; changed inputs require a fresh `--out` directory. API failures stop the
 run rather than being reported as model mistakes. For a smoke test use `--limit 1`
 with a separate `--out` directory. These are synthetic rubric benchmarks, not a
 measure of clinical correctness. Latencies compare the actual serving paths, which
 use different infrastructure.
+
+## Faster evaluation
+
+Both `eval/evaluate.py` and `eval/compare_openai.py` default to `--concurrency 4`.
+The Qwen server is configured for four concurrent sequences. Keep the full prompt,
+schema and held-out splits for accuracy comparisons; parallel per-request latency
+must not be compared directly with the saved sequential latency baseline.
+Use `--concurrency 1` when measuring sequential latency.
+
+For an initial Qwen smoke test from the repository root:
+
+```bash
+model/.venv/bin/python -I model/eval/evaluate.py --system http --guided \
+  --data model/fixtures/demo/demo.jsonl --limit 20 --skip-latency \
+  --out model/runs/parallel-smoke/eval-ft-demo.json
+```
+
+Supply `--base-url` if the server is not at `http://localhost:8000/v1`.
+Remove `--limit` for the full split and use a separate output file per split and
+configuration. `--skip-latency` retains quality scoring without the latency gate.
+OpenAI comparisons checkpoint in input order and resume completed prefixes;
+configuration changes require a fresh output directory. On API failure, no new
+work is submitted, though up to four requests may already be in flight.

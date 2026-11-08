@@ -145,8 +145,9 @@ def aggregate(rows):
         "latency_p50_ms": round(statistics.median(lat)) if lat else None,
         "latency_p95_ms": round(lat[min(len(lat) - 1, int(0.95 * len(lat)))]) if lat else None,
     }
-    agg["gate_pass"] = bool(agg["schema_valid"] and agg["schema_valid"] >= 0.99 and (agg["rec_match"] or 0) >= 0.95
-                            and agg["acuity_exact"] >= 0.90 and (agg["latency_p95_ms"] is None or agg["latency_p95_ms"] <= 2000))
+    agg["quality_gate_pass"] = ((agg["schema_valid"] or 0) >= 0.99 and (agg["rec_match"] or 0) >= 0.95
+                                and (agg["acuity_exact"] or 0) >= 0.90)
+    agg["gate_pass"] = agg["quality_gate_pass"] and (agg["latency_p95_ms"] is None or agg["latency_p95_ms"] <= 2000)
     return agg
 
 
@@ -159,28 +160,32 @@ def main():
     ap.add_argument("--model", default="qwen3-4b-dispatch-lora")
     ap.add_argument("--api-key", default=os.environ.get("MODEL_API_KEY", "none"))
     ap.add_argument("--guided", action="store_true")
-    ap.add_argument("--concurrency", type=int, default=1, help="1 = sequential (honest latency)")
+    ap.add_argument("--concurrency", type=int, default=4, help="parallel requests (default: 4); use 1 for sequential latency comparisons")
+    ap.add_argument("--skip-latency", action="store_true", help="score quality only")
     ap.add_argument("--limit", type=int, default=0)
     ap.add_argument("--short-prompt", action="store_true",
                     help="use the training-only one-line prompt (tests whether the rubric is in the weights)")
     a = ap.parse_args()
+    if a.concurrency < 1:
+        ap.error("--concurrency must be at least 1")
 
     items = [json.loads(l) for l in open(a.data)]
     if a.limit:
         items = items[: a.limit]
     sysfn = rules_system if a.system == "rules" else http_system(a.base_url, a.model, a.guided, a.api_key,
                                                                     system=SHORT if a.short_prompt else None)
+    time_requests = a.system == "http" and not a.skip_latency
 
     def run(it):
         req = it["meta"]["request"]
-        t0 = time.perf_counter()
+        t0 = time.perf_counter() if time_requests else None
         try:
             out, err = sysfn(req), None
         except Exception as e:  # noqa
             out, err = "", repr(e)
-        ms = (time.perf_counter() - t0) * 1000
+        ms = (time.perf_counter() - t0) * 1000 if t0 is not None else None
         s = score(req, it["meta"]["label"], out)
-        s.update(latency_ms=ms if a.system == "http" else None, gold_status=it["meta"]["label"]["status"],
+        s.update(latency_ms=ms, gold_status=it["meta"]["label"]["status"],
                  gold_acuity=it["meta"]["label"].get("acuity"), family=it["meta"].get("family"),
                  id=req["requestId"], error=err, output=out if isinstance(out, str) else json.dumps(out))
         return s
@@ -188,10 +193,10 @@ def main():
     with ThreadPoolExecutor(max_workers=a.concurrency) as ex:
         rows = list(ex.map(run, items))
     agg = aggregate(rows)
-    if a.concurrency > 1:
+    if a.concurrency > 1 and time_requests:
         agg["latency_note"] = f"measured at concurrency {a.concurrency}"
     meta = {"short_prompt": a.short_prompt, "system": a.system, "model": a.model if a.system == "http" else "rules", "guided": a.guided,
-            "data": a.data, "base_url": a.base_url if a.system == "http" else None}
+            "data": a.data, "base_url": a.base_url if a.system == "http" else None, "concurrency": a.concurrency}
     Path(a.out).parent.mkdir(parents=True, exist_ok=True)
     Path(a.out).write_text(json.dumps({"meta": meta, "metrics": agg, "rows": rows}, indent=1))
     print(json.dumps({**meta, **agg}, indent=2))

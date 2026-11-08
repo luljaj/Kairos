@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import {
@@ -31,26 +30,23 @@ export function AcuityMark({
   return (
     <span
       className={cn(
-        "inline-flex items-center gap-1.5 text-xs font-medium",
+        "inline-flex shrink-0 items-center rounded-md border border-current/20 px-2 py-0.5 text-xs font-medium",
         acuity === "Echo" || acuity === "Delta"
           ? "text-critical"
           : acuity === "Charlie"
             ? "text-urgent"
             : "text-muted-foreground",
       )}
+      title={source === "fallback" ? "Rule-based assessment" : source === "dispatcher" ? "Set by dispatcher" : source === "model" ? "Model assessment" : undefined}
     >
-      <span className="size-1.5 rounded-full bg-current" />
       {acuity ?? "Unassessed"}
-      {source && (
-        <span className="font-normal text-muted-foreground">{source}</span>
-      )}
     </span>
   );
 }
 
 export function KeySignals({ call }: { call: Call }) {
   const facts = Object.entries(call.facts).filter(
-    ([, value]) => value !== null,
+    ([key, value]) => key !== "chiefComplaint" && value !== null,
   );
   return (
     <dl className="grid grid-cols-2 gap-x-3 gap-y-2 text-xs">
@@ -73,51 +69,6 @@ export function KeySignals({ call }: { call: Call }) {
         </p>
       )}
     </dl>
-  );
-}
-
-export function LiveCaption({ call }: { call: Call }) {
-  const [open, setOpen] = useState(false);
-  const lines = call.transcript;
-  return (
-    <div className="flex flex-col gap-2">
-      <div className="flex items-center justify-between">
-        <span className="text-xs text-muted-foreground">Transcript</span>
-        <Button
-          variant="ghost"
-          size="xs"
-          aria-expanded={open}
-          aria-controls={`transcript-${call.id}`}
-          onClick={() => setOpen(!open)}
-        >
-          {open ? "Hide" : `Show (${call.transcript.length})`}
-        </Button>
-      </div>
-      {open && <div
-        id={`transcript-${call.id}`}
-        className="flex h-40 flex-col gap-2 overflow-y-auto overscroll-contain"
-        tabIndex={0}
-        role="region"
-        aria-label="Call transcript"
-      >
-        {lines.map((line, i) => (
-          <p
-            key={`${line.at}-${i}`}
-            className="text-[13px] leading-relaxed break-words"
-          >
-            <span className="text-muted-foreground">
-              {line.role === "caller" ? "Caller" : "Assistant"} —{" "}
-            </span>
-            {line.text}
-          </p>
-        ))}
-        {!lines.length && (
-          <p className="text-xs text-muted-foreground">
-            No transcript received.
-          </p>
-        )}
-      </div>}
-    </div>
   );
 }
 

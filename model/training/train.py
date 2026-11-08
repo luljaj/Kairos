@@ -37,6 +37,41 @@ def to_pc(path: Path, template_kwargs: dict):
     return Dataset.from_list(rows)
 
 
+def recommendation_span(ids, key, after):
+    """Find the recommended ID in a tokenized, compact ready response."""
+    key_start = next((i for i, token in enumerate(ids) if token == key[0] and ids[i:i + len(key)] == key), None)
+    if key_start is None:
+        return None
+    start = key_start + len(key)
+    end = next((i for i in range(start, len(ids)) if ids[i:i + len(after)] == after), None)
+    return (start, end) if end is not None else None
+
+
+def recommendation_loss(tok, weight):
+    import torch
+    from torch.nn.functional import cross_entropy
+
+    key = tok.encode('recommendedAmbulanceId":"', add_special_tokens=False)
+    after = tok.encode('","candidates', add_special_tokens=False)
+
+    def loss(outputs, labels, num_items_in_batch=None):
+        # Trainer supplies completion-only labels and the accumulated token count.
+        targets = labels[:, 1:]
+        valid = targets != -100
+        weights = torch.ones_like(targets, dtype=torch.float32)
+        for i, ids in enumerate(targets.tolist()):
+            span = recommendation_span(ids, key, after)
+            if span is not None:
+                start, end = span
+                weights[i, start:end] = weight
+        logits = outputs.logits[:, :-1][valid].float()
+        losses = cross_entropy(logits, targets[valid], reduction="none")
+        count = valid.sum() if num_items_in_batch is None else num_items_in_batch
+        return (losses * weights[valid]).sum() / torch.as_tensor(count, device=losses.device).clamp(min=1)
+
+    return loss
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--run-id", required=True)
@@ -53,9 +88,12 @@ def main():
     ap.add_argument("--bf16-lora", action="store_true", help="full BF16 base (only use with small models on a 10 GB slice)")
     ap.add_argument("--resume", action="store_true")
     ap.add_argument("--init-adapter", help="initialize LoRA weights from a saved adapter and start a new run")
+    ap.add_argument("--recommendation-weight", type=float, default=1.0, help="loss multiplier for the recommended ambulance ID")
     ap.add_argument("--reload-only", action="store_true", help="only run the save/reload check on runs/<run-id>/adapter")
     ap.add_argument("--save-steps", type=int, default=100)
     a = ap.parse_args()
+    if a.recommendation_weight < 1.0:
+        ap.error("--recommendation-weight must be at least 1")
 
     import torch
     from huggingface_hub import try_to_load_from_cache
@@ -116,8 +154,9 @@ def main():
         save_strategy="steps", save_steps=a.save_steps, save_total_limit=2, bf16=True, gradient_checkpointing=True, max_length=a.max_len,
         completion_only_loss=True, report_to=[], seed=7, dataloader_num_workers=0,
     )
+    loss = recommendation_loss(tok, a.recommendation_weight) if a.recommendation_weight > 1.0 else None
     trainer = SFTTrainer(model=model, args=sft, train_dataset=train_ds, eval_dataset=val_ds,
-                         processing_class=tok, peft_config=peft_cfg)
+                         processing_class=tok, peft_config=peft_cfg, compute_loss_func=loss)
     t0 = time.time()
     trainer.train(resume_from_checkpoint=a.resume or None)
     dt = time.time() - t0

@@ -7,6 +7,7 @@ import random
 import shutil
 import sys
 from collections import Counter
+from concurrent.futures import ThreadPoolExecutor
 from copy import deepcopy
 from pathlib import Path
 
@@ -84,20 +85,21 @@ def compact_reasons(req, resp, lab):
         result["reason"] = f"{why}. {eta}."
 
 
-def example(rng, req, meta, system, user):
+def example(rng, req, meta, system):
+    req = {**req, "requestId": f"req-{rng.getrandbits(64):016x}"}
     resp, lab = build_response(rng, req, meta["info"], sig=set(meta["concepts"]))
     compact_reasons(req, resp, lab)
     if issue := verify(req, resp, lab):
         raise ValueError(f"{req['requestId']} failed verification ({issue})")
-    return {"messages": [{"role": "system", "content": system}, {"role": "user", "content": user},
+    return {"messages": [{"role": "system", "content": system}, {"role": "user", "content": user_content(rng, req)},
                          {"role": "assistant", "content": json.dumps(resp, separators=(",", ":"))}],
             "meta": {**meta, "request": req, "label": lab}}
 
 
-def fleet_pairs(rng, source):
+def fleet_pairs(rng, source, count):
     """Same case and roster twice, with one of the two exception thresholds crossed."""
     critical = [r["meta"] for r in source if r["meta"]["label"]["acuity"] in ("Delta", "Echo")]
-    for i, meta in enumerate(rng.sample(critical, 300)):
+    for i, meta in enumerate(rng.sample(critical, count)):
         req = deepcopy(meta["request"])
         while True:
             req["candidates"] = sample_candidates(rng, force_close=True)
@@ -112,23 +114,21 @@ def fleet_pairs(rng, source):
         chief["monthsOfService"] = rubric.chief_months(fastest) + gap
         system = SHORT_SYSTEM if meta["short_prompt"] else SYSTEM
         for positive in (True, False):
-            req["requestId"] = f"req-train-fleet-{i}-{'a' if positive else 'b'}"
             if not positive:
                 if i % 2:
                     slower["travelSeconds"] = slower["arrivalInSeconds"] = fastest["arrivalInSeconds"] + 61
                 else:
                     chief["monthsOfService"] = rubric.chief_months(fastest) + 23
-            row = example(rng, deepcopy(req), meta, system, user_content(rng, req))
+            row = example(rng, deepcopy(req), {**meta, "augmentation": "fleet_threshold"}, system)
             assert (row["meta"]["label"]["kind"] == "experience_exception") == positive
             yield row
 
 
 def text_examples(rng, source, verified):
-    for i, (text, concepts, conscious, breathing, gist) in enumerate(verified):
+    for text, concepts, conscious, breathing, gist in verified:
         count = 40 if "unconscious" in concepts else 20
-        for j in range(count):
+        for _ in range(count):
             req = deepcopy(rng.choice(source)["meta"]["request"])
-            req["requestId"] = f"req-train-text-{i}-{j}"
             req["incident"]["facts"].update(
                 chiefComplaint=text, patientCount=1, conscious=rng.choice(conscious),
                 breathingNormally=rng.choice(breathing), severeBleeding=None, chestPain=None,
@@ -136,8 +136,8 @@ def text_examples(rng, source, verified):
             )
             short = rng.random() < 0.3
             meta = {"split": "train", "family": text, "concepts": sorted(concepts),
-                    "short_prompt": short, "info": {"gist": gist}}
-            yield example(rng, req, meta, SHORT_SYSTEM if short else SYSTEM, user_content(rng, req))
+                    "short_prompt": short, "info": {"gist": gist}, "augmentation": "text_contrast"}
+            yield example(rng, req, meta, SHORT_SYSTEM if short else SYSTEM)
 
 
 def main():
@@ -145,15 +145,20 @@ def main():
     ap.add_argument("--data", type=Path, default=ROOT / "data/generated")
     ap.add_argument("--out", type=Path, required=True)
     ap.add_argument("--verify-url", required=True)
+    ap.add_argument("--fleet-pairs", type=int, default=300)
     args = ap.parse_args()
     rng = random.Random(17)
     args.out.mkdir(parents=True, exist_ok=True)
     with (args.data / "train.jsonl").open() as f:
         source = [json.loads(line) for line in f]
     verified, checks = [], []
-    for text, names, conscious, breathing, gist in TEXT_CASES:
+    with ThreadPoolExecutor(4) as executor:
+        seen_by_text = list(executor.map(
+            lambda case: ask(args.verify_url, "Qwen/Qwen3-4B-Instruct-2507", case[0]),
+            TEXT_CASES,
+        ))
+    for (text, names, conscious, breathing, gist), seen in zip(TEXT_CASES, seen_by_text, strict=True):
         concepts = set(names.split("+"))
-        seen = ask(args.verify_url, "Qwen/Qwen3-4B-Instruct-2507", text)
         passed = same_meaning(concepts, seen)
         checks.append({"text": text, "intended": sorted(concepts), "verifier": sorted(seen), "kept": passed})
         if passed:
@@ -161,9 +166,8 @@ def main():
     (args.out / "text_verification.json").write_text(json.dumps(checks, indent=2) + "\n")
     if not {"unconscious", "unresponsive_hint"} <= set().union(*(e[1] for e in verified)):
         raise ValueError("Verifier must accept both definite unconsciousness and uncertain unresponsiveness")
-    rows = [example(rng, row["meta"]["request"], row["meta"], row["messages"][0]["content"],
-                    row["messages"][1]["content"]) for row in source]
-    rows.extend(fleet_pairs(rng, source))
+    rows = [example(rng, row["meta"]["request"], row["meta"], row["messages"][0]["content"]) for row in source]
+    rows.extend(fleet_pairs(rng, source, args.fleet_pairs))
     rows.extend(text_examples(rng, source, verified))
     rng.shuffle(rows)
     with (args.out / "train.jsonl").open("w") as f:
