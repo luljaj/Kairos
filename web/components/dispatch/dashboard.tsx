@@ -38,13 +38,11 @@ export function DispatchDashboard() {
     <div className="dispatch dark">
       <DispatchMap
         ref={mapRef}
-        look="dusk"
         sim={s.sim}
         trackedId={s.trackedId}
         proposal={s.proposal}
         padding={{ top: 80, right: tracked ? 360 : 40, bottom: 240, left: COLUMN + INSET * 2 }}
         onSelectUnit={s.setTrackedId}
-        drift
       />
 
       {/* Left column: three islands, each its own surface */}
@@ -101,7 +99,7 @@ export function DispatchDashboard() {
           </CardHeader>
           <CardContent className="flex flex-col px-1.5">
             {s.sim.units.map((u) => (
-              <FleetRow key={u.id} live={u} dense tracked={s.trackedId === u.id} onClick={() => s.track(u.id)} />
+              <FleetRow key={u.id} live={u} tracked={s.trackedId === u.id} onClick={() => s.track(u.id)} />
             ))}
           </CardContent>
         </Card>

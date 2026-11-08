@@ -6,20 +6,16 @@ import "mapbox-gl/dist/mapbox-gl.css";
 import { CALLS, HOSPITALS, UNITS, unitById, type LngLat, type TriageOption } from "@/lib/dispatch-mock/data";
 import { MEASURED, splitAt, type SimApi } from "@/lib/dispatch-mock/sim";
 
-export type MapLook = "satellite" | "dusk" | "night";
 export type Padding = { top: number; right: number; bottom: number; left: number };
 
 export type DispatchMapHandle = { overview: () => void };
 
 type Props = {
-  look: MapLook;
   sim: SimApi;
   trackedId: string | null;
   proposal: TriageOption | null;
   padding: Padding;
   onSelectUnit: (id: string | null) => void;
-  /** Slow idle bearing drift when nothing is focused. */
-  drift?: boolean;
 };
 
 const OVERVIEW = { center: [-75.948, 42.0985] as LngLat, zoom: 12.85, pitch: 58, bearing: -22 };
@@ -39,25 +35,18 @@ const approach = (from: number, to: number, dt: number, response = 0.45) =>
 
 const angleDelta = (from: number, to: number) => ((((to - from) % 360) + 540) % 360) - 180;
 
-function styleFor(look: MapLook): Pick<mapboxgl.MapOptions, "style" | "config"> {
-  if (look === "satellite") return { style: "mapbox://styles/mapbox/satellite-v9" };
-  return {
-    style: "mapbox://styles/mapbox/standard",
-    config: {
-      basemap: {
-        lightPreset: look === "dusk" ? "dusk" : "night",
-        theme: "monochrome",
-        showPointOfInterestLabels: false,
-        showTransitLabels: false,
-        showPedestrianRoads: false,
-        show3dObjects: true,
-      },
-    },
-  };
-}
+/** Mapbox Standard at dusk, monochrome, no POI clutter, 3D buildings on. */
+const BASEMAP: Record<string, string | boolean> = {
+  lightPreset: "dusk",
+  theme: "monochrome",
+  showPointOfInterestLabels: false,
+  showTransitLabels: false,
+  showPedestrianRoads: false,
+  show3dObjects: true,
+};
 
 export const DispatchMap = forwardRef<DispatchMapHandle, Props>(function DispatchMap(
-  { look, sim, trackedId, proposal, padding, onSelectUnit, drift = false },
+  { sim, trackedId, proposal, padding, onSelectUnit },
   ref,
 ) {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -67,8 +56,8 @@ export const DispatchMap = forwardRef<DispatchMapHandle, Props>(function Dispatc
   const etaMarkerRef = useRef<mapboxgl.Marker | null>(null);
 
   // Latest props for the animation loop without re-subscribing.
-  const live = useRef({ trackedId, padding, drift, onSelectUnit, proposal });
-  live.current = { trackedId, padding, drift, onSelectUnit, proposal };
+  const live = useRef({ trackedId, padding, onSelectUnit, proposal });
+  live.current = { trackedId, padding, onSelectUnit, proposal };
   const lastInteraction = useRef(0);
 
   useImperativeHandle(ref, () => ({
@@ -83,75 +72,24 @@ export const DispatchMap = forwardRef<DispatchMapHandle, Props>(function Dispatc
     const map = new mapboxgl.Map({
       container: containerRef.current,
       accessToken: process.env.NEXT_PUBLIC_MAPBOX_TOKEN,
-      ...styleFor(look),
+      style: "mapbox://styles/mapbox/standard",
       ...INTRO,
       antialias: true,
       attributionControl: false,
       logoPosition: "bottom-right",
     });
     mapRef.current = map;
-    let warned429 = false;
     map.on("error", (e) => {
       const err = e.error as (Error & { status?: number; url?: string }) | undefined;
       if (err?.name === "AbortError") return;
-      if (err?.status === 429) {
-        if (!warned429) console.warn("[map] Mapbox is rate-limiting raster tiles (429) for this token.");
-        warned429 = true;
-        return;
-      }
       console.error("[map]", err?.message, err?.status, err?.url);
     });
 
     map.on("style.load", () => {
-      const isStandard = look !== "satellite";
-      const slot = isStandard ? { slot: "top" as const } : {};
-      if (isStandard) {
-        const basemap = (styleFor(look).config as { basemap: Record<string, string | boolean> }).basemap;
-        for (const [k, v] of Object.entries(basemap)) map.setConfigProperty("basemap", k, v);
-        // Standard drapes lines on terrain but HTML markers sit at sea level — keep both on one plane.
-        map.setTerrain(null);
-      }
-
-      if (look === "satellite") {
-        map.setPaintProperty("satellite", "raster-saturation", -0.82);
-        map.setPaintProperty("satellite", "raster-brightness-max", 0.62);
-        map.setPaintProperty("satellite", "raster-contrast", 0.12);
-        map.addSource("dem", { type: "raster-dem", url: "mapbox://mapbox.mapbox-terrain-dem-v1", tileSize: 512 });
-        map.setTerrain({ source: "dem", exaggeration: 1.5 });
-        map.addSource("streets", { type: "vector", url: "mapbox://mapbox.mapbox-streets-v8" });
-        map.addLayer({
-          id: "roads",
-          type: "line",
-          source: "streets",
-          "source-layer": "road",
-          filter: ["in", ["get", "class"], ["literal", ["motorway", "trunk", "primary", "secondary", "tertiary", "street"]]],
-          paint: {
-            "line-color": "#ffffff",
-            "line-opacity": ["interpolate", ["linear"], ["zoom"], 11, 0.06, 15, 0.14],
-            "line-width": ["interpolate", ["linear"], ["zoom"], 11, 0.4, 16, 2],
-          },
-        });
-        map.addLayer({
-          id: "buildings",
-          type: "fill-extrusion",
-          source: "streets",
-          "source-layer": "building",
-          minzoom: 13,
-          paint: {
-            "fill-extrusion-color": "#c9ced6",
-            "fill-extrusion-opacity": 0.38,
-            "fill-extrusion-height": ["coalesce", ["get", "height"], 6],
-            "fill-extrusion-base": ["coalesce", ["get", "min_height"], 0],
-          },
-        });
-        map.setFog({
-          color: "rgb(18,20,24)",
-          "high-color": "rgb(30,34,42)",
-          "horizon-blend": 0.12,
-          "space-color": "rgb(8,9,11)",
-          "star-intensity": 0.15,
-        });
-      }
+      const slot = { slot: "top" as const };
+      for (const [k, v] of Object.entries(BASEMAP)) map.setConfigProperty("basemap", k, v);
+      // Standard drapes lines on terrain but HTML markers sit at sea level — keep both on one plane.
+      map.setTerrain(null);
 
       // Overlay sources
       map.addSource("trails", { type: "geojson", data: EMPTY, lineMetrics: true });
@@ -247,8 +185,6 @@ export const DispatchMap = forwardRef<DispatchMapHandle, Props>(function Dispatc
       map.remove();
       mapRef.current = null;
     };
-    // look is fixed per variant mount
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // --- Markers (created once) ------------------------------------------------
@@ -394,7 +330,6 @@ export const DispatchMap = forwardRef<DispatchMapHandle, Props>(function Dispatc
             padding: live.current.padding,
           });
         } else if (
-          live.current.drift &&
           !tracked &&
           !live.current.proposal &&
           !map.isMoving() &&
@@ -417,7 +352,7 @@ export const DispatchMap = forwardRef<DispatchMapHandle, Props>(function Dispatc
 
   return (
     <div className="absolute inset-0">
-      <div ref={containerRef} className="size-full" data-look={look} />
+      <div ref={containerRef} className="size-full" />
     </div>
   );
 });
