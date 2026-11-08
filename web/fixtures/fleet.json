@@ -1,0 +1,50 @@
+{
+  "$comment": "Fictional fleet, crews and hospitals. Exactly three ambulances. Coordinates are near Binghamton, NY but all names and addresses are invented.",
+  "ambulances": [
+    {
+      "id": "amb-1",
+      "revision": 0,
+      "name": "Medic 1",
+      "position": { "lat": 42.0995, "lng": -75.9165 },
+      "status": "available",
+      "crewIds": ["crew-1a", "crew-1b"],
+      "activeTaskId": null,
+      "queuedTaskIds": [],
+      "homeStation": { "lat": 42.0995, "lng": -75.9165 }
+    },
+    {
+      "id": "amb-2",
+      "revision": 0,
+      "name": "Medic 2",
+      "position": { "lat": 42.1105, "lng": -75.9480 },
+      "status": "available",
+      "crewIds": ["crew-2a", "crew-2b"],
+      "activeTaskId": null,
+      "queuedTaskIds": [],
+      "homeStation": { "lat": 42.1105, "lng": -75.9480 }
+    },
+    {
+      "id": "amb-3",
+      "revision": 0,
+      "name": "Medic 3",
+      "position": { "lat": 42.0870, "lng": -75.9720 },
+      "status": "available",
+      "crewIds": ["crew-3a", "crew-3b"],
+      "activeTaskId": null,
+      "queuedTaskIds": [],
+      "homeStation": { "lat": 42.0870, "lng": -75.9720 }
+    }
+  ],
+  "crew": [
+    { "id": "crew-1a", "name": "Jordan Pike", "role": "driver", "qualifications": ["nys_emt", "hf_driver_cleared"], "monthsOfService": 14 },
+    { "id": "crew-1b", "name": "Sam Okafor", "role": "crew_chief", "qualifications": ["nys_emt", "hf_crew_chief_cleared"], "monthsOfService": 30 },
+    { "id": "crew-2a", "name": "Riley Chen", "role": "driver", "qualifications": ["nys_emt", "hf_driver_cleared"], "monthsOfService": 22 },
+    { "id": "crew-2b", "name": "Avery Santos", "role": "crew_chief", "qualifications": ["nys_paramedic", "hf_als_cleared", "hf_crew_chief_cleared"], "monthsOfService": 41 },
+    { "id": "crew-3a", "name": "Casey Novak", "role": "driver", "qualifications": ["nys_aemt", "hf_driver_cleared"], "monthsOfService": 9 },
+    { "id": "crew-3b", "name": "Morgan Reyes", "role": "crew_chief", "qualifications": ["nys_paramedic", "hf_als_cleared", "hf_crew_chief_cleared"], "monthsOfService": 66 }
+  ],
+  "hospitals": [
+    { "id": "hosp-riverside", "name": "Riverside General (fictional)", "coords": { "lat": 42.1035, "lng": -75.9310 } },
+    { "id": "hosp-southtier", "name": "Southtier Medical Center (fictional)", "coords": { "lat": 42.0905, "lng": -75.8985 } }
+  ]
+}
