@@ -13,7 +13,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Dispatch Assistant",
+  title: "Kairos",
   description: "Ambulance dispatch assistant demo (fictional fleet)",
 };
 

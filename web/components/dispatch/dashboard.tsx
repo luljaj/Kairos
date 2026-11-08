@@ -51,9 +51,9 @@ export function DispatchDashboard() {
         style={{ width: COLUMN + INSET, padding: INSET, paddingRight: 0 }}
       >
         <div className="pointer-events-auto flex items-center justify-between px-2 py-1">
-          <span className="flex items-center gap-2">
+          <span className="flex items-center gap-1.5">
             <Mark />
-            <span className="text-[15px] font-medium tracking-tight">Binghamton</span>
+            <span className="text-[15px] font-medium tracking-tight">Kairos</span>
           </span>
           <Clock className="text-xs text-muted-foreground" />
         </div>
