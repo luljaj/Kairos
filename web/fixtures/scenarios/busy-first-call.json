@@ -1,0 +1,20 @@
+{
+  "$comment": "Demo step 1: the call the dispatcher is already handling. Medic 3 gets assigned to it.",
+  "id": "busy-first-call",
+  "title": "Kitchen fall, wrist injury (dispatcher's own call)",
+  "callerNumber": null,
+  "location": { "text": "220 Oak Hollow Rd (fictional)", "coords": { "lat": 42.0790, "lng": -75.9850 }, "confidence": "confirmed" },
+  "steps": [
+    {
+      "atSeconds": 0,
+      "locationText": "220 Oak Hollow Rd (fictional)",
+      "facts": { "chiefComplaint": "Slipped in the kitchen, hurt her wrist", "callerRelation": "self" },
+      "transcript": [{ "role": "caller", "text": "I slipped in my kitchen and I think I broke my wrist." }]
+    },
+    {
+      "atSeconds": 4,
+      "facts": { "patientCount": 1, "patientAge": 58, "patientSex": "female", "conscious": true, "breathingNormally": true, "severeBleeding": false, "traumaMechanism": "fall from standing" }
+    }
+  ],
+  "expected": { "acuity": "Bravo", "recommendedAmbulanceId": null }
+}

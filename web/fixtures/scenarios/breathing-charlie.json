@@ -1,0 +1,19 @@
+{
+  "$comment": "Demo step 5: third call while Medic 2 and Medic 3 are busy. Only BLS Medic 1 is free; dispatcher queues ALS Medic 3.",
+  "id": "breathing-charlie",
+  "title": "Asthma, short of breath",
+  "callerNumber": "+15555550177",
+  "location": { "text": "9 Chenango Ct (fictional)", "coords": { "lat": 42.1180, "lng": -75.9120 }, "confidence": "confirmed" },
+  "steps": [
+    {
+      "atSeconds": 0,
+      "locationText": "9 Chenango Ct (fictional)",
+      "facts": { "chiefComplaint": "Roommate having an asthma attack, short of breath", "callerRelation": "bystander" }
+    },
+    {
+      "atSeconds": 5,
+      "facts": { "conscious": true, "breathingNormally": false, "patientCount": 1, "patientAge": 21, "chestPain": false }
+    }
+  ],
+  "expected": { "acuity": "Charlie", "recommendedAmbulanceId": null }
+}

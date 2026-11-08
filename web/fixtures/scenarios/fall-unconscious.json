@@ -1,0 +1,34 @@
+{
+  "$comment": "Demo step 2: the main call. Expected recommendation is ALS Medic 2 over faster BLS Medic 1.",
+  "id": "fall-unconscious",
+  "title": "Father fell down stairs, not answering",
+  "callerNumber": "+15555550142",
+  "location": { "text": "14 Riverside Dr (fictional)", "coords": { "lat": 42.0960, "lng": -75.9235 }, "confidence": "confirmed" },
+  "steps": [
+    {
+      "atSeconds": 0,
+      "locationText": "14 Riverside Dr (fictional)",
+      "facts": {},
+      "transcript": [
+        { "role": "agent", "text": "This is the automated assistant for the demo dispatch centre. A human dispatcher is overseeing. What is the address of the emergency?" },
+        { "role": "caller", "text": "14 Riverside Drive." }
+      ]
+    },
+    {
+      "atSeconds": 5,
+      "facts": { "chiefComplaint": "Father fell down the stairs, not answering", "callerRelation": "family", "traumaMechanism": "fall down stairs" },
+      "transcript": [{ "role": "caller", "text": "My dad fell down the stairs and he's not answering me." }]
+    },
+    {
+      "atSeconds": 10,
+      "facts": { "conscious": false, "breathingNormally": true },
+      "transcript": [{ "role": "caller", "text": "His eyes are closed but he's breathing." }]
+    },
+    {
+      "atSeconds": 15,
+      "facts": { "patientCount": 1, "patientAge": 67, "patientSex": "male" },
+      "transcript": [{ "role": "caller", "text": "He's 67." }]
+    }
+  ],
+  "expected": { "acuity": "Delta", "recommendedAmbulanceId": "amb-2" }
+}
