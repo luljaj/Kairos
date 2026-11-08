@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useRef } from "react";
 import { Scan } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
@@ -11,7 +11,7 @@ import {
   CardDescription,
 } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
-import { DEMO_SCENARIOS, useDispatchUi } from "@/lib/client/useDispatchUi";
+import { useDispatchUi } from "@/lib/client/useDispatchUi";
 import { callTitle } from "@/lib/client/dispatch-view";
 import "./dispatch.css";
 import { DispatchMap, type DispatchMapHandle } from "./dispatch-map";
@@ -25,10 +25,10 @@ import {
   UnitDetail,
 } from "./parts";
 import { TriageCard } from "./triage-card";
+import { DemoPanel } from "./demo-panel";
 
 export function DispatchDashboard() {
   const s = useDispatchUi();
-  const [scenario, setScenario] = useState<string>(DEMO_SCENARIOS[0].id);
   const mapRef = useRef<DispatchMapHandle>(null);
   const { state, call } = s;
   const tracked = s.trackedId ? state?.ambulances[s.trackedId] : null;
@@ -44,7 +44,7 @@ export function DispatchDashboard() {
         onSelectCall={s.selectCall}
       />
       <aside className="dispatch-left">
-        <div className="flex items-center justify-between px-2 py-1">
+        <div className="flex items-center justify-between px-4 py-1">
           <span className="flex items-center gap-1.5">
             <Mark />
             <span className="text-[15px] font-medium tracking-tight">Kairos</span>
@@ -60,53 +60,6 @@ export function DispatchDashboard() {
                 : "Reconnecting…"}
           </span>
         </div>
-        <Card size="sm">
-          <CardHeader>
-            <CardTitle className="text-xs">Demo incident</CardTitle>
-            <CardDescription className="text-xs">
-              Scripted inputs · fictional incidents
-            </CardDescription>
-          </CardHeader>
-          <CardContent className="flex flex-col gap-2">
-            <label className="sr-only" htmlFor="demo-scenario">
-              Demo scenario
-            </label>
-            <select
-              id="demo-scenario"
-              className="rounded-md border border-border bg-background p-2 text-xs"
-              value={scenario}
-              onChange={(event) => setScenario(event.target.value)}
-            >
-              {DEMO_SCENARIOS.map((item) => (
-                <option key={item.id} value={item.id}>
-                  {item.label}
-                </option>
-              ))}
-            </select>
-            <div className="flex gap-2">
-              <Button
-                size="sm"
-                disabled={!s.canAct}
-                onClick={() => void s.startDemo(scenario)}
-              >
-                {s.demoPending ? "Starting…" : "Start sample incident"}
-              </Button>
-              <Button
-                size="sm"
-                variant="ghost"
-                disabled={!s.canAct}
-                onClick={() => void s.reset()}
-              >
-                Reset
-              </Button>
-            </div>
-            {s.demoMessage && (
-              <p role="status" className="text-xs text-muted-foreground">
-                {s.demoMessage}
-              </p>
-            )}
-          </CardContent>
-        </Card>
         {call && (
           <Card key={call.id}>
             <CardHeader>
@@ -135,13 +88,13 @@ export function DispatchDashboard() {
             </CardContent>
           </Card>
         )}
-        <Card size="sm">
+        <Card size="sm" className="dispatch-list-card">
           <CardHeader>
-            <CardTitle className="text-xs text-muted-foreground">
+            <CardTitle className="dispatch-section-title">
               Queue
             </CardTitle>
           </CardHeader>
-          <CardContent className="flex flex-col px-1.5">
+          <CardContent className="flex flex-col px-1">
             {state &&
               Object.values(state.calls).map((item) => {
                 const task = item.taskId ? state.tasks[item.taskId] : null;
@@ -162,18 +115,18 @@ export function DispatchDashboard() {
               })}
             {state && Object.keys(state.calls).length === 0 && (
               <p className="px-3 py-2 text-xs text-muted-foreground">
-                No incidents. Start a sample above.
+                No active incidents.
               </p>
             )}
           </CardContent>
         </Card>
-        <Card size="sm">
+        <Card size="sm" className="dispatch-list-card">
           <CardHeader>
-            <CardTitle className="text-xs text-muted-foreground">
+            <CardTitle className="dispatch-section-title">
               Fleet
             </CardTitle>
           </CardHeader>
-          <CardContent className="flex flex-col px-1.5">
+          <CardContent className="flex flex-col px-1">
             {state &&
               Object.values(state.ambulances).map((unit) => (
                 <FleetRow
@@ -230,7 +183,7 @@ export function DispatchDashboard() {
           </div>
         )}
         {tracked && state && (
-          <Card size="sm">
+          <Card>
             <CardContent>
               <UnitDetail
                 unit={tracked}
@@ -241,9 +194,12 @@ export function DispatchDashboard() {
           </Card>
         )}
       </section>
-      <section className="dispatch-triage" aria-label="Dispatch assessment">
-        <TriageCard key={call?.id ?? "empty"} s={s} className="w-full max-w-[560px]" />
-      </section>
+      <DemoPanel s={s} />
+      {state && call && call.status !== "closed" && (
+        <section className="dispatch-triage" aria-label="Dispatch assessment">
+          <TriageCard key={call.id} s={s} className="w-full max-w-[560px]" />
+        </section>
+      )}
     </main>
   );
 }

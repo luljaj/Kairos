@@ -85,7 +85,7 @@ assert.match(
 );
 assert.match(render({ set: { ...set, status: "error" } }), /Retry assessment/);
 assert.match(render({ set: null }), /waiting for assessment/);
-assert.match(render({ call: null }), /Ready for an incident/);
+assert.equal(render({ call: null }), "");
 const task: Task = {
   id: "task-test",
   revision: 0,

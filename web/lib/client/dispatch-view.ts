@@ -2,9 +2,26 @@ import type {
   Ambulance,
   Call,
   Candidate,
+  CrewRole,
   DispatchState,
+  Qualification,
   Task,
 } from "@/lib/contracts";
+
+export const crewRoleLabels: Record<CrewRole, string> = {
+  driver: "Driver",
+  crew_chief: "Crew Chief",
+  attendant: "Attendant",
+};
+
+export const qualificationLabels: Record<Qualification, string> = {
+  nys_emt: "NYS EMT",
+  nys_aemt: "NYS AEMT",
+  nys_paramedic: "NYS Paramedic",
+  hf_driver_cleared: "HF Driver Cleared",
+  hf_crew_chief_cleared: "HF Crew Chief Cleared",
+  hf_als_cleared: "HF ALS Cleared",
+};
 
 export const durationLabel = (seconds: number | null | undefined): string =>
   seconds == null || !Number.isFinite(seconds)

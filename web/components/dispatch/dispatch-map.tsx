@@ -7,6 +7,8 @@ import {
   useRef,
   useState,
 } from "react";
+import { createPortal } from "react-dom";
+import { SquadroomMarker } from "./squadroom-marker";
 import mapboxgl from "mapbox-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
 import type { DispatchState, LatLng } from "@/lib/contracts";
@@ -24,11 +26,20 @@ type Props = {
 };
 const point = ({ lat, lng }: LatLng): [number, number] => [lng, lat];
 const token = process.env.NEXT_PUBLIC_MAPBOX_TOKEN;
+function parkedUnits(state: DispatchState | null) {
+  if (!state) return [];
+  const units = Object.values(state.ambulances);
+  const home = units[0]?.homeStation;
+  return home ? units.filter((unit) => !unit.activeTaskId && !unit.returnTrip && unit.status === "available"
+    && distance(point(unit.position), point(home)) < 20) : [];
+}
 
 export const DispatchMap = forwardRef<DispatchMapHandle, Props>(
   function DispatchMap(props, ref) {
     const container = useRef<HTMLDivElement>(null);
     const mapRef = useRef<mapboxgl.Map | null>(null);
+    const stationMarker = useRef<mapboxgl.Marker | null>(null);
+    const [stationElement, setStationElement] = useState<HTMLElement | null>(null);
     const markers = useRef(new Map<string, mapboxgl.Marker>());
     const latest = useRef(props);
     const cameraKey = useRef("");
@@ -95,6 +106,17 @@ export const DispatchMap = forwardRef<DispatchMapHandle, Props>(
           container: container.current,
           accessToken: token,
           style: "mapbox://styles/mapbox/standard",
+          // Apply the dashboard palette before the first map frame renders.
+          config: {
+            basemap: {
+              lightPreset: "dusk",
+              theme: "monochrome",
+              showPointOfInterestLabels: false,
+              showTransitLabels: false,
+              showPedestrianRoads: false,
+              show3dObjects: true,
+            },
+          },
           center: [-75.948, 42.0985],
           zoom: 12.5,
           pitch: 58,
@@ -119,12 +141,6 @@ export const DispatchMap = forwardRef<DispatchMapHandle, Props>(
         ),
       );
       map.on("load", () => {
-        map.setConfigProperty("basemap", "lightPreset", "dusk");
-        map.setConfigProperty("basemap", "theme", "monochrome");
-        map.setConfigProperty("basemap", "showPointOfInterestLabels", false);
-        map.setConfigProperty("basemap", "showTransitLabels", false);
-        map.setConfigProperty("basemap", "showPedestrianRoads", false);
-        map.setConfigProperty("basemap", "show3dObjects", true);
         map.setTerrain(null);
         map.addSource("task-routes", {
           type: "geojson",
@@ -150,6 +166,14 @@ export const DispatchMap = forwardRef<DispatchMapHandle, Props>(
           layout: { "line-cap": "round", "line-join": "round" },
           paint: { "line-color": "#f2c46d", "line-width": 3.5, "line-emissive-strength": 1 },
         });
+        const element = document.createElement("div");
+        element.className = "dm-station";
+        element.style.display = "none";
+        stationMarker.current = new mapboxgl.Marker({ element, anchor: "bottom", offset: [0, -18] })
+          .setLngLat(map.getCenter()).addTo(map);
+        element.setAttribute("role", "group");
+        element.setAttribute("aria-label", "Harpur’s Ferry squadroom");
+        setStationElement(element);
         setReady(true);
         setError(null);
       });
@@ -160,6 +184,8 @@ export const DispatchMap = forwardRef<DispatchMapHandle, Props>(
       return () => {
         activeMarkers.forEach((marker) => marker.remove());
         activeMarkers.clear();
+        stationMarker.current?.remove();
+        stationMarker.current = null;
         map.remove();
         mapRef.current = null;
       };
@@ -235,75 +261,11 @@ export const DispatchMap = forwardRef<DispatchMapHandle, Props>(
       }
       const units = Object.values(state.ambulances);
       const home = units[0]?.homeStation;
-      const parked = home ? units.filter((unit) =>
-        !unit.activeTaskId && !unit.returnTrip && unit.status === "available"
-        && distance(point(unit.position), point(home)) < 20,
-      ) : [];
+      const parked = parkedUnits(state);
       const groupedIds = new Set(parked.length >= 2 ? parked.map((unit) => unit.id) : []);
-      if (home) {
-        const stationId = "hf-squadroom";
-        retained.add(stationId);
-        let station = markers.current.get(stationId);
-        if (!station) {
-          const element = document.createElement("div");
-          element.className = "dm-station";
-          const button = document.createElement("button");
-          button.type = "button";
-          button.className = "dm-station-button";
-          button.setAttribute("aria-controls", "squadroom-units");
-          button.setAttribute("aria-expanded", "false");
-          const list = document.createElement("div");
-          list.id = "squadroom-units";
-          list.className = "dm-station-units";
-          list.hidden = true;
-          button.onclick = () => {
-            list.hidden = !list.hidden;
-            button.setAttribute("aria-expanded", String(!list.hidden));
-          };
-          element.onkeydown = (event) => {
-            if (event.key === "Escape") {
-              list.hidden = true;
-              button.setAttribute("aria-expanded", "false");
-              button.focus();
-            }
-          };
-          element.append(button, list);
-          station = new mapboxgl.Marker({ element, anchor: "bottom", offset: [0, -18] })
-            .setLngLat(point(home)).addTo(map);
-          markers.current.set(stationId, station);
-        }
-        station.setLngLat(point(home));
-        const element = station.getElement();
-        const button = element.querySelector<HTMLButtonElement>(".dm-station-button")!;
-        const list = element.querySelector<HTMLDivElement>(".dm-station-units")!;
-        button.textContent = groupedIds.size ? `HF squadroom · ${parked.length} cars` : "HF squadroom";
-        button.title = "Harpur’s Ferry squadroom · East Access Road";
-        button.disabled = !groupedIds.size;
-        element.dataset.tracked = String(parked.some((unit) => unit.id === trackedId || unit.id === candidateId));
-        if (!groupedIds.size) {
-          list.hidden = true;
-          button.setAttribute("aria-expanded", "false");
-        }
-        const groupKey = [...groupedIds].join(",");
-        if (element.dataset.units !== groupKey) {
-          element.dataset.units = groupKey;
-          list.replaceChildren(...parked.filter((unit) => groupedIds.has(unit.id)).map((unit) => {
-            const choice = document.createElement("button");
-            choice.type = "button";
-            choice.dataset.unitId = unit.id;
-            choice.textContent = `${unit.name} · Available`;
-            choice.onclick = () => {
-              latest.current.onSelectUnit(unit.id);
-              list.hidden = true;
-              button.setAttribute("aria-expanded", "false");
-              button.focus();
-            };
-            return choice;
-          }));
-        }
-        list.querySelectorAll<HTMLButtonElement>("button").forEach((choice) => {
-          choice.setAttribute("aria-pressed", String(choice.dataset.unitId === trackedId));
-        });
+      if (home && stationMarker.current) {
+        stationMarker.current.setLngLat(point(home));
+        stationMarker.current.getElement().style.display = "";
       }
       units.forEach((unit) => {
         if (groupedIds.has(unit.id)) {
@@ -452,6 +414,10 @@ export const DispatchMap = forwardRef<DispatchMapHandle, Props>(
     return (
       <div className="dispatch-map" aria-label="Incident and fleet map">
         <div ref={container} className="absolute inset-0" />
+        {stationElement && props.state && createPortal(
+          <SquadroomMarker units={parkedUnits(props.state)} state={props.state} trackedId={props.trackedId} onSelectUnit={props.onSelectUnit} />,
+          stationElement,
+        )}
         {error && (
           <p role="status" className="map-notice">
             {error}

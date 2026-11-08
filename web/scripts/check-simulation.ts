@@ -111,6 +111,7 @@ async function main() {
     const late = harness(() => new Promise<Route>((done) => { resolve = done; }));
     const current = late.store.getState();
     const returning = current.ambulances["amb-2"];
+    returning.position = { ...current.hospitals[0].coords };
     releaseUnit(current, returning, current.simClock);
     late.sim.tick(0);
     if (action === "assign") late.assign();

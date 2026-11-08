@@ -13,8 +13,10 @@ import {
 } from "@/lib/contracts";
 import {
   callTitle,
+  crewRoleLabels,
   durationLabel,
   fieldLabel,
+  qualificationLabels,
   taskArrival,
   unitStatus,
 } from "@/lib/client/dispatch-view";
@@ -248,11 +250,11 @@ export function UnitDetail({
             member && (
               <div key={id} className="text-xs">
                 <p>
-                  {member.name} · {fieldLabel(member.role.replaceAll("_", " "))}
+                  <strong className="font-bold">{member.name}</strong> · {crewRoleLabels[member.role]}
                 </p>
                 <p className="text-muted-foreground">
                   {member.qualifications
-                    .map((q) => q.replaceAll("_", " "))
+                    .map((q) => qualificationLabels[q])
                     .join(" · ")}
                 </p>
               </div>

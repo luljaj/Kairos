@@ -1,8 +1,8 @@
 /* Operator dashboard — materials, motion and map markers. Theme tokens live in app/globals.css (.dark). */
 
-.dispatch {
-  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+:root { --ease-out: cubic-bezier(0.23, 1, 0.32, 1); }
 
+.dispatch {
   position: fixed;
   inset: 0;
   overflow: hidden;
@@ -13,8 +13,30 @@
 
 /* Materials ---------------------------------------------------------------- */
 
+/* Headings and row contents share a 16px inset. Rows contribute their own
+   12px horizontal / 8px vertical padding inside the compact list body. */
+.dispatch-list-card {
+  --card-spacing: 16px;
+  gap: 8px;
+  padding-top: 16px;
+  padding-bottom: 8px;
+}
+.dispatch-section-title {
+  font-size: 12px;
+  line-height: 18px;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  color: var(--muted-foreground);
+}
+
 /* Translucent cards: thicker blur on bigger surfaces; a bright top edge = light on glass. */
-.dispatch [data-slot="card"] {
+.dispatch-card-surface {
+  font-family: var(--font-geist-sans), system-ui, sans-serif;
+  background: var(--card);
+  color: var(--card-foreground);
+}
+.dispatch [data-slot="card"],
+.dispatch-card-surface {
   -webkit-backdrop-filter: blur(28px) saturate(1.7);
   backdrop-filter: blur(28px) saturate(1.7);
   box-shadow:
@@ -23,7 +45,8 @@
 }
 
 @media (prefers-reduced-transparency: reduce) {
-  .dispatch [data-slot="card"] {
+  .dispatch [data-slot="card"],
+  .dispatch-card-surface {
     background: oklch(0.19 0.005 260);
     backdrop-filter: none;
     -webkit-backdrop-filter: none;
@@ -293,7 +316,7 @@
 }
 
 /* Floating controls and the original bottom-centered proposal card. */
-.dispatch-map { position: absolute; inset: 0; background: radial-gradient(ellipse at center, #20272c, #101317); }
+.dispatch-map { position: absolute; inset: 0; background: radial-gradient(ellipse at center, #242424, #111111); }
 .dispatch-left, .dispatch-right { position: absolute; top: 0; bottom: 0; display: flex; flex-direction: column; gap: 12px; padding: 16px; overflow-y: auto; scrollbar-width: thin; }
 .dispatch-left { left: 0; width: 384px; }
 .dispatch-right { right: 0; bottom: auto; width: 352px; max-height: 45%; pointer-events: none; }
@@ -316,22 +339,159 @@
 /* Mapbox's unlayered position:relative overrides Tailwind utilities. */
 .dispatch-map > .mapboxgl-map { position: absolute; inset: 0; width: 100%; height: 100%; }
 
-/* Parked units share one expandable station marker. */
-.dm-station { position: relative; z-index: 5; font: 12px/1.4 var(--font-sans), sans-serif; }
-.dm-station-button, .dm-station-units button {
-  color: #f5f7fa; background: #182422; border: 1px solid #647f77;
-  border-radius: 8px; padding: 9px 12px; cursor: pointer;
-  box-shadow: 0 4px 14px #0005; white-space: nowrap;
+/* Shared shadcn surfaces, including portalled panels outside .dispatch. */
+.dispatch-surface {
+  font-family: var(--font-geist-sans), system-ui, sans-serif;
+  background: var(--popover);
+  color: var(--popover-foreground);
+  -webkit-backdrop-filter: blur(18px) saturate(1.4);
+  backdrop-filter: blur(18px) saturate(1.4);
+  box-shadow: inset 0 1px 0 oklch(1 0 0 / 0.06), 0 12px 36px -8px oklch(0 0 0 / 0.5);
 }
-.dm-station-button { font-weight: 600; }
-.dm-station-button:disabled { cursor: default; }
-.dm-station[data-tracked="true"] .dm-station-button { border-color: #f2c46d; }
-.dm-station-units {
-  position: absolute; bottom: calc(100% + 6px); left: 50%; transform: translateX(-50%);
-  display: grid; gap: 4px; min-width: 170px; padding: 6px;
-  background: #101b19; border: 1px solid #647f77; border-radius: 10px;
+/* Mapbox owns the station root's absolute position and transform. */
+.dm-station { z-index: 5; }
+.squadroom-anchor { position: relative; font-family: var(--font-geist-sans), system-ui, sans-serif; }
+/* Both surfaces inherit the same Mapbox transform. Override the floating
+   wrapper's viewport coordinates so no measurement loop can lag behind a pan.
+   The card stays above its marker instead of flipping during map movement. */
+.squadroom-anchor > [data-radix-popper-content-wrapper] {
+  position: absolute !important;
+  top: auto !important;
+  bottom: calc(100% + 10px);
+  left: 50% !important;
+  transform: translateX(-50%) !important;
 }
-.dm-station-units[hidden] { display: none; }
-.dm-station-units button { text-align: left; box-shadow: none; }
-.dm-station-units button:hover, .dm-station-units button[aria-pressed="true"] { background: #30453e; }
-.dm-station button:focus-visible { outline: 2px solid #f2c46d; outline-offset: 2px; }
+/* A fixed canvas avoids relayout and keeps the map anchor still while the
+   clipped hit target grows from a 36px circle into a 148px pill. */
+.squadroom-trigger {
+  position: relative;
+  display: block;
+  width: 148px;
+  height: 36px;
+  padding: 0;
+  border: 0;
+  border-radius: 18px;
+  clip-path: inset(0 56px round 18px);
+  background: var(--card);
+  color: var(--card-foreground);
+  font-family: var(--font-geist-sans), system-ui, sans-serif;
+  font-size: 12px;
+  letter-spacing: 0.01em;
+  -webkit-backdrop-filter: blur(28px) saturate(1.7);
+  backdrop-filter: blur(28px) saturate(1.7);
+  box-shadow: inset 0 0 0 1px oklch(1 0 0 / 0.1), inset 0 1px 0 oklch(1 0 0 / 0.08);
+  transition: clip-path 160ms var(--ease-out);
+}
+.squadroom-trigger .squadroom-icon {
+  position: absolute;
+  left: 10px;
+  top: 10px;
+  width: 16px;
+  height: 16px;
+  transform: translateX(56px);
+  transition: transform 160ms var(--ease-out);
+}
+.squadroom-label {
+  position: absolute;
+  left: 36px;
+  top: 0;
+  line-height: 36px;
+  opacity: 0;
+  transform: translateX(4px);
+  transition: opacity 160ms var(--ease-out), transform 160ms var(--ease-out);
+}
+.squadroom-trigger .squadroom-chevron {
+  position: absolute;
+  right: 12px;
+  top: 12px;
+  width: 12px;
+  height: 12px;
+  opacity: 0;
+  transition: opacity 160ms var(--ease-out);
+}
+.squadroom-trigger[data-tracked="true"] .squadroom-icon { color: var(--success); }
+.squadroom-trigger:is([data-state="open"], :focus-visible) { clip-path: inset(0 round 18px); }
+.squadroom-trigger:is([data-state="open"], :focus-visible) .squadroom-icon,
+.squadroom-trigger:is([data-state="open"], :focus-visible) .squadroom-label { transform: translateX(0); }
+.squadroom-trigger:is([data-state="open"], :focus-visible) :is(.squadroom-label, .squadroom-chevron) { opacity: 1; }
+.squadroom-trigger:focus-visible { box-shadow: inset 0 0 0 2px var(--ring); }
+@media (hover: hover) and (pointer: fine) {
+  .squadroom-trigger:hover { clip-path: inset(0 round 18px); }
+  .squadroom-trigger:hover :is(.squadroom-icon, .squadroom-label) { transform: translateX(0); }
+  .squadroom-trigger:hover :is(.squadroom-label, .squadroom-chevron) { opacity: 1; }
+}
+.squadroom-popover {
+  opacity: 1;
+  transform: translateY(0);
+  transform-origin: bottom center;
+  transition: opacity 180ms var(--ease-out), transform 180ms var(--ease-out);
+  @starting-style {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+}
+.squadroom-popover[data-state="closed"] {
+  opacity: 0;
+  transform: translateY(8px);
+  pointer-events: none;
+  transition-duration: 125ms;
+  /* Radix waits for animationend before unmounting. This holds presence only;
+     visual motion uses transitions so rapid reopening reverses smoothly. */
+  animation: squadroom-presence 125ms linear;
+}
+@keyframes squadroom-presence {
+  from { visibility: visible; }
+  to { visibility: visible; }
+}
+.squadroom-trigger[data-keyboard="true"],
+.squadroom-trigger[data-keyboard="true"] *,
+.squadroom-popover[data-keyboard="true"] {
+  transition: none;
+  animation: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  .squadroom-trigger, .squadroom-trigger *, .squadroom-popover {
+    transition: none !important;
+    animation: none !important;
+  }
+}
+@media (prefers-reduced-transparency: reduce), (prefers-contrast: more) {
+  .squadroom-trigger {
+    background: oklch(0.2 0.006 260);
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+  }
+}
+/* Keyboard toggles are immediate. The panel stays spatially anchored on the right. */
+.demo-panel[data-slot="sheet-content"] {
+  top: 64px;
+  right: 16px;
+  bottom: auto;
+  width: min(352px, calc(100vw - 32px));
+  max-width: none;
+  height: auto;
+  max-height: calc(100dvh - 80px);
+  overflow-y: auto;
+  gap: 16px;
+  padding: 16px;
+  border: 0;
+  border-radius: calc(var(--radius) + 4px);
+  transition: none;
+  animation: none;
+  outline: none;
+}
+/* Center the 28px close target on the 18px title at the 16px inset.
+   The icon's right edge aligns with the panel's content edge. */
+.demo-panel [data-slot="sheet-close"] {
+  top: 11px;
+  right: 10px;
+}
+@media (prefers-reduced-transparency: reduce), (prefers-contrast: more) {
+  .dispatch-surface,
+  .dispatch-card-surface {
+    background: oklch(0.2 0.006 260);
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+    border: 1px solid var(--ring);
+  }
+}

@@ -19,19 +19,10 @@ export function TriageCard({ s, className }: { s: DispatchUiState; className?: s
   const confirmationKey = `${set?.id}:${candidate?.ambulanceId}:${call?.acuity?.value}`;
   const confirmed = confirmedFor === confirmationKey;
   const cardClass = cn("materialize", className);
-  if (!state || !call) return (
-    <Card className={cardClass}>
-      <CardHeader>
-        <CardTitle>{state ? "Ready for an incident" : "Connecting to dispatch…"}</CardTitle>
-        <CardDescription>
-          {state ? "Start a scripted demo incident from the controls on the left." : "Waiting for the first backend snapshot."}
-        </CardDescription>
-      </CardHeader>
-    </Card>
-  );
+  if (!state || !call) return null;
 
   if (task) return (
-    <Card size="sm" className={cardClass}>
+    <Card className={cardClass}>
       <CardContent className="flex items-center gap-3">
         <span className="grid size-8 shrink-0 place-items-center rounded-full bg-success/15 text-success"><Check className="size-4" /></span>
         <span className="flex min-w-0 flex-1 flex-col gap-1">
