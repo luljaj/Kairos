@@ -1,9 +1,14 @@
-/** ElevenLabs server tools. The scripted caller goes through `updateIncident` too. */
-import type { GetAssignmentResult, UpdateIncidentBody } from "@/lib/contracts";
+/**
+ * Voice-agent tools (webhook + MCP). Every intake source goes through `ingestIncident`:
+ * geocode the location text, pre-fetch road routes, then apply the update.
+ */
+import type { GetAssignmentResult, LatLng, UpdateIncidentBody } from "@/lib/contracts";
 import { TOOL_SECRET_HEADER } from "@/lib/contracts";
 import { appendTranscript, applyIncidentChanges, createCall, findCallByConversation } from "./incidents";
 import { incidentInputKey } from "./candidates";
 import { ensureRecommendationsStarted, scheduleAwaitingRecommendations, scheduleRecommendation } from "./recommend";
+import { geocodeLocation } from "./geocode";
+import { warmRoutes } from "./routing";
 import { getState, mutate, touch } from "./store";
 
 /** Constant-time-ish check of the shared secret. Unset secret = reject everything. */
@@ -16,13 +21,28 @@ export function checkToolSecret(req: Request): boolean {
   return diff === 0;
 }
 
-export function updateIncident(
-  body: UpdateIncidentBody,
-  extra?: {
-    coords?: { lat: number; lng: number } | null;
-    transcript?: { role: "agent" | "caller"; text: string }[];
-  },
-): string {
+type Extra = {
+  /** Known coordinates (scripted caller). Skips geocoding. */
+  coords?: LatLng | null;
+  coordsConfidence?: "confirmed" | "approximate";
+  transcript?: { role: "agent" | "caller"; text: string }[];
+};
+
+/** Async intake: resolve `locationText` to coords and warm routes before the update lands. */
+export async function ingestIncident(body: UpdateIncidentBody, extra: Extra = {}): Promise<string> {
+  let { coords, coordsConfidence } = extra;
+  const previous = findCallByConversation(getState(), body.conversationId)?.location.text ?? null;
+  if (coords === undefined && body.locationText !== undefined && body.locationText !== previous) {
+    const geo = body.locationText ? await geocodeLocation(body.locationText) : null;
+    // No usable match clears old coords, so the recommendation asks for the location again.
+    coords = geo?.coords ?? null;
+    coordsConfidence = geo?.confidence;
+  }
+  if (coords) await warmRoutes(getState(), coords);
+  return updateIncident(body, { ...extra, coords, coordsConfidence });
+}
+
+export function updateIncident(body: UpdateIncidentBody, extra?: Extra): string {
   const beforeFleet = getState().fleetRevision;
   const result = mutate((state) => {
     const now = new Date().toISOString();
@@ -52,9 +72,13 @@ export function updateIncident(
               ...(body.locationText !== undefined
                 ? { text: body.locationText, confidence: body.locationText ? "approximate" : null }
                 : {}),
-              // TODO(geocoding): resolve locationText -> coords. Scripted caller passes coords directly.
               ...(extra?.coords !== undefined
-                ? { coords: extra.coords, confidence: extra.coords ? "confirmed" : null }
+                ? {
+                    coords: extra.coords,
+                    confidence: extra.coords
+                      ? extra.coordsConfidence ?? "confirmed"
+                      : body.locationText ? "approximate" : null,
+                  }
                 : {}),
             }
           : undefined,

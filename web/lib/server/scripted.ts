@@ -1,6 +1,6 @@
 /** Scripted caller: replays a scenario's timed payloads through the voice code path. */
 import { scenarios } from "./fixtures";
-import { updateIncident } from "./voice";
+import { ingestIncident } from "./voice";
 import type { ScenarioFixture } from "@/lib/contracts";
 import { randomIncidents } from "./random-incidents";
 import { RANDOM_INCIDENT_OPTIONS, randomIncidentOption } from "@/lib/demo/random-incidents";
@@ -41,7 +41,7 @@ function startScenario(scenario: ScenarioFixture, speed: number): { conversation
       () => {
         state.timers.delete(timer);
         if (generation !== state.generation) return;
-        updateIncident(
+        void ingestIncident(
           {
             conversationId,
             callerNumber: scenario.callerNumber,
@@ -50,11 +50,11 @@ function startScenario(scenario: ScenarioFixture, speed: number): { conversation
             intakeComplete: i === scenario.steps.length - 1,
           },
           {
-            // First step carries the fixture coords (stand-in for geocoding).
+            // First step carries the fixture coords, so the demo never depends on geocoding.
             coords: i === 0 ? scenario.location.coords : undefined,
             transcript: step.transcript,
           },
-        );
+        ).catch((error) => console.error("[scripted] step failed", error));
       },
       (step.atSeconds * 1000) / speed,
     );

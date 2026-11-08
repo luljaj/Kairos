@@ -1,4 +1,7 @@
 import { selectability, type Ambulance, type DispatchState, type LatLng, type Task } from "@/lib/contracts";
+import { estimateTravelSeconds, travelSeconds } from "./travel";
+
+export { estimateTravelSeconds };
 
 const SCENE_SECONDS = 480;
 type Travel = (from: LatLng, to: LatLng) => number;
@@ -9,10 +12,6 @@ function distance(from: LatLng, to: LatLng): number {
     + Math.cos(from.lat * rad) * Math.cos(to.lat * rad)
       * Math.sin((to.lng - from.lng) * rad / 2) ** 2;
   return 2 * 6_371_000 * Math.asin(Math.sqrt(Math.min(1, Math.max(0, h))));
-}
-
-export function estimateTravelSeconds(from: LatLng, to: LatLng): number {
-  return Math.ceil(distance(from, to) * 1.4 / (40_000 / 3_600));
 }
 
 export function nearestHospital(state: DispatchState, from: LatLng | null) {
@@ -39,7 +38,7 @@ function workLocations(state: DispatchState, task: Task) {
 export function estimateAvailability(
   state: DispatchState,
   ambulance: Ambulance,
-  travel: Travel = estimateTravelSeconds,
+  travel: Travel = travelSeconds,
 ): { availableInSeconds: number | null; releasePoint: LatLng | null } {
   if (!selectability(ambulance, state.crew).selectable) return unknown();
 
@@ -100,7 +99,7 @@ export function estimateAvailability(
 
 export function estimateArrival(
   state: DispatchState, ambulance: Ambulance, incident: LatLng | null,
-  travel: Travel = estimateTravelSeconds,
+  travel: Travel = travelSeconds,
 ) {
   const { availableInSeconds, releasePoint } = estimateAvailability(state, ambulance, travel);
   const travelSeconds = incident && releasePoint ? duration(travel(releasePoint, incident)) : null;

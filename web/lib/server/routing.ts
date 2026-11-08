@@ -1,7 +1,8 @@
-import { Route, type LatLng } from "@/lib/contracts";
+import { Route, type DispatchState, type LatLng } from "@/lib/contracts";
 import savedRoutes from "@/fixtures/demo-routes.json";
 import { coordinates, distance, type LngLat } from "@/lib/simulation/geometry";
-import { estimateTravelSeconds } from "./eta";
+import { estimateAvailability, nearestHospital } from "./eta";
+import { estimateTravelSeconds, rememberRoadSeconds } from "./travel";
 
 const cache = new Map<string, Route>();
 
@@ -49,6 +50,24 @@ export async function getRoute(from: LatLng, to: LatLng): Promise<Route> {
   if (!route.estimated) {
     if (cache.size >= 100) cache.delete(cache.keys().next().value!);
     cache.set(key, route);
+    // Ranking and ETAs read this, so they match the line the unit actually drives.
+    rememberRoadSeconds(from, to, route.durationSeconds);
   }
   return structuredClone(route);
+}
+
+/**
+ * Fetch road routes for an incident ahead of ranking: every selectable unit's release point
+ * -> incident, and incident -> nearest hospital. Fills the travel-time cache and the route
+ * cache, so the accepted task reuses the same route. Never throws (getRoute has fallbacks).
+ */
+export async function warmRoutes(state: DispatchState, incident: LatLng): Promise<void> {
+  const pairs: [LatLng, LatLng][] = [];
+  for (const unit of Object.values(state.ambulances)) {
+    const from = estimateAvailability(state, unit).releasePoint;
+    if (from) pairs.push([from, incident]);
+  }
+  const hospital = nearestHospital(state, incident);
+  if (hospital) pairs.push([incident, hospital.coords]);
+  await Promise.all(pairs.map(([from, to]) => getRoute(from, to)));
 }
