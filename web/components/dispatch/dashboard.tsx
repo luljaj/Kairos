@@ -45,9 +45,9 @@ export function DispatchDashboard() {
       />
       <aside className="dispatch-left">
         <div className="flex items-center justify-between px-2 py-1">
-          <span className="flex items-center gap-2">
+          <span className="flex items-center gap-1.5">
             <Mark />
-            <span className="text-[15px] font-medium">Binghamton</span>
+            <span className="text-[15px] font-medium tracking-tight">Kairos</span>
           </span>
           <span
             role="status"

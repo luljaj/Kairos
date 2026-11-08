@@ -264,16 +264,16 @@ export function UnitDetail({
   );
 }
 
-export function Mark() {
+/**
+ * Kairos mark — a dial open at one instant. Sized to the 15px wordmark: an 18px box puts the
+ * ring just above cap height (round forms need overshoot) and the 2-unit stroke renders ~1.5px,
+ * matching Geist Medium's stem weight.
+ */
+export function Mark({ className }: { className?: string }) {
   return (
-    <svg viewBox="0 0 24 24" className="size-6" aria-hidden>
-      <path
-        d="M4 14 14 4M8 18 18 8M12 21l9-9"
-        stroke="currentColor"
-        strokeWidth="2.2"
-        strokeLinecap="round"
-        fill="none"
-      />
+    <svg viewBox="0 0 24 24" className={cn("size-[18px] shrink-0", className)} aria-hidden fill="none">
+      <path d="M15.2 3.6A9 9 0 1 0 20.4 8.8" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+      <circle cx="18.6" cy="5.4" r="2.1" fill="currentColor" />
     </svg>
   );
 }
