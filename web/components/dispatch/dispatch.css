@@ -291,3 +291,21 @@
 .dispatch .mapboxgl-ctrl-logo {
   opacity: 0.35;
 }
+
+/* Each operational column scrolls independently over the map. */
+.dispatch-map { position: absolute; inset: 0; background: radial-gradient(ellipse at center, #20272c, #101317); }
+.dispatch-left, .dispatch-right { position: absolute; top: 0; bottom: 0; display: flex; flex-direction: column; gap: 12px; padding: 16px; overflow-y: auto; scrollbar-width: thin; }
+.dispatch-left { left: 0; width: 384px; }
+.dispatch-right { right: 0; width: 424px; }
+.dispatch-left > *, .dispatch-right > * { flex-shrink: 0; }
+.dispatch-triage { margin-top: auto; }
+.map-notice { position: absolute; bottom: 12px; left: 50%; transform: translateX(-50%); max-width: 240px; border-radius: 8px; padding: 8px; background: #101317dd; text-align: center; font-size: 11px; color: #bec5ce; }
+.dm-unit[data-status="out_of_service"] { opacity: .45; }
+.dm-incident { border: 0; background: transparent; cursor: pointer; }
+@media (max-width: 900px) {
+  .dispatch { overflow-y: auto; }
+  .dispatch-map { position: relative; height: 260px; }
+  .dispatch-left, .dispatch-right { position: relative; width: 100%; overflow: visible; }
+  .dispatch-right { padding-top: 0; }
+  .map-notice { width: 240px; }
+}

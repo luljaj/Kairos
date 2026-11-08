@@ -1,137 +1,249 @@
 "use client";
 
+import { useRef, useState } from "react";
 import { Scan } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+} from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
-import { useRef } from "react";
+import { DEMO_SCENARIOS, useDispatchUi } from "@/lib/client/useDispatchUi";
+import { callTitle } from "@/lib/client/dispatch-view";
 import "./dispatch.css";
 import { DispatchMap, type DispatchMapHandle } from "./dispatch-map";
 import {
-  ACTIVE_CALL,
   Mark,
   AcuityMark,
   CallRow,
-  Clock,
   FleetRow,
   KeySignals,
   LiveCaption,
-  OTHER_CALLS,
   UnitDetail,
 } from "./parts";
 import { TriageCard } from "./triage-card";
-import { useDispatchUi } from "@/lib/dispatch-mock/use-dispatch-ui";
 
-const COLUMN = 360;
-const INSET = 16;
-
-/**
- * Operator dashboard (Orbit) — the map is the whole canvas. The left column is a stack of floating
- * glass islands; the city drifts slowly when nobody is touching it.
- */
 export function DispatchDashboard() {
   const s = useDispatchUi();
+  const [scenario, setScenario] = useState<string>(DEMO_SCENARIOS[0].id);
   const mapRef = useRef<DispatchMapHandle>(null);
-  const tracked = s.trackedId ? s.sim.units.find((u) => u.id === s.trackedId) : null;
-
+  const { state, call } = s;
+  const tracked = s.trackedId ? state?.ambulances[s.trackedId] : null;
   return (
-    <div className="dispatch dark">
+    <main className="dispatch dark">
       <DispatchMap
         ref={mapRef}
-        sim={s.sim}
+        state={state}
+        selectedCallId={call?.id ?? null}
+        candidateId={s.task?.ambulanceId ?? s.candidate?.ambulanceId ?? null}
         trackedId={s.trackedId}
-        proposal={s.proposal}
-        padding={{ top: 80, right: tracked ? 360 : 40, bottom: 240, left: COLUMN + INSET * 2 }}
         onSelectUnit={s.setTrackedId}
+        onSelectCall={s.selectCall}
       />
-
-      {/* Left column: three islands, each its own surface */}
-      <div
-        className="pointer-events-none absolute top-0 bottom-0 left-0 flex flex-col gap-3"
-        style={{ width: COLUMN + INSET, padding: INSET, paddingRight: 0 }}
-      >
-        <div className="pointer-events-auto flex items-center justify-between px-2 py-1">
+      <aside className="dispatch-left">
+        <div className="flex items-center justify-between px-2 py-1">
           <span className="flex items-center gap-2">
             <Mark />
-            <span className="text-[15px] font-medium tracking-tight">Binghamton</span>
+            <span className="text-[15px] font-medium">Binghamton</span>
           </span>
-          <Clock className="text-xs text-muted-foreground" />
+          <span
+            role="status"
+            className={`text-xs ${s.connection === "open" ? "text-success" : "text-urgent"}`}
+          >
+            {s.connection === "open"
+              ? "Connected"
+              : s.connection === "connecting"
+                ? "Connecting…"
+                : "Reconnecting…"}
+          </span>
         </div>
-
-        <Card className="pointer-events-auto shrink-0">
+        <Card size="sm">
           <CardHeader>
-            <CardDescription className="flex items-center justify-between text-xs">
-              <span className="inline-flex items-center gap-2">
-                <span className="live-dot" /> Live · {ACTIVE_CALL.startedAt}
-              </span>
-              <AcuityMark acuity={ACTIVE_CALL.acuity} suggested />
+            <CardTitle className="text-xs">Demo incident</CardTitle>
+            <CardDescription className="text-xs">
+              Scripted inputs · fictional incidents
             </CardDescription>
-            <CardTitle className="text-xl font-normal tracking-tight">{ACTIVE_CALL.title}</CardTitle>
-            <CardDescription className="text-xs">{ACTIVE_CALL.location}</CardDescription>
           </CardHeader>
-          <CardContent className="flex flex-col gap-4">
-            <KeySignals call={ACTIVE_CALL} elapsed={s.sim.elapsed} />
-            <Separator />
-            <LiveCaption call={ACTIVE_CALL} elapsed={s.sim.elapsed} />
+          <CardContent className="flex flex-col gap-2">
+            <label className="sr-only" htmlFor="demo-scenario">
+              Demo scenario
+            </label>
+            <select
+              id="demo-scenario"
+              className="rounded-md border border-border bg-background p-2 text-xs"
+              value={scenario}
+              onChange={(event) => setScenario(event.target.value)}
+            >
+              {DEMO_SCENARIOS.map((item) => (
+                <option key={item.id} value={item.id}>
+                  {item.label}
+                </option>
+              ))}
+            </select>
+            <div className="flex gap-2">
+              <Button
+                size="sm"
+                disabled={!s.canAct}
+                onClick={() => void s.startDemo(scenario)}
+              >
+                {s.demoPending ? "Starting…" : "Start sample incident"}
+              </Button>
+              <Button
+                size="sm"
+                variant="ghost"
+                disabled={!s.canAct}
+                onClick={() => void s.reset()}
+              >
+                Reset
+              </Button>
+            </div>
+            {s.demoMessage && (
+              <p role="status" className="text-xs text-muted-foreground">
+                {s.demoMessage}
+              </p>
+            )}
           </CardContent>
         </Card>
-        <div className="flex-1" />
-
-        <Card size="sm" className="pointer-events-auto shrink-0 gap-1">
-          <CardHeader>
-            <CardTitle className="text-xs font-medium text-muted-foreground">Queue</CardTitle>
-          </CardHeader>
-          <CardContent className="flex flex-col px-1.5">
-            {OTHER_CALLS.map((c) => (
-              <CallRow
-                key={c.id}
-                call={c}
-                assignedUnit={c.stage === "assigned" ? "Medic 3" : undefined}
-                onClick={() => c.stage === "assigned" && s.setTrackedId("amb-3")}
-              />
-            ))}
-          </CardContent>
-        </Card>
-
-        <Card size="sm" className="pointer-events-auto shrink-0 gap-1">
-          <CardHeader>
-            <CardTitle className="text-xs font-medium text-muted-foreground">Fleet</CardTitle>
-          </CardHeader>
-          <CardContent className="flex flex-col px-1.5">
-            {s.sim.units.map((u) => (
-              <FleetRow key={u.id} live={u} tracked={s.trackedId === u.id} onClick={() => s.track(u.id)} />
-            ))}
-          </CardContent>
-        </Card>
-      </div>
-
-      <div className="absolute top-4 right-4 flex flex-col items-end gap-3">
-        <Button
-          variant="secondary"
-          size="sm"
-          onClick={() => {
-            s.setTrackedId(null);
-            mapRef.current?.overview();
-          }}
-        >
-          <Scan data-icon="inline-start" />
-          Overview
-        </Button>
-        {tracked && (
-          <Card key={tracked.id} className="materialize w-80" style={{ transformOrigin: "top right" }}>
-            <CardContent>
-              <UnitDetail live={tracked} onClose={() => s.setTrackedId(null)} />
+        {call && (
+          <Card key={call.id}>
+            <CardHeader>
+              <CardDescription className="flex justify-between gap-2 text-xs">
+                <span>
+                  {call.conversationId?.startsWith("scripted-")
+                    ? "Scripted demo"
+                    : "Incident"}
+                </span>
+                <AcuityMark
+                  acuity={call.acuity?.value ?? null}
+                  source={call.acuity?.source}
+                />
+              </CardDescription>
+              <CardTitle className="text-xl font-normal">
+                {callTitle(call)}
+              </CardTitle>
+              <CardDescription className="text-xs">
+                {call.location.text ?? "Location unknown"}
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="flex flex-col gap-4">
+              <KeySignals call={call} />
+              <Separator />
+              <LiveCaption call={call} />
             </CardContent>
           </Card>
         )}
-      </div>
-
-      <div
-        className="absolute bottom-6 flex justify-center"
-        style={{ left: COLUMN + INSET * 2, right: INSET }}
-      >
-        <TriageCard s={s} className="w-full max-w-[560px]" />
-      </div>
-    </div>
+        <Card size="sm">
+          <CardHeader>
+            <CardTitle className="text-xs text-muted-foreground">
+              Queue
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="flex flex-col px-1.5">
+            {state &&
+              Object.values(state.calls).map((item) => {
+                const task = item.taskId ? state.tasks[item.taskId] : null;
+                const unit = task ? state.ambulances[task.ambulanceId] : null;
+                return (
+                  <CallRow
+                    key={item.id}
+                    call={item}
+                    active={item.id === call?.id}
+                    assignedUnit={
+                      unit
+                        ? `${unit.name}${task?.status === "queued" ? " · queued" : ""}`
+                        : undefined
+                    }
+                    onClick={() => s.selectCall(item.id)}
+                  />
+                );
+              })}
+            {state && Object.keys(state.calls).length === 0 && (
+              <p className="px-3 py-2 text-xs text-muted-foreground">
+                No incidents. Start a sample above.
+              </p>
+            )}
+          </CardContent>
+        </Card>
+        <Card size="sm">
+          <CardHeader>
+            <CardTitle className="text-xs text-muted-foreground">
+              Fleet
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="flex flex-col px-1.5">
+            {state &&
+              Object.values(state.ambulances).map((unit) => (
+                <FleetRow
+                  key={unit.id}
+                  unit={unit}
+                  state={state}
+                  tracked={s.trackedId === unit.id}
+                  onClick={() =>
+                    s.setTrackedId(s.trackedId === unit.id ? null : unit.id)
+                  }
+                />
+              ))}
+          </CardContent>
+        </Card>
+      </aside>
+      <section className="dispatch-right" aria-label="Dispatch assessment">
+        <div className="flex justify-end">
+          <Button
+            variant="secondary"
+            size="sm"
+            onClick={() => {
+              s.setTrackedId(null);
+              mapRef.current?.overview();
+            }}
+          >
+            <Scan data-icon="inline-start" />
+            Overview
+          </Button>
+        </div>
+        {s.connectionError && (
+          <div
+            role="alert"
+            className="rounded-xl border border-urgent/40 bg-background p-3 text-xs text-urgent"
+          >
+            {s.connectionError}
+          </div>
+        )}
+        {s.operation && (
+          <div
+            role="status"
+            className="rounded-xl border border-border bg-background p-3 text-xs"
+          >
+            <p>{s.operation.message}</p>
+            {s.operation.status === "uncertain" && (
+              <Button
+                size="sm"
+                className="mt-2"
+                disabled={s.connection !== "open"}
+                onClick={() => void s.retry()}
+              >
+                Retry same action
+              </Button>
+            )}
+          </div>
+        )}
+        {tracked && state && (
+          <Card size="sm">
+            <CardContent>
+              <UnitDetail
+                unit={tracked}
+                state={state}
+                onClose={() => s.setTrackedId(null)}
+              />
+            </CardContent>
+          </Card>
+        )}
+        <div className="dispatch-triage">
+          <TriageCard key={call?.id ?? "empty"} s={s} />
+        </div>
+      </section>
+    </main>
   );
 }

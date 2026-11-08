@@ -74,6 +74,7 @@ function openAISchema() {
 }
 
 const envelope = z.object({
+  model: z.string().min(1).optional(),
   choices: z.array(z.object({
     finish_reason: z.string(),
     message: z.object({ refusal: z.unknown().optional(), content: z.unknown().optional() }),
@@ -178,7 +179,7 @@ export function createModelClient(
         if (!wrapped.success) throw new ModelFailure("schema");
         payload = wrapped.data.result;
       }
-      return { response: validateModelResponse(parsedRequest.data, payload), modelId: config.name, latencyMs: clock() - started };
+      return { response: validateModelResponse(parsedRequest.data, payload), modelId: parsed.data.model ?? config.name, latencyMs: clock() - started };
     },
   };
 }

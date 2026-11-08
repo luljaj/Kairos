@@ -393,7 +393,7 @@ async function checkTransport() {
     const prompt = readFileSync("../model/prompt.md", "utf8").trim();
     const schema = readFileSync("../model/schemas/model-response.json", "utf8");
     assert.equal(compatible.promptHash, createHash("sha256").update(prompt).digest("hex"));
-    assert.equal((await compatible.infer(req, signal)).modelId, "configured-adapter");
+    assert.equal((await compatible.infer(req, signal)).modelId, "reported-base-model");
     assert.deepEqual(sent[0], {
       path: "/v1/chat/completions", auth: undefined,
       body: {
