@@ -1,0 +1,11 @@
+.venv/
+__pycache__/
+*.pyc
+data/generated/
+runs/*
+!runs/.gitkeep
+*.safetensors
+*.bin
+wandb/
+logs/
+data/generated_raw/

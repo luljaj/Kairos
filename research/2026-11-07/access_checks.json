@@ -1,0 +1,282 @@
+[
+  {
+    "name": "neuronpedia",
+    "url": "https://www.neuronpedia.org/api/feature/gpt2-small/0-res-jb/0",
+    "checked_at_utc": "2026-11-07T20:04:35.370800+00:00",
+    "status": 200,
+    "bytes_read": 222878,
+    "content_type": "application/json",
+    "explanations": [
+      "named military brigades or units",
+      "references to military units and formations"
+    ],
+    "activation_count": 60,
+    "activation_record_keys": [
+      "id",
+      "tokens",
+      "dataIndex",
+      "index",
+      "layer",
+      "modelId",
+      "dataSource",
+      "maxValue",
+      "maxValueTokenIndex",
+      "minValue",
+      "values",
+      "dfaValues",
+      "dfaTargetIndex",
+      "dfaMaxValue",
+      "zQIndices",
+      "zKIndices",
+      "zValues",
+      "creatorId",
+      "createdAt",
+      "lossValues",
+      "logitContributions",
+      "binMin",
+      "binMax",
+      "binContains",
+      "qualifyingTokenIndex"
+    ],
+    "max_values": [
+      2.953654050827026,
+      2.953383684158325,
+      2.95200777053833,
+      2.949909210205078,
+      2.948687791824341,
+      2.947754383087158,
+      2.946757316589355,
+      2.946475028991699,
+      2.946475028991699,
+      2.946305513381958,
+      2.943997383117676,
+      2.943860054016113,
+      2.943315505981445,
+      2.941015958786011,
+      2.939470767974854,
+      2.93824315071106,
+      2.934684038162231,
+      2.230663299560547,
+      2.230663299560547,
+      2.224531173706055,
+      2.224531173706055,
+      2.223162412643433,
+      2.219861507415771,
+      2.216730833053589,
+      2.208160161972046,
+      2.206089496612549,
+      1.734864592552185,
+      1.733587026596069,
+      1.733587026596069,
+      1.731157541275024,
+      1.729700088500977,
+      1.469749093055725,
+      0.3161578178405762,
+      0.3137467503547668,
+      0.3048661947250366,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "top_level_keys": [
+      "modelId",
+      "layer",
+      "index",
+      "sourceSetName",
+      "creatorId",
+      "createdAt",
+      "maxActApprox",
+      "hasVector",
+      "vector",
+      "vectorLabel",
+      "vectorDefaultSteerStrength",
+      "hookName",
+      "topkCosSimIndices",
+      "topkCosSimValues",
+      "neuron_alignment_indices",
+      "neuron_alignment_values",
+      "neuron_alignment_l1",
+      "correlated_neurons_indices",
+      "correlated_neurons_pearson",
+      "correlated_neurons_l1",
+      "correlated_features_indices",
+      "correlated_features_pearson",
+      "correlated_features_l1",
+      "neg_str",
+      "neg_values",
+      "pos_str",
+      "pos_values",
+      "frac_nonzero",
+      "freq_hist_data_bar_heights",
+      "freq_hist_data_bar_values",
+      "logits_hist_data_bar_heights",
+      "logits_hist_data_bar_values",
+      "decoder_weights_dist",
+      "umap_cluster",
+      "umap_log_feature_sparsity",
+      "umap_x",
+      "umap_y",
+      "model",
+      "lists",
+      "creator",
+      "source",
+      "sourceSet",
+      "comments",
+      "activations",
+      "explanations"
+    ]
+  },
+  {
+    "name": "jobs",
+    "url": "https://boards-api.greenhouse.io/v1/boards/anthropic/jobs",
+    "checked_at_utc": "2026-11-07T20:04:35.371363+00:00",
+    "status": 200,
+    "bytes_read": 483484,
+    "content_type": "application/json",
+    "job_count": 675
+  },
+  {
+    "name": "flood",
+    "url": "https://mapservices.weather.noaa.gov/static/rest/services/NWS_FIM/FIM_bngn6/MapServer?f=pjson",
+    "checked_at_utc": "2026-11-07T20:04:35.371454+00:00",
+    "status": 200,
+    "bytes_read": 12429,
+    "content_type": "text/plain;charset=UTF-8",
+    "layers": [
+      {
+        "id": 0,
+        "name": "depth_grids"
+      },
+      {
+        "id": 1,
+        "name": "833.0"
+      },
+      {
+        "id": 2,
+        "name": "834.1"
+      },
+      {
+        "id": 3,
+        "name": "835.1"
+      },
+      {
+        "id": 4,
+        "name": "836.1"
+      },
+      {
+        "id": 5,
+        "name": "836.9"
+      },
+      {
+        "id": 6,
+        "name": "837.9"
+      },
+      {
+        "id": 7,
+        "name": "838.9"
+      },
+      {
+        "id": 8,
+        "name": "839.9"
+      },
+      {
+        "id": 9,
+        "name": "840.9"
+      },
+      {
+        "id": 10,
+        "name": "841.9"
+      },
+      {
+        "id": 11,
+        "name": "842.9"
+      },
+      {
+        "id": 12,
+        "name": "843.9"
+      },
+      {
+        "id": 13,
+        "name": "844.9"
+      },
+      {
+        "id": 14,
+        "name": "845.9"
+      },
+      {
+        "id": 15,
+        "name": "850.0"
+      },
+      {
+        "id": 16,
+        "name": "study_extent"
+      },
+      {
+        "id": 17,
+        "name": "Study Boundaries"
+      },
+      {
+        "id": 18,
+        "name": "extra"
+      },
+      {
+        "id": 19,
+        "name": "Flood control structures"
+      },
+      {
+        "id": 20,
+        "name": "catagories"
+      },
+      {
+        "id": 21,
+        "name": "Low"
+      },
+      {
+        "id": 22,
+        "name": "Near"
+      },
+      {
+        "id": 23,
+        "name": "Minor"
+      },
+      {
+        "id": 24,
+        "name": "Moderate"
+      },
+      {
+        "id": 25,
+        "name": "Major"
+      }
+    ]
+  },
+  {
+    "name": "transit",
+    "url": "https://broomecountyny.gov/sites/default/files/dept/transit/BCT_GTFS.zip",
+    "checked_at_utc": "2026-11-07T20:04:35.371514+00:00",
+    "status": 200,
+    "bytes_read": 569866,
+    "content_type": "application/zip"
+  }
+]

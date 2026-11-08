@@ -173,6 +173,9 @@ function handle(state: DispatchState, cmd: Exclude<Command, { type: "reset_demo"
 
     case "request_recommendation":
       // TODO(pipeline): lib/server/recommend.ts — candidates, model/fallback, apply.
+      // Copy ModelResponseReady.acuityReason into RecommendationSet.acuityReason; the rules
+      // fallback must fill it too (templates: model/data/generate.py::acuity_reason).
+      // Guided decoding: send model/schemas/model-response.json with `uniqueItems` stripped.
       return err("not_implemented", "recommendation pipeline not built yet");
 
     case "move_queued_task":

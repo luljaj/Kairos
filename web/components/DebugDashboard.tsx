@@ -65,6 +65,20 @@ export function DebugDashboard() {
                   </div>
                   <div>{c.location.text ?? "location unknown"}</div>
                   <div>{c.facts.chiefComplaint ?? "complaint unknown"}</div>
+                  {(() => {
+                    const rec = c.recommendationSetId ? state.recommendations[c.recommendationSetId] : null;
+                    if (!rec) return null;
+                    return (
+                      <div className="mt-1">
+                        <div>
+                          Suggested acuity: {rec.acuity ?? rec.status} ({rec.source})
+                        </div>
+                        {rec.acuityReason && (
+                          <div className="text-xs text-zinc-500">Why: {rec.acuityReason}</div>
+                        )}
+                      </div>
+                    );
+                  })()}
                   {!c.taskId && (
                     <div className="mt-1 flex gap-1">
                       {Object.values(state.ambulances).map((a) => (

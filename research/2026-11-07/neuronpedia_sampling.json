@@ -1,0 +1,15 @@
+{
+  "url": "https://www.neuronpedia.org/api/feature/gpt2-small/0-res-jb/0",
+  "count": 60,
+  "zero_max_count": 25,
+  "bins": [
+    [
+      null,
+      null,
+      null
+    ]
+  ],
+  "unique_data_indices": 1,
+  "nonempty_token_records": 60,
+  "nonempty_value_records": 60
+}
