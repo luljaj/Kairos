@@ -1,0 +1,312 @@
+{
+  "metrics": {
+    "test": {
+      "qwen_base": {
+        "n": 300,
+        "schema_valid": 1.0,
+        "coverage": 0.88,
+        "acuity_exact": 0.6967,
+        "acuity_within1": 0.83,
+        "nmi_precision": null,
+        "nmi_recall": 0.0,
+        "rec_match": 0.8182,
+        "acuity_reason_consistent": 0.9533,
+        "acuity_reason_grounded": 1.0,
+        "suit_acc": 0.9129,
+        "reasons_grounded": 0.7393,
+        "exception_cases": 10,
+        "exception_rec_match": 0.2,
+        "latency_p50_ms": 2740,
+        "latency_p95_ms": 3280,
+        "gate_pass": false
+      },
+      "qwen_finetuned_r1": {
+        "n": 300,
+        "schema_valid": 1.0,
+        "coverage": 0.95,
+        "acuity_exact": 0.8833,
+        "acuity_within1": 0.93,
+        "nmi_precision": 0.7059,
+        "nmi_recall": 1.0,
+        "rec_match": 0.8902,
+        "acuity_reason_consistent": 1.0,
+        "acuity_reason_grounded": 1.0,
+        "suit_acc": 0.9362,
+        "reasons_grounded": 1.0,
+        "exception_cases": 10,
+        "exception_rec_match": 0.0,
+        "latency_p50_ms": 2457,
+        "latency_p95_ms": 3146,
+        "gate_pass": false
+      },
+      "gpt54mini": {
+        "n": 300,
+        "schema_valid": 1.0,
+        "coverage": 0.91,
+        "acuity_exact": 0.8567,
+        "acuity_within1": 0.8967,
+        "nmi_precision": 0.7143,
+        "nmi_recall": 0.4167,
+        "rec_match": 0.8864,
+        "acuity_reason_consistent": 0.9928,
+        "acuity_reason_grounded": 1.0,
+        "suit_acc": 0.9747,
+        "reasons_grounded": 0.9968,
+        "exception_cases": 10,
+        "exception_rec_match": 0.4,
+        "latency_p50_ms": 1054,
+        "latency_p95_ms": 1268,
+        "gate_pass": false
+      },
+      "gpt6luna": {
+        "n": 300,
+        "schema_valid": 1.0,
+        "coverage": 0.9067,
+        "acuity_exact": 0.88,
+        "acuity_within1": 0.9,
+        "nmi_precision": 0.7,
+        "nmi_recall": 0.3889,
+        "rec_match": 0.9015,
+        "acuity_reason_consistent": 1.0,
+        "acuity_reason_grounded": 1.0,
+        "suit_acc": 0.9722,
+        "reasons_grounded": 0.9968,
+        "exception_cases": 10,
+        "exception_rec_match": 0.7,
+        "latency_p50_ms": 1775,
+        "latency_p95_ms": 2230,
+        "gate_pass": false
+      }
+    },
+    "paraphrase": {
+      "qwen_base": {
+        "n": 150,
+        "schema_valid": 1.0,
+        "coverage": 0.9933,
+        "acuity_exact": 0.7733,
+        "acuity_within1": 0.92,
+        "nmi_precision": null,
+        "nmi_recall": null,
+        "rec_match": 0.8533,
+        "acuity_reason_consistent": 0.9867,
+        "acuity_reason_grounded": 0.9933,
+        "suit_acc": 0.9122,
+        "reasons_grounded": 0.7033,
+        "exception_cases": 7,
+        "exception_rec_match": 0.1429,
+        "latency_p50_ms": 2698,
+        "latency_p95_ms": 3343,
+        "gate_pass": false
+      },
+      "qwen_finetuned_r1": {
+        "n": 150,
+        "schema_valid": 1.0,
+        "coverage": 0.9933,
+        "acuity_exact": 0.94,
+        "acuity_within1": 0.96,
+        "nmi_precision": 0.0,
+        "nmi_recall": null,
+        "rec_match": 0.9267,
+        "acuity_reason_consistent": 1.0,
+        "acuity_reason_grounded": 1.0,
+        "suit_acc": 0.9822,
+        "reasons_grounded": 1.0,
+        "exception_cases": 7,
+        "exception_rec_match": 0.0,
+        "latency_p50_ms": 2687,
+        "latency_p95_ms": 3192,
+        "gate_pass": false
+      },
+      "gpt54mini": {
+        "n": 150,
+        "schema_valid": 1.0,
+        "coverage": 0.9867,
+        "acuity_exact": 0.88,
+        "acuity_within1": 0.9667,
+        "nmi_precision": 0.0,
+        "nmi_recall": null,
+        "rec_match": 0.9,
+        "acuity_reason_consistent": 1.0,
+        "acuity_reason_grounded": 1.0,
+        "suit_acc": 0.9867,
+        "reasons_grounded": 0.9955,
+        "exception_cases": 7,
+        "exception_rec_match": 0.4286,
+        "latency_p50_ms": 1083,
+        "latency_p95_ms": 1320,
+        "gate_pass": false
+      },
+      "gpt6luna": {
+        "n": 150,
+        "schema_valid": 1.0,
+        "coverage": 0.9867,
+        "acuity_exact": 0.8933,
+        "acuity_within1": 0.9733,
+        "nmi_precision": 0.0,
+        "nmi_recall": null,
+        "rec_match": 0.9133,
+        "acuity_reason_consistent": 1.0,
+        "acuity_reason_grounded": 0.9932,
+        "suit_acc": 0.9867,
+        "reasons_grounded": 0.9899,
+        "exception_cases": 7,
+        "exception_rec_match": 0.5714,
+        "latency_p50_ms": 1831,
+        "latency_p95_ms": 2438,
+        "gate_pass": false
+      }
+    },
+    "demo": {
+      "qwen_base": {
+        "n": 40,
+        "schema_valid": 1.0,
+        "coverage": 0.85,
+        "acuity_exact": 0.625,
+        "acuity_within1": 0.825,
+        "nmi_precision": null,
+        "nmi_recall": 0.0,
+        "rec_match": 0.8286,
+        "acuity_reason_consistent": 0.95,
+        "acuity_reason_grounded": 0.925,
+        "suit_acc": 0.9667,
+        "reasons_grounded": 0.8381,
+        "exception_cases": 2,
+        "exception_rec_match": 0.0,
+        "latency_p50_ms": 2890,
+        "latency_p95_ms": 3336,
+        "gate_pass": false
+      },
+      "qwen_finetuned_r1": {
+        "n": 40,
+        "schema_valid": 1.0,
+        "coverage": 1.0,
+        "acuity_exact": 0.9,
+        "acuity_within1": 0.975,
+        "nmi_precision": 1.0,
+        "nmi_recall": 1.0,
+        "rec_match": 0.9429,
+        "acuity_reason_consistent": 1.0,
+        "acuity_reason_grounded": 1.0,
+        "suit_acc": 0.9714,
+        "reasons_grounded": 1.0,
+        "exception_cases": 2,
+        "exception_rec_match": 0.0,
+        "latency_p50_ms": 2836,
+        "latency_p95_ms": 3214,
+        "gate_pass": false
+      },
+      "gpt54mini": {
+        "n": 40,
+        "schema_valid": 1.0,
+        "coverage": 0.95,
+        "acuity_exact": 0.775,
+        "acuity_within1": 0.925,
+        "nmi_precision": 1.0,
+        "nmi_recall": 0.6,
+        "rec_match": 0.9143,
+        "acuity_reason_consistent": 0.9459,
+        "acuity_reason_grounded": 1.0,
+        "suit_acc": 0.9905,
+        "reasons_grounded": 0.9905,
+        "exception_cases": 2,
+        "exception_rec_match": 0.0,
+        "latency_p50_ms": 1073,
+        "latency_p95_ms": 1376,
+        "gate_pass": false
+      },
+      "gpt6luna": {
+        "n": 40,
+        "schema_valid": 1.0,
+        "coverage": 0.95,
+        "acuity_exact": 0.825,
+        "acuity_within1": 0.925,
+        "nmi_precision": 1.0,
+        "nmi_recall": 0.6,
+        "rec_match": 0.9429,
+        "acuity_reason_consistent": 0.973,
+        "acuity_reason_grounded": 0.973,
+        "suit_acc": 0.9905,
+        "reasons_grounded": 0.981,
+        "exception_cases": 2,
+        "exception_rec_match": 0.5,
+        "latency_p50_ms": 1578,
+        "latency_p95_ms": 1885,
+        "gate_pass": false
+      }
+    }
+  },
+  "costs": {
+    "gpt54mini": {
+      "test": {
+        "total_usd": 0.5887443,
+        "mean_usd": 0.001962481,
+        "uncached_input_reference_usd": 0.5898675
+      },
+      "paraphrase": {
+        "total_usd": 0.30067125,
+        "mean_usd": 0.002004475,
+        "uncached_input_reference_usd": 0.30067125
+      },
+      "demo": {
+        "total_usd": 0.0781578,
+        "mean_usd": 0.001953945,
+        "uncached_input_reference_usd": 0.079281
+      }
+    },
+    "gpt6luna": {
+      "test": {
+        "total_usd": 0.039685065,
+        "mean_usd": 0.00013228355,
+        "uncached_input_reference_usd": 0.0760731
+      },
+      "paraphrase": {
+        "total_usd": 0.020640415000000002,
+        "mean_usd": 0.0001376027666666667,
+        "uncached_input_reference_usd": 0.038807100000000004
+      },
+      "demo": {
+        "total_usd": 0.005418640000000001,
+        "mean_usd": 0.00013546600000000002,
+        "uncached_input_reference_usd": 0.0103014
+      }
+    }
+  },
+  "rates_per_million_input_cached_output": {
+    "gpt54mini": [
+      0.75,
+      0.075,
+      4.5
+    ],
+    "gpt6luna": [
+      0.1,
+      0.01,
+      0.5
+    ]
+  },
+  "luna_cache_write_rate_per_million": 0.125,
+  "sha256": {
+    "README.md": "2bac38ba3aa96e9fcf990658e3a81da329f91ec0948e55f1fcd6549b5e52ac68",
+    "disagreements.json": "ed91b4a327ae942b472b23fbe8ebca34bfbd350042dd20e2a526b906d95f01b8",
+    "inputs/compare_openai.py": "bdec0279161677db153d5b9eb9a1a66369f25251d32e2790254b46e093083cd8",
+    "inputs/demo.jsonl": "6232a13d6043373101d6702c5b2ed25d988af4870c88146888c3741db8b1a23c",
+    "inputs/evaluate.py": "42f48444ae44cdd9c2f57585f3f95526021c2236533c4607d92082ef7cb3ff67",
+    "inputs/model-response.json": "ee9ba08f1eeaf9ddaff6b52e46960bbaeac89d476698fce8521c1432b41af29b",
+    "inputs/paraphrase.jsonl": "b8460fa16b97495bbb327dc322cc16bdfe561db48c89a551b4b3d336dac22ee6",
+    "inputs/prompt.md": "658a569706bee124a5211bb7051377b24bd21c6414e5c4a72be02086cf00434c",
+    "inputs/rubric.py": "2977415bc8b08dd6d938068bc5d9640f39d361b0f50c005dbc9c2152b08c0b10",
+    "inputs/test.jsonl": "1a5bbb76322d2a70914fd48b3d3b2378d12b5831d9eb117bbe28bc6b17038736",
+    "per-request-costs.json": "23cf93dc0bb4b625ec933689b15583bc688779b0c568d798fc804feb9ec73412",
+    "results/gpt54mini-demo.json": "75bb1386dae069987574cb2f8b9ab6040814c6fcba3dfca80c9b1a5c17e6e3b6",
+    "results/gpt54mini-paraphrase.json": "4aa3dc6e53224e5b9b265350942993481aa2f0ea22f5b5a004882e78ba52f3f1",
+    "results/gpt54mini-test.json": "3021389fb16520ea60ccb6b1219309bf2738c1ad18e77aa4b9061fb93653d93b",
+    "results/gpt6luna-demo.json": "c890b31195783c431574a96c8f9b574f830f988a0e76a8aa9a46f23eba41f497",
+    "results/gpt6luna-paraphrase.json": "913610dd88aa929cf72618b3d4bf8ae92afe1dfafbada7ba95785e4d1dd61229",
+    "results/gpt6luna-test.json": "f7dfcaa34444ba7208ba4b91aa04ca9cbe448cab3e29331500a23a6fa1726d3f",
+    "results/qwen_base-demo.json": "c9a1eb692252fc4814e11e00fe059af7e13f199b4bfb7c7532d596894878d144",
+    "results/qwen_base-paraphrase.json": "8e29ab6d36beca79dc16f717e6823a876cd7c52074d3895b480ff6d0fe6dae3c",
+    "results/qwen_base-test.json": "37aa7309e7462de3daaaea4a3cb65cf08ad34fba712788a2415d779a8e3b9564",
+    "results/qwen_finetuned_r1-demo.json": "6c53f0541dd7e23619138cb48a9b5401717297b967652c44d5ec1cddab0b195d",
+    "results/qwen_finetuned_r1-paraphrase.json": "ddc1d2909ece73b3fd2a523446038d5de0e373c1587d368a9f80629d4f2fe88c",
+    "results/qwen_finetuned_r1-test.json": "e02e04085a20539e7be637ca56354bf02536ac0e3ecc9463c87fb1b5fadd14ab"
+  }
+}

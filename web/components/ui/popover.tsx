@@ -21,15 +21,17 @@ function PopoverContent({
   align = "center",
   sideOffset = 4,
   portalled = true,
+  asChild = false,
   ...props
 }: React.ComponentProps<typeof PopoverPrimitive.Content> & { portalled?: boolean }) {
   const content = (
       <PopoverPrimitive.Content
+        asChild={asChild}
         data-slot="popover-content"
         align={align}
         sideOffset={sideOffset}
         className={cn(
-          "z-50 flex w-72 origin-(--radix-popover-content-transform-origin) flex-col gap-2.5 rounded-lg bg-popover p-2.5 text-sm text-popover-foreground shadow-md ring-1 ring-foreground/10 outline-hidden duration-100 ",
+          asChild ? "z-50 outline-none" : "z-50 flex w-72 origin-(--radix-popover-content-transform-origin) flex-col gap-2.5 rounded-lg bg-popover p-2.5 text-sm text-popover-foreground shadow-md ring-1 ring-foreground/10 outline-hidden duration-100 ",
           className
         )}
         {...props}

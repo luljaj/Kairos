@@ -1,0 +1,3922 @@
+[
+  {
+    "split": "test",
+    "id": "req-test-00001",
+    "input_tokens": 1771,
+    "cached_input_tokens": 1664,
+    "output_tokens": 110,
+    "usd": 0.0007000499999999999
+  },
+  {
+    "split": "test",
+    "id": "req-test-00002",
+    "input_tokens": 1765,
+    "cached_input_tokens": 0,
+    "output_tokens": 118,
+    "usd": 0.00185475
+  },
+  {
+    "split": "test",
+    "id": "req-test-00004",
+    "input_tokens": 1869,
+    "cached_input_tokens": 0,
+    "output_tokens": 164,
+    "usd": 0.00213975
+  },
+  {
+    "split": "test",
+    "id": "req-test-00005",
+    "input_tokens": 1895,
+    "cached_input_tokens": 0,
+    "output_tokens": 162,
+    "usd": 0.00215025
+  },
+  {
+    "split": "test",
+    "id": "req-test-00006",
+    "input_tokens": 1860,
+    "cached_input_tokens": 0,
+    "output_tokens": 158,
+    "usd": 0.002106
+  },
+  {
+    "split": "test",
+    "id": "req-test-00007",
+    "input_tokens": 1887,
+    "cached_input_tokens": 0,
+    "output_tokens": 152,
+    "usd": 0.00209925
+  },
+  {
+    "split": "test",
+    "id": "req-test-00009",
+    "input_tokens": 1854,
+    "cached_input_tokens": 0,
+    "output_tokens": 159,
+    "usd": 0.002106
+  },
+  {
+    "split": "test",
+    "id": "req-test-00010",
+    "input_tokens": 1780,
+    "cached_input_tokens": 0,
+    "output_tokens": 128,
+    "usd": 0.001911
+  },
+  {
+    "split": "test",
+    "id": "req-test-00011",
+    "input_tokens": 1759,
+    "cached_input_tokens": 0,
+    "output_tokens": 119,
+    "usd": 0.00185475
+  },
+  {
+    "split": "test",
+    "id": "req-test-00013",
+    "input_tokens": 1779,
+    "cached_input_tokens": 0,
+    "output_tokens": 140,
+    "usd": 0.00196425
+  },
+  {
+    "split": "test",
+    "id": "req-test-00014",
+    "input_tokens": 1863,
+    "cached_input_tokens": 0,
+    "output_tokens": 161,
+    "usd": 0.00212175
+  },
+  {
+    "split": "test",
+    "id": "req-test-00016",
+    "input_tokens": 1854,
+    "cached_input_tokens": 0,
+    "output_tokens": 49,
+    "usd": 0.001611
+  },
+  {
+    "split": "test",
+    "id": "req-test-00017",
+    "input_tokens": 1884,
+    "cached_input_tokens": 0,
+    "output_tokens": 149,
+    "usd": 0.0020835
+  },
+  {
+    "split": "test",
+    "id": "req-test-00018",
+    "input_tokens": 1863,
+    "cached_input_tokens": 0,
+    "output_tokens": 144,
+    "usd": 0.00204525
+  },
+  {
+    "split": "test",
+    "id": "req-test-00019",
+    "input_tokens": 1690,
+    "cached_input_tokens": 0,
+    "output_tokens": 96,
+    "usd": 0.0016995
+  },
+  {
+    "split": "test",
+    "id": "req-test-00020",
+    "input_tokens": 1898,
+    "cached_input_tokens": 0,
+    "output_tokens": 165,
+    "usd": 0.002166
+  },
+  {
+    "split": "test",
+    "id": "req-test-00021",
+    "input_tokens": 1794,
+    "cached_input_tokens": 0,
+    "output_tokens": 134,
+    "usd": 0.0019485
+  },
+  {
+    "split": "test",
+    "id": "req-test-00022",
+    "input_tokens": 1864,
+    "cached_input_tokens": 0,
+    "output_tokens": 156,
+    "usd": 0.0021
+  },
+  {
+    "split": "test",
+    "id": "req-test-00023",
+    "input_tokens": 1858,
+    "cached_input_tokens": 0,
+    "output_tokens": 146,
+    "usd": 0.0020505
+  },
+  {
+    "split": "test",
+    "id": "req-test-00024",
+    "input_tokens": 1863,
+    "cached_input_tokens": 0,
+    "output_tokens": 56,
+    "usd": 0.00164925
+  },
+  {
+    "split": "test",
+    "id": "req-test-00025",
+    "input_tokens": 1860,
+    "cached_input_tokens": 0,
+    "output_tokens": 50,
+    "usd": 0.00162
+  },
+  {
+    "split": "test",
+    "id": "req-test-00026",
+    "input_tokens": 1768,
+    "cached_input_tokens": 0,
+    "output_tokens": 115,
+    "usd": 0.0018435
+  },
+  {
+    "split": "test",
+    "id": "req-test-00027",
+    "input_tokens": 1677,
+    "cached_input_tokens": 0,
+    "output_tokens": 94,
+    "usd": 0.00168075
+  },
+  {
+    "split": "test",
+    "id": "req-test-00028",
+    "input_tokens": 1870,
+    "cached_input_tokens": 0,
+    "output_tokens": 153,
+    "usd": 0.002091
+  },
+  {
+    "split": "test",
+    "id": "req-test-00029",
+    "input_tokens": 1853,
+    "cached_input_tokens": 0,
+    "output_tokens": 52,
+    "usd": 0.00162375
+  },
+  {
+    "split": "test",
+    "id": "req-test-00031",
+    "input_tokens": 1862,
+    "cached_input_tokens": 0,
+    "output_tokens": 143,
+    "usd": 0.00204
+  },
+  {
+    "split": "test",
+    "id": "req-test-00032",
+    "input_tokens": 1875,
+    "cached_input_tokens": 0,
+    "output_tokens": 151,
+    "usd": 0.00208575
+  },
+  {
+    "split": "test",
+    "id": "req-test-00033",
+    "input_tokens": 1785,
+    "cached_input_tokens": 0,
+    "output_tokens": 129,
+    "usd": 0.00191925
+  },
+  {
+    "split": "test",
+    "id": "req-test-00034",
+    "input_tokens": 1889,
+    "cached_input_tokens": 0,
+    "output_tokens": 158,
+    "usd": 0.00212775
+  },
+  {
+    "split": "test",
+    "id": "req-test-00036",
+    "input_tokens": 1897,
+    "cached_input_tokens": 0,
+    "output_tokens": 157,
+    "usd": 0.00212925
+  },
+  {
+    "split": "test",
+    "id": "req-test-00037",
+    "input_tokens": 1798,
+    "cached_input_tokens": 0,
+    "output_tokens": 138,
+    "usd": 0.0019695
+  },
+  {
+    "split": "test",
+    "id": "req-test-00038",
+    "input_tokens": 1668,
+    "cached_input_tokens": 0,
+    "output_tokens": 98,
+    "usd": 0.001692
+  },
+  {
+    "split": "test",
+    "id": "req-test-00039",
+    "input_tokens": 1867,
+    "cached_input_tokens": 0,
+    "output_tokens": 153,
+    "usd": 0.00208875
+  },
+  {
+    "split": "test",
+    "id": "req-test-00040",
+    "input_tokens": 1787,
+    "cached_input_tokens": 0,
+    "output_tokens": 46,
+    "usd": 0.00154725
+  },
+  {
+    "split": "test",
+    "id": "req-test-00041",
+    "input_tokens": 1779,
+    "cached_input_tokens": 0,
+    "output_tokens": 125,
+    "usd": 0.00189675
+  },
+  {
+    "split": "test",
+    "id": "req-test-00042",
+    "input_tokens": 1856,
+    "cached_input_tokens": 0,
+    "output_tokens": 165,
+    "usd": 0.0021345
+  },
+  {
+    "split": "test",
+    "id": "req-test-00043",
+    "input_tokens": 1859,
+    "cached_input_tokens": 0,
+    "output_tokens": 146,
+    "usd": 0.00205125
+  },
+  {
+    "split": "test",
+    "id": "req-test-00045",
+    "input_tokens": 1763,
+    "cached_input_tokens": 0,
+    "output_tokens": 115,
+    "usd": 0.00183975
+  },
+  {
+    "split": "test",
+    "id": "req-test-00046",
+    "input_tokens": 1855,
+    "cached_input_tokens": 0,
+    "output_tokens": 145,
+    "usd": 0.00204375
+  },
+  {
+    "split": "test",
+    "id": "req-test-00047",
+    "input_tokens": 1857,
+    "cached_input_tokens": 0,
+    "output_tokens": 163,
+    "usd": 0.00212625
+  },
+  {
+    "split": "test",
+    "id": "req-test-00048",
+    "input_tokens": 1845,
+    "cached_input_tokens": 0,
+    "output_tokens": 152,
+    "usd": 0.00206775
+  },
+  {
+    "split": "test",
+    "id": "req-test-00049",
+    "input_tokens": 1762,
+    "cached_input_tokens": 0,
+    "output_tokens": 113,
+    "usd": 0.00183
+  },
+  {
+    "split": "test",
+    "id": "req-test-00050",
+    "input_tokens": 1854,
+    "cached_input_tokens": 0,
+    "output_tokens": 150,
+    "usd": 0.0020655
+  },
+  {
+    "split": "test",
+    "id": "req-test-00055",
+    "input_tokens": 1754,
+    "cached_input_tokens": 0,
+    "output_tokens": 135,
+    "usd": 0.001923
+  },
+  {
+    "split": "test",
+    "id": "req-test-00056",
+    "input_tokens": 1874,
+    "cached_input_tokens": 0,
+    "output_tokens": 169,
+    "usd": 0.002166
+  },
+  {
+    "split": "test",
+    "id": "req-test-00059",
+    "input_tokens": 1757,
+    "cached_input_tokens": 0,
+    "output_tokens": 116,
+    "usd": 0.00183975
+  },
+  {
+    "split": "test",
+    "id": "req-test-00061",
+    "input_tokens": 1874,
+    "cached_input_tokens": 0,
+    "output_tokens": 160,
+    "usd": 0.0021255
+  },
+  {
+    "split": "test",
+    "id": "req-test-00062",
+    "input_tokens": 1869,
+    "cached_input_tokens": 0,
+    "output_tokens": 162,
+    "usd": 0.00213075
+  },
+  {
+    "split": "test",
+    "id": "req-test-00063",
+    "input_tokens": 1895,
+    "cached_input_tokens": 0,
+    "output_tokens": 168,
+    "usd": 0.00217725
+  },
+  {
+    "split": "test",
+    "id": "req-test-00065",
+    "input_tokens": 1787,
+    "cached_input_tokens": 0,
+    "output_tokens": 125,
+    "usd": 0.00190275
+  },
+  {
+    "split": "test",
+    "id": "req-test-00066",
+    "input_tokens": 1869,
+    "cached_input_tokens": 0,
+    "output_tokens": 166,
+    "usd": 0.00214875
+  },
+  {
+    "split": "test",
+    "id": "req-test-00069",
+    "input_tokens": 1875,
+    "cached_input_tokens": 0,
+    "output_tokens": 139,
+    "usd": 0.00203175
+  },
+  {
+    "split": "test",
+    "id": "req-test-00070",
+    "input_tokens": 1879,
+    "cached_input_tokens": 0,
+    "output_tokens": 148,
+    "usd": 0.00207525
+  },
+  {
+    "split": "test",
+    "id": "req-test-00071",
+    "input_tokens": 1846,
+    "cached_input_tokens": 0,
+    "output_tokens": 53,
+    "usd": 0.001623
+  },
+  {
+    "split": "test",
+    "id": "req-test-00072",
+    "input_tokens": 1885,
+    "cached_input_tokens": 0,
+    "output_tokens": 147,
+    "usd": 0.00207525
+  },
+  {
+    "split": "test",
+    "id": "req-test-00073",
+    "input_tokens": 1860,
+    "cached_input_tokens": 0,
+    "output_tokens": 162,
+    "usd": 0.002124
+  },
+  {
+    "split": "test",
+    "id": "req-test-00074",
+    "input_tokens": 1763,
+    "cached_input_tokens": 0,
+    "output_tokens": 126,
+    "usd": 0.00188925
+  },
+  {
+    "split": "test",
+    "id": "req-test-00075",
+    "input_tokens": 1896,
+    "cached_input_tokens": 0,
+    "output_tokens": 157,
+    "usd": 0.0021285
+  },
+  {
+    "split": "test",
+    "id": "req-test-00076",
+    "input_tokens": 1773,
+    "cached_input_tokens": 0,
+    "output_tokens": 129,
+    "usd": 0.00191025
+  },
+  {
+    "split": "test",
+    "id": "req-test-00077",
+    "input_tokens": 1790,
+    "cached_input_tokens": 0,
+    "output_tokens": 134,
+    "usd": 0.0019455
+  },
+  {
+    "split": "test",
+    "id": "req-test-00079",
+    "input_tokens": 1843,
+    "cached_input_tokens": 0,
+    "output_tokens": 138,
+    "usd": 0.00200325
+  },
+  {
+    "split": "test",
+    "id": "req-test-00081",
+    "input_tokens": 1876,
+    "cached_input_tokens": 0,
+    "output_tokens": 140,
+    "usd": 0.002037
+  },
+  {
+    "split": "test",
+    "id": "req-test-00083",
+    "input_tokens": 1765,
+    "cached_input_tokens": 0,
+    "output_tokens": 125,
+    "usd": 0.00188625
+  },
+  {
+    "split": "test",
+    "id": "req-test-00085",
+    "input_tokens": 1775,
+    "cached_input_tokens": 0,
+    "output_tokens": 136,
+    "usd": 0.00194325
+  },
+  {
+    "split": "test",
+    "id": "req-test-00087",
+    "input_tokens": 1755,
+    "cached_input_tokens": 0,
+    "output_tokens": 128,
+    "usd": 0.00189225
+  },
+  {
+    "split": "test",
+    "id": "req-test-00088",
+    "input_tokens": 1866,
+    "cached_input_tokens": 0,
+    "output_tokens": 153,
+    "usd": 0.002088
+  },
+  {
+    "split": "test",
+    "id": "req-test-00089",
+    "input_tokens": 1818,
+    "cached_input_tokens": 0,
+    "output_tokens": 137,
+    "usd": 0.00198
+  },
+  {
+    "split": "test",
+    "id": "req-test-00091",
+    "input_tokens": 1761,
+    "cached_input_tokens": 0,
+    "output_tokens": 130,
+    "usd": 0.00190575
+  },
+  {
+    "split": "test",
+    "id": "req-test-00092",
+    "input_tokens": 1880,
+    "cached_input_tokens": 0,
+    "output_tokens": 143,
+    "usd": 0.0020535
+  },
+  {
+    "split": "test",
+    "id": "req-test-00093",
+    "input_tokens": 1790,
+    "cached_input_tokens": 0,
+    "output_tokens": 142,
+    "usd": 0.0019815
+  },
+  {
+    "split": "test",
+    "id": "req-test-00094",
+    "input_tokens": 1862,
+    "cached_input_tokens": 0,
+    "output_tokens": 143,
+    "usd": 0.00204
+  },
+  {
+    "split": "test",
+    "id": "req-test-00095",
+    "input_tokens": 1883,
+    "cached_input_tokens": 0,
+    "output_tokens": 141,
+    "usd": 0.00204675
+  },
+  {
+    "split": "test",
+    "id": "req-test-00096",
+    "input_tokens": 1788,
+    "cached_input_tokens": 0,
+    "output_tokens": 143,
+    "usd": 0.0019845
+  },
+  {
+    "split": "test",
+    "id": "req-test-00097",
+    "input_tokens": 1847,
+    "cached_input_tokens": 0,
+    "output_tokens": 158,
+    "usd": 0.00209625
+  },
+  {
+    "split": "test",
+    "id": "req-test-00098",
+    "input_tokens": 1758,
+    "cached_input_tokens": 0,
+    "output_tokens": 54,
+    "usd": 0.0015615
+  },
+  {
+    "split": "test",
+    "id": "req-test-00099",
+    "input_tokens": 1897,
+    "cached_input_tokens": 0,
+    "output_tokens": 146,
+    "usd": 0.00207975
+  },
+  {
+    "split": "test",
+    "id": "req-test-00100",
+    "input_tokens": 1767,
+    "cached_input_tokens": 0,
+    "output_tokens": 133,
+    "usd": 0.00192375
+  },
+  {
+    "split": "test",
+    "id": "req-test-00102",
+    "input_tokens": 1861,
+    "cached_input_tokens": 0,
+    "output_tokens": 163,
+    "usd": 0.00212925
+  },
+  {
+    "split": "test",
+    "id": "req-test-00103",
+    "input_tokens": 1758,
+    "cached_input_tokens": 0,
+    "output_tokens": 117,
+    "usd": 0.001845
+  },
+  {
+    "split": "test",
+    "id": "req-test-00105",
+    "input_tokens": 1797,
+    "cached_input_tokens": 0,
+    "output_tokens": 117,
+    "usd": 0.00187425
+  },
+  {
+    "split": "test",
+    "id": "req-test-00106",
+    "input_tokens": 1667,
+    "cached_input_tokens": 0,
+    "output_tokens": 108,
+    "usd": 0.00173625
+  },
+  {
+    "split": "test",
+    "id": "req-test-00107",
+    "input_tokens": 1691,
+    "cached_input_tokens": 0,
+    "output_tokens": 94,
+    "usd": 0.00169125
+  },
+  {
+    "split": "test",
+    "id": "req-test-00108",
+    "input_tokens": 1773,
+    "cached_input_tokens": 0,
+    "output_tokens": 140,
+    "usd": 0.00195975
+  },
+  {
+    "split": "test",
+    "id": "req-test-00110",
+    "input_tokens": 1851,
+    "cached_input_tokens": 0,
+    "output_tokens": 167,
+    "usd": 0.00213975
+  },
+  {
+    "split": "test",
+    "id": "req-test-00111",
+    "input_tokens": 1781,
+    "cached_input_tokens": 0,
+    "output_tokens": 119,
+    "usd": 0.00187125
+  },
+  {
+    "split": "test",
+    "id": "req-test-00112",
+    "input_tokens": 1856,
+    "cached_input_tokens": 0,
+    "output_tokens": 165,
+    "usd": 0.0021345
+  },
+  {
+    "split": "test",
+    "id": "req-test-00113",
+    "input_tokens": 1792,
+    "cached_input_tokens": 0,
+    "output_tokens": 127,
+    "usd": 0.0019155
+  },
+  {
+    "split": "test",
+    "id": "req-test-00115",
+    "input_tokens": 1842,
+    "cached_input_tokens": 0,
+    "output_tokens": 139,
+    "usd": 0.002007
+  },
+  {
+    "split": "test",
+    "id": "req-test-00116",
+    "input_tokens": 1849,
+    "cached_input_tokens": 0,
+    "output_tokens": 151,
+    "usd": 0.00206625
+  },
+  {
+    "split": "test",
+    "id": "req-test-00117",
+    "input_tokens": 1762,
+    "cached_input_tokens": 0,
+    "output_tokens": 108,
+    "usd": 0.0018075
+  },
+  {
+    "split": "test",
+    "id": "req-test-00119",
+    "input_tokens": 1871,
+    "cached_input_tokens": 0,
+    "output_tokens": 144,
+    "usd": 0.00205125
+  },
+  {
+    "split": "test",
+    "id": "req-test-00120",
+    "input_tokens": 1777,
+    "cached_input_tokens": 0,
+    "output_tokens": 127,
+    "usd": 0.00190425
+  },
+  {
+    "split": "test",
+    "id": "req-test-00121",
+    "input_tokens": 1752,
+    "cached_input_tokens": 0,
+    "output_tokens": 51,
+    "usd": 0.0015435
+  },
+  {
+    "split": "test",
+    "id": "req-test-00123",
+    "input_tokens": 1859,
+    "cached_input_tokens": 0,
+    "output_tokens": 148,
+    "usd": 0.00206025
+  },
+  {
+    "split": "test",
+    "id": "req-test-00124",
+    "input_tokens": 1881,
+    "cached_input_tokens": 0,
+    "output_tokens": 183,
+    "usd": 0.00223425
+  },
+  {
+    "split": "test",
+    "id": "req-test-00125",
+    "input_tokens": 1879,
+    "cached_input_tokens": 0,
+    "output_tokens": 175,
+    "usd": 0.00219675
+  },
+  {
+    "split": "test",
+    "id": "req-test-00126",
+    "input_tokens": 1785,
+    "cached_input_tokens": 0,
+    "output_tokens": 124,
+    "usd": 0.00189675
+  },
+  {
+    "split": "test",
+    "id": "req-test-00127",
+    "input_tokens": 1865,
+    "cached_input_tokens": 0,
+    "output_tokens": 136,
+    "usd": 0.00201075
+  },
+  {
+    "split": "test",
+    "id": "req-test-00128",
+    "input_tokens": 1878,
+    "cached_input_tokens": 0,
+    "output_tokens": 162,
+    "usd": 0.0021375
+  },
+  {
+    "split": "test",
+    "id": "req-test-00129",
+    "input_tokens": 1774,
+    "cached_input_tokens": 0,
+    "output_tokens": 129,
+    "usd": 0.001911
+  },
+  {
+    "split": "test",
+    "id": "req-test-00130",
+    "input_tokens": 1765,
+    "cached_input_tokens": 0,
+    "output_tokens": 121,
+    "usd": 0.00186825
+  },
+  {
+    "split": "test",
+    "id": "req-test-00131",
+    "input_tokens": 1786,
+    "cached_input_tokens": 0,
+    "output_tokens": 144,
+    "usd": 0.0019875
+  },
+  {
+    "split": "test",
+    "id": "req-test-00132",
+    "input_tokens": 1782,
+    "cached_input_tokens": 0,
+    "output_tokens": 127,
+    "usd": 0.001908
+  },
+  {
+    "split": "test",
+    "id": "req-test-00134",
+    "input_tokens": 1850,
+    "cached_input_tokens": 0,
+    "output_tokens": 151,
+    "usd": 0.002067
+  },
+  {
+    "split": "test",
+    "id": "req-test-00135",
+    "input_tokens": 1671,
+    "cached_input_tokens": 0,
+    "output_tokens": 93,
+    "usd": 0.00167175
+  },
+  {
+    "split": "test",
+    "id": "req-test-00136",
+    "input_tokens": 1758,
+    "cached_input_tokens": 0,
+    "output_tokens": 125,
+    "usd": 0.001881
+  },
+  {
+    "split": "test",
+    "id": "req-test-00137",
+    "input_tokens": 1852,
+    "cached_input_tokens": 0,
+    "output_tokens": 50,
+    "usd": 0.001614
+  },
+  {
+    "split": "test",
+    "id": "req-test-00138",
+    "input_tokens": 1764,
+    "cached_input_tokens": 0,
+    "output_tokens": 132,
+    "usd": 0.001917
+  },
+  {
+    "split": "test",
+    "id": "req-test-00140",
+    "input_tokens": 1899,
+    "cached_input_tokens": 0,
+    "output_tokens": 148,
+    "usd": 0.00209025
+  },
+  {
+    "split": "test",
+    "id": "req-test-00141",
+    "input_tokens": 1787,
+    "cached_input_tokens": 0,
+    "output_tokens": 132,
+    "usd": 0.00193425
+  },
+  {
+    "split": "test",
+    "id": "req-test-00142",
+    "input_tokens": 1849,
+    "cached_input_tokens": 0,
+    "output_tokens": 48,
+    "usd": 0.00160275
+  },
+  {
+    "split": "test",
+    "id": "req-test-00143",
+    "input_tokens": 1781,
+    "cached_input_tokens": 0,
+    "output_tokens": 119,
+    "usd": 0.00187125
+  },
+  {
+    "split": "test",
+    "id": "req-test-00144",
+    "input_tokens": 1783,
+    "cached_input_tokens": 0,
+    "output_tokens": 118,
+    "usd": 0.00186825
+  },
+  {
+    "split": "test",
+    "id": "req-test-00145",
+    "input_tokens": 1887,
+    "cached_input_tokens": 0,
+    "output_tokens": 170,
+    "usd": 0.00218025
+  },
+  {
+    "split": "test",
+    "id": "req-test-00146",
+    "input_tokens": 1852,
+    "cached_input_tokens": 0,
+    "output_tokens": 146,
+    "usd": 0.002046
+  },
+  {
+    "split": "test",
+    "id": "req-test-00147",
+    "input_tokens": 1851,
+    "cached_input_tokens": 0,
+    "output_tokens": 155,
+    "usd": 0.00208575
+  },
+  {
+    "split": "test",
+    "id": "req-test-00148",
+    "input_tokens": 1873,
+    "cached_input_tokens": 0,
+    "output_tokens": 140,
+    "usd": 0.00203475
+  },
+  {
+    "split": "test",
+    "id": "req-test-00150",
+    "input_tokens": 1758,
+    "cached_input_tokens": 0,
+    "output_tokens": 108,
+    "usd": 0.0018045
+  },
+  {
+    "split": "test",
+    "id": "req-test-00151",
+    "input_tokens": 1771,
+    "cached_input_tokens": 0,
+    "output_tokens": 126,
+    "usd": 0.00189525
+  },
+  {
+    "split": "test",
+    "id": "req-test-00152",
+    "input_tokens": 1864,
+    "cached_input_tokens": 0,
+    "output_tokens": 153,
+    "usd": 0.0020865
+  },
+  {
+    "split": "test",
+    "id": "req-test-00154",
+    "input_tokens": 1863,
+    "cached_input_tokens": 0,
+    "output_tokens": 52,
+    "usd": 0.00163125
+  },
+  {
+    "split": "test",
+    "id": "req-test-00155",
+    "input_tokens": 1664,
+    "cached_input_tokens": 0,
+    "output_tokens": 98,
+    "usd": 0.001689
+  },
+  {
+    "split": "test",
+    "id": "req-test-00156",
+    "input_tokens": 1867,
+    "cached_input_tokens": 0,
+    "output_tokens": 161,
+    "usd": 0.00212475
+  },
+  {
+    "split": "test",
+    "id": "req-test-00157",
+    "input_tokens": 1691,
+    "cached_input_tokens": 0,
+    "output_tokens": 96,
+    "usd": 0.00170025
+  },
+  {
+    "split": "test",
+    "id": "req-test-00159",
+    "input_tokens": 1872,
+    "cached_input_tokens": 0,
+    "output_tokens": 176,
+    "usd": 0.002196
+  },
+  {
+    "split": "test",
+    "id": "req-test-00160",
+    "input_tokens": 1848,
+    "cached_input_tokens": 0,
+    "output_tokens": 48,
+    "usd": 0.001602
+  },
+  {
+    "split": "test",
+    "id": "req-test-00161",
+    "input_tokens": 1816,
+    "cached_input_tokens": 0,
+    "output_tokens": 118,
+    "usd": 0.001893
+  },
+  {
+    "split": "test",
+    "id": "req-test-00162",
+    "input_tokens": 1664,
+    "cached_input_tokens": 0,
+    "output_tokens": 95,
+    "usd": 0.0016755
+  },
+  {
+    "split": "test",
+    "id": "req-test-00163",
+    "input_tokens": 1771,
+    "cached_input_tokens": 0,
+    "output_tokens": 41,
+    "usd": 0.00151275
+  },
+  {
+    "split": "test",
+    "id": "req-test-00164",
+    "input_tokens": 1869,
+    "cached_input_tokens": 0,
+    "output_tokens": 158,
+    "usd": 0.00211275
+  },
+  {
+    "split": "test",
+    "id": "req-test-00165",
+    "input_tokens": 1874,
+    "cached_input_tokens": 0,
+    "output_tokens": 149,
+    "usd": 0.002076
+  },
+  {
+    "split": "test",
+    "id": "req-test-00166",
+    "input_tokens": 1881,
+    "cached_input_tokens": 0,
+    "output_tokens": 172,
+    "usd": 0.00218475
+  },
+  {
+    "split": "test",
+    "id": "req-test-00167",
+    "input_tokens": 1856,
+    "cached_input_tokens": 0,
+    "output_tokens": 170,
+    "usd": 0.002157
+  },
+  {
+    "split": "test",
+    "id": "req-test-00168",
+    "input_tokens": 1870,
+    "cached_input_tokens": 0,
+    "output_tokens": 163,
+    "usd": 0.002136
+  },
+  {
+    "split": "test",
+    "id": "req-test-00170",
+    "input_tokens": 1754,
+    "cached_input_tokens": 0,
+    "output_tokens": 117,
+    "usd": 0.001842
+  },
+  {
+    "split": "test",
+    "id": "req-test-00171",
+    "input_tokens": 1894,
+    "cached_input_tokens": 0,
+    "output_tokens": 170,
+    "usd": 0.0021855
+  },
+  {
+    "split": "test",
+    "id": "req-test-00173",
+    "input_tokens": 1866,
+    "cached_input_tokens": 0,
+    "output_tokens": 152,
+    "usd": 0.0020835
+  },
+  {
+    "split": "test",
+    "id": "req-test-00175",
+    "input_tokens": 1757,
+    "cached_input_tokens": 0,
+    "output_tokens": 117,
+    "usd": 0.00184425
+  },
+  {
+    "split": "test",
+    "id": "req-test-00176",
+    "input_tokens": 1844,
+    "cached_input_tokens": 0,
+    "output_tokens": 160,
+    "usd": 0.002103
+  },
+  {
+    "split": "test",
+    "id": "req-test-00177",
+    "input_tokens": 1842,
+    "cached_input_tokens": 0,
+    "output_tokens": 143,
+    "usd": 0.002025
+  },
+  {
+    "split": "test",
+    "id": "req-test-00178",
+    "input_tokens": 1881,
+    "cached_input_tokens": 0,
+    "output_tokens": 147,
+    "usd": 0.00207225
+  },
+  {
+    "split": "test",
+    "id": "req-test-00180",
+    "input_tokens": 1786,
+    "cached_input_tokens": 0,
+    "output_tokens": 110,
+    "usd": 0.0018345
+  },
+  {
+    "split": "test",
+    "id": "req-test-00181",
+    "input_tokens": 1885,
+    "cached_input_tokens": 0,
+    "output_tokens": 171,
+    "usd": 0.00218325
+  },
+  {
+    "split": "test",
+    "id": "req-test-00182",
+    "input_tokens": 1860,
+    "cached_input_tokens": 0,
+    "output_tokens": 159,
+    "usd": 0.0021105
+  },
+  {
+    "split": "test",
+    "id": "req-test-00183",
+    "input_tokens": 1874,
+    "cached_input_tokens": 0,
+    "output_tokens": 162,
+    "usd": 0.0021345
+  },
+  {
+    "split": "test",
+    "id": "req-test-00184",
+    "input_tokens": 1855,
+    "cached_input_tokens": 0,
+    "output_tokens": 159,
+    "usd": 0.00210675
+  },
+  {
+    "split": "test",
+    "id": "req-test-00185",
+    "input_tokens": 1884,
+    "cached_input_tokens": 0,
+    "output_tokens": 161,
+    "usd": 0.0021375
+  },
+  {
+    "split": "test",
+    "id": "req-test-00186",
+    "input_tokens": 1841,
+    "cached_input_tokens": 0,
+    "output_tokens": 153,
+    "usd": 0.00206925
+  },
+  {
+    "split": "test",
+    "id": "req-test-00187",
+    "input_tokens": 1872,
+    "cached_input_tokens": 0,
+    "output_tokens": 153,
+    "usd": 0.0020925
+  },
+  {
+    "split": "test",
+    "id": "req-test-00188",
+    "input_tokens": 1875,
+    "cached_input_tokens": 0,
+    "output_tokens": 146,
+    "usd": 0.00206325
+  },
+  {
+    "split": "test",
+    "id": "req-test-00189",
+    "input_tokens": 1772,
+    "cached_input_tokens": 0,
+    "output_tokens": 134,
+    "usd": 0.001932
+  },
+  {
+    "split": "test",
+    "id": "req-test-00193",
+    "input_tokens": 1672,
+    "cached_input_tokens": 0,
+    "output_tokens": 105,
+    "usd": 0.0017265
+  },
+  {
+    "split": "test",
+    "id": "req-test-00194",
+    "input_tokens": 1866,
+    "cached_input_tokens": 0,
+    "output_tokens": 147,
+    "usd": 0.002061
+  },
+  {
+    "split": "test",
+    "id": "req-test-00195",
+    "input_tokens": 1774,
+    "cached_input_tokens": 0,
+    "output_tokens": 141,
+    "usd": 0.001965
+  },
+  {
+    "split": "test",
+    "id": "req-test-00196",
+    "input_tokens": 1873,
+    "cached_input_tokens": 0,
+    "output_tokens": 152,
+    "usd": 0.00208875
+  },
+  {
+    "split": "test",
+    "id": "req-test-00198",
+    "input_tokens": 1752,
+    "cached_input_tokens": 0,
+    "output_tokens": 132,
+    "usd": 0.001908
+  },
+  {
+    "split": "test",
+    "id": "req-test-00200",
+    "input_tokens": 1879,
+    "cached_input_tokens": 0,
+    "output_tokens": 141,
+    "usd": 0.00204375
+  },
+  {
+    "split": "test",
+    "id": "req-test-00201",
+    "input_tokens": 1809,
+    "cached_input_tokens": 0,
+    "output_tokens": 135,
+    "usd": 0.00196425
+  },
+  {
+    "split": "test",
+    "id": "req-test-00202",
+    "input_tokens": 1866,
+    "cached_input_tokens": 0,
+    "output_tokens": 143,
+    "usd": 0.002043
+  },
+  {
+    "split": "test",
+    "id": "req-test-00203",
+    "input_tokens": 1855,
+    "cached_input_tokens": 0,
+    "output_tokens": 142,
+    "usd": 0.00203025
+  },
+  {
+    "split": "test",
+    "id": "req-test-00204",
+    "input_tokens": 1857,
+    "cached_input_tokens": 0,
+    "output_tokens": 142,
+    "usd": 0.00203175
+  },
+  {
+    "split": "test",
+    "id": "req-test-00206",
+    "input_tokens": 1875,
+    "cached_input_tokens": 0,
+    "output_tokens": 141,
+    "usd": 0.00204075
+  },
+  {
+    "split": "test",
+    "id": "req-test-00207",
+    "input_tokens": 1847,
+    "cached_input_tokens": 0,
+    "output_tokens": 146,
+    "usd": 0.00204225
+  },
+  {
+    "split": "test",
+    "id": "req-test-00208",
+    "input_tokens": 1761,
+    "cached_input_tokens": 0,
+    "output_tokens": 129,
+    "usd": 0.00190125
+  },
+  {
+    "split": "test",
+    "id": "req-test-00209",
+    "input_tokens": 1891,
+    "cached_input_tokens": 0,
+    "output_tokens": 151,
+    "usd": 0.00209775
+  },
+  {
+    "split": "test",
+    "id": "req-test-00210",
+    "input_tokens": 1788,
+    "cached_input_tokens": 0,
+    "output_tokens": 132,
+    "usd": 0.001935
+  },
+  {
+    "split": "test",
+    "id": "req-test-00211",
+    "input_tokens": 1900,
+    "cached_input_tokens": 0,
+    "output_tokens": 161,
+    "usd": 0.0021495
+  },
+  {
+    "split": "test",
+    "id": "req-test-00213",
+    "input_tokens": 1785,
+    "cached_input_tokens": 0,
+    "output_tokens": 124,
+    "usd": 0.00189675
+  },
+  {
+    "split": "test",
+    "id": "req-test-00214",
+    "input_tokens": 1780,
+    "cached_input_tokens": 0,
+    "output_tokens": 128,
+    "usd": 0.001911
+  },
+  {
+    "split": "test",
+    "id": "req-test-00215",
+    "input_tokens": 1861,
+    "cached_input_tokens": 0,
+    "output_tokens": 143,
+    "usd": 0.00203925
+  },
+  {
+    "split": "test",
+    "id": "req-test-00216",
+    "input_tokens": 1788,
+    "cached_input_tokens": 0,
+    "output_tokens": 132,
+    "usd": 0.001935
+  },
+  {
+    "split": "test",
+    "id": "req-test-00218",
+    "input_tokens": 1798,
+    "cached_input_tokens": 0,
+    "output_tokens": 130,
+    "usd": 0.0019335
+  },
+  {
+    "split": "test",
+    "id": "req-test-00219",
+    "input_tokens": 1875,
+    "cached_input_tokens": 0,
+    "output_tokens": 145,
+    "usd": 0.00205875
+  },
+  {
+    "split": "test",
+    "id": "req-test-00220",
+    "input_tokens": 1763,
+    "cached_input_tokens": 0,
+    "output_tokens": 50,
+    "usd": 0.00154725
+  },
+  {
+    "split": "test",
+    "id": "req-test-00221",
+    "input_tokens": 1882,
+    "cached_input_tokens": 0,
+    "output_tokens": 141,
+    "usd": 0.002046
+  },
+  {
+    "split": "test",
+    "id": "req-test-00222",
+    "input_tokens": 1757,
+    "cached_input_tokens": 0,
+    "output_tokens": 51,
+    "usd": 0.00154725
+  },
+  {
+    "split": "test",
+    "id": "req-test-00223",
+    "input_tokens": 1855,
+    "cached_input_tokens": 0,
+    "output_tokens": 150,
+    "usd": 0.00206625
+  },
+  {
+    "split": "test",
+    "id": "req-test-00224",
+    "input_tokens": 1860,
+    "cached_input_tokens": 0,
+    "output_tokens": 168,
+    "usd": 0.002151
+  },
+  {
+    "split": "test",
+    "id": "req-test-00225",
+    "input_tokens": 1744,
+    "cached_input_tokens": 0,
+    "output_tokens": 121,
+    "usd": 0.0018525
+  },
+  {
+    "split": "test",
+    "id": "req-test-00226",
+    "input_tokens": 1875,
+    "cached_input_tokens": 0,
+    "output_tokens": 47,
+    "usd": 0.00161775
+  },
+  {
+    "split": "test",
+    "id": "req-test-00227",
+    "input_tokens": 1769,
+    "cached_input_tokens": 0,
+    "output_tokens": 140,
+    "usd": 0.00195675
+  },
+  {
+    "split": "test",
+    "id": "req-test-00228",
+    "input_tokens": 1866,
+    "cached_input_tokens": 0,
+    "output_tokens": 142,
+    "usd": 0.0020385
+  },
+  {
+    "split": "test",
+    "id": "req-test-00229",
+    "input_tokens": 1761,
+    "cached_input_tokens": 0,
+    "output_tokens": 133,
+    "usd": 0.00191925
+  },
+  {
+    "split": "test",
+    "id": "req-test-00230",
+    "input_tokens": 1877,
+    "cached_input_tokens": 0,
+    "output_tokens": 131,
+    "usd": 0.00199725
+  },
+  {
+    "split": "test",
+    "id": "req-test-00231",
+    "input_tokens": 1853,
+    "cached_input_tokens": 0,
+    "output_tokens": 139,
+    "usd": 0.00201525
+  },
+  {
+    "split": "test",
+    "id": "req-test-00232",
+    "input_tokens": 1855,
+    "cached_input_tokens": 0,
+    "output_tokens": 161,
+    "usd": 0.00211575
+  },
+  {
+    "split": "test",
+    "id": "req-test-00233",
+    "input_tokens": 1887,
+    "cached_input_tokens": 0,
+    "output_tokens": 158,
+    "usd": 0.00212625
+  },
+  {
+    "split": "test",
+    "id": "req-test-00234",
+    "input_tokens": 1884,
+    "cached_input_tokens": 0,
+    "output_tokens": 144,
+    "usd": 0.002061
+  },
+  {
+    "split": "test",
+    "id": "req-test-00235",
+    "input_tokens": 1764,
+    "cached_input_tokens": 0,
+    "output_tokens": 132,
+    "usd": 0.001917
+  },
+  {
+    "split": "test",
+    "id": "req-test-00236",
+    "input_tokens": 1782,
+    "cached_input_tokens": 0,
+    "output_tokens": 123,
+    "usd": 0.00189
+  },
+  {
+    "split": "test",
+    "id": "req-test-00238",
+    "input_tokens": 1769,
+    "cached_input_tokens": 0,
+    "output_tokens": 121,
+    "usd": 0.00187125
+  },
+  {
+    "split": "test",
+    "id": "req-test-00240",
+    "input_tokens": 1885,
+    "cached_input_tokens": 0,
+    "output_tokens": 148,
+    "usd": 0.00207975
+  },
+  {
+    "split": "test",
+    "id": "req-test-00241",
+    "input_tokens": 1848,
+    "cached_input_tokens": 0,
+    "output_tokens": 156,
+    "usd": 0.002088
+  },
+  {
+    "split": "test",
+    "id": "req-test-00242",
+    "input_tokens": 1779,
+    "cached_input_tokens": 0,
+    "output_tokens": 135,
+    "usd": 0.00194175
+  },
+  {
+    "split": "test",
+    "id": "req-test-00245",
+    "input_tokens": 1661,
+    "cached_input_tokens": 0,
+    "output_tokens": 97,
+    "usd": 0.00168225
+  },
+  {
+    "split": "test",
+    "id": "req-test-00246",
+    "input_tokens": 1864,
+    "cached_input_tokens": 0,
+    "output_tokens": 156,
+    "usd": 0.0021
+  },
+  {
+    "split": "test",
+    "id": "req-test-00247",
+    "input_tokens": 1752,
+    "cached_input_tokens": 0,
+    "output_tokens": 122,
+    "usd": 0.001863
+  },
+  {
+    "split": "test",
+    "id": "req-test-00248",
+    "input_tokens": 1854,
+    "cached_input_tokens": 0,
+    "output_tokens": 146,
+    "usd": 0.0020475
+  },
+  {
+    "split": "test",
+    "id": "req-test-00249",
+    "input_tokens": 1785,
+    "cached_input_tokens": 0,
+    "output_tokens": 140,
+    "usd": 0.00196875
+  },
+  {
+    "split": "test",
+    "id": "req-test-00252",
+    "input_tokens": 1787,
+    "cached_input_tokens": 0,
+    "output_tokens": 114,
+    "usd": 0.00185325
+  },
+  {
+    "split": "test",
+    "id": "req-test-00253",
+    "input_tokens": 1780,
+    "cached_input_tokens": 0,
+    "output_tokens": 129,
+    "usd": 0.0019155
+  },
+  {
+    "split": "test",
+    "id": "req-test-00254",
+    "input_tokens": 1853,
+    "cached_input_tokens": 0,
+    "output_tokens": 135,
+    "usd": 0.00199725
+  },
+  {
+    "split": "test",
+    "id": "req-test-00256",
+    "input_tokens": 1746,
+    "cached_input_tokens": 0,
+    "output_tokens": 117,
+    "usd": 0.001836
+  },
+  {
+    "split": "test",
+    "id": "req-test-00257",
+    "input_tokens": 1862,
+    "cached_input_tokens": 0,
+    "output_tokens": 158,
+    "usd": 0.0021075
+  },
+  {
+    "split": "test",
+    "id": "req-test-00258",
+    "input_tokens": 1881,
+    "cached_input_tokens": 0,
+    "output_tokens": 157,
+    "usd": 0.00211725
+  },
+  {
+    "split": "test",
+    "id": "req-test-00259",
+    "input_tokens": 1908,
+    "cached_input_tokens": 0,
+    "output_tokens": 161,
+    "usd": 0.0021555
+  },
+  {
+    "split": "test",
+    "id": "req-test-00260",
+    "input_tokens": 1842,
+    "cached_input_tokens": 0,
+    "output_tokens": 139,
+    "usd": 0.002007
+  },
+  {
+    "split": "test",
+    "id": "req-test-00261",
+    "input_tokens": 1773,
+    "cached_input_tokens": 0,
+    "output_tokens": 49,
+    "usd": 0.00155025
+  },
+  {
+    "split": "test",
+    "id": "req-test-00264",
+    "input_tokens": 1851,
+    "cached_input_tokens": 0,
+    "output_tokens": 144,
+    "usd": 0.00203625
+  },
+  {
+    "split": "test",
+    "id": "req-test-00265",
+    "input_tokens": 1846,
+    "cached_input_tokens": 0,
+    "output_tokens": 141,
+    "usd": 0.002019
+  },
+  {
+    "split": "test",
+    "id": "req-test-00266",
+    "input_tokens": 1885,
+    "cached_input_tokens": 0,
+    "output_tokens": 148,
+    "usd": 0.00207975
+  },
+  {
+    "split": "test",
+    "id": "req-test-00267",
+    "input_tokens": 1857,
+    "cached_input_tokens": 0,
+    "output_tokens": 150,
+    "usd": 0.00206775
+  },
+  {
+    "split": "test",
+    "id": "req-test-00268",
+    "input_tokens": 1843,
+    "cached_input_tokens": 0,
+    "output_tokens": 144,
+    "usd": 0.00203025
+  },
+  {
+    "split": "test",
+    "id": "req-test-00269",
+    "input_tokens": 1775,
+    "cached_input_tokens": 0,
+    "output_tokens": 136,
+    "usd": 0.00194325
+  },
+  {
+    "split": "test",
+    "id": "req-test-00270",
+    "input_tokens": 1772,
+    "cached_input_tokens": 0,
+    "output_tokens": 147,
+    "usd": 0.0019905
+  },
+  {
+    "split": "test",
+    "id": "req-test-00271",
+    "input_tokens": 1851,
+    "cached_input_tokens": 0,
+    "output_tokens": 159,
+    "usd": 0.00210375
+  },
+  {
+    "split": "test",
+    "id": "req-test-00272",
+    "input_tokens": 1765,
+    "cached_input_tokens": 0,
+    "output_tokens": 120,
+    "usd": 0.00186375
+  },
+  {
+    "split": "test",
+    "id": "req-test-00273",
+    "input_tokens": 1757,
+    "cached_input_tokens": 0,
+    "output_tokens": 119,
+    "usd": 0.00185325
+  },
+  {
+    "split": "test",
+    "id": "req-test-00274",
+    "input_tokens": 1910,
+    "cached_input_tokens": 0,
+    "output_tokens": 161,
+    "usd": 0.002157
+  },
+  {
+    "split": "test",
+    "id": "req-test-00275",
+    "input_tokens": 1874,
+    "cached_input_tokens": 0,
+    "output_tokens": 146,
+    "usd": 0.0020625
+  },
+  {
+    "split": "test",
+    "id": "req-test-00277",
+    "input_tokens": 1894,
+    "cached_input_tokens": 0,
+    "output_tokens": 159,
+    "usd": 0.002136
+  },
+  {
+    "split": "test",
+    "id": "req-test-00278",
+    "input_tokens": 1809,
+    "cached_input_tokens": 0,
+    "output_tokens": 132,
+    "usd": 0.00195075
+  },
+  {
+    "split": "test",
+    "id": "req-test-00279",
+    "input_tokens": 1784,
+    "cached_input_tokens": 0,
+    "output_tokens": 122,
+    "usd": 0.001887
+  },
+  {
+    "split": "test",
+    "id": "req-test-00280",
+    "input_tokens": 1873,
+    "cached_input_tokens": 0,
+    "output_tokens": 47,
+    "usd": 0.00161625
+  },
+  {
+    "split": "test",
+    "id": "req-test-00282",
+    "input_tokens": 1884,
+    "cached_input_tokens": 0,
+    "output_tokens": 148,
+    "usd": 0.002079
+  },
+  {
+    "split": "test",
+    "id": "req-test-00283",
+    "input_tokens": 1752,
+    "cached_input_tokens": 0,
+    "output_tokens": 57,
+    "usd": 0.0015705
+  },
+  {
+    "split": "test",
+    "id": "req-test-00284",
+    "input_tokens": 1877,
+    "cached_input_tokens": 0,
+    "output_tokens": 153,
+    "usd": 0.00209625
+  },
+  {
+    "split": "test",
+    "id": "req-test-00285",
+    "input_tokens": 1849,
+    "cached_input_tokens": 0,
+    "output_tokens": 138,
+    "usd": 0.00200775
+  },
+  {
+    "split": "test",
+    "id": "req-test-00286",
+    "input_tokens": 1858,
+    "cached_input_tokens": 0,
+    "output_tokens": 159,
+    "usd": 0.002109
+  },
+  {
+    "split": "test",
+    "id": "req-test-00289",
+    "input_tokens": 1781,
+    "cached_input_tokens": 0,
+    "output_tokens": 128,
+    "usd": 0.00191175
+  },
+  {
+    "split": "test",
+    "id": "req-test-00290",
+    "input_tokens": 1854,
+    "cached_input_tokens": 0,
+    "output_tokens": 162,
+    "usd": 0.0021195
+  },
+  {
+    "split": "test",
+    "id": "req-test-00291",
+    "input_tokens": 1675,
+    "cached_input_tokens": 0,
+    "output_tokens": 106,
+    "usd": 0.00173325
+  },
+  {
+    "split": "test",
+    "id": "req-test-00293",
+    "input_tokens": 1869,
+    "cached_input_tokens": 0,
+    "output_tokens": 148,
+    "usd": 0.00206775
+  },
+  {
+    "split": "test",
+    "id": "req-test-00294",
+    "input_tokens": 1871,
+    "cached_input_tokens": 0,
+    "output_tokens": 150,
+    "usd": 0.00207825
+  },
+  {
+    "split": "test",
+    "id": "req-test-00295",
+    "input_tokens": 1776,
+    "cached_input_tokens": 0,
+    "output_tokens": 133,
+    "usd": 0.0019305
+  },
+  {
+    "split": "test",
+    "id": "req-test-00296",
+    "input_tokens": 1768,
+    "cached_input_tokens": 0,
+    "output_tokens": 117,
+    "usd": 0.0018525
+  },
+  {
+    "split": "test",
+    "id": "req-test-00297",
+    "input_tokens": 1787,
+    "cached_input_tokens": 0,
+    "output_tokens": 136,
+    "usd": 0.00195225
+  },
+  {
+    "split": "test",
+    "id": "req-test-00298",
+    "input_tokens": 1851,
+    "cached_input_tokens": 0,
+    "output_tokens": 158,
+    "usd": 0.00209925
+  },
+  {
+    "split": "test",
+    "id": "req-test-00299",
+    "input_tokens": 1857,
+    "cached_input_tokens": 0,
+    "output_tokens": 140,
+    "usd": 0.00202275
+  },
+  {
+    "split": "test",
+    "id": "req-test-00301",
+    "input_tokens": 1752,
+    "cached_input_tokens": 0,
+    "output_tokens": 116,
+    "usd": 0.001836
+  },
+  {
+    "split": "test",
+    "id": "req-test-00302",
+    "input_tokens": 1869,
+    "cached_input_tokens": 0,
+    "output_tokens": 158,
+    "usd": 0.00211275
+  },
+  {
+    "split": "test",
+    "id": "req-test-00303",
+    "input_tokens": 1770,
+    "cached_input_tokens": 0,
+    "output_tokens": 130,
+    "usd": 0.0019125
+  },
+  {
+    "split": "test",
+    "id": "req-test-00304",
+    "input_tokens": 1763,
+    "cached_input_tokens": 0,
+    "output_tokens": 123,
+    "usd": 0.00187575
+  },
+  {
+    "split": "test",
+    "id": "req-test-00305",
+    "input_tokens": 1785,
+    "cached_input_tokens": 0,
+    "output_tokens": 119,
+    "usd": 0.00187425
+  },
+  {
+    "split": "test",
+    "id": "req-test-00306",
+    "input_tokens": 1763,
+    "cached_input_tokens": 0,
+    "output_tokens": 131,
+    "usd": 0.00191175
+  },
+  {
+    "split": "test",
+    "id": "req-test-00307",
+    "input_tokens": 1848,
+    "cached_input_tokens": 0,
+    "output_tokens": 141,
+    "usd": 0.0020205
+  },
+  {
+    "split": "test",
+    "id": "req-test-00308",
+    "input_tokens": 1803,
+    "cached_input_tokens": 0,
+    "output_tokens": 120,
+    "usd": 0.00189225
+  },
+  {
+    "split": "test",
+    "id": "req-test-00311",
+    "input_tokens": 1764,
+    "cached_input_tokens": 0,
+    "output_tokens": 129,
+    "usd": 0.0019035
+  },
+  {
+    "split": "test",
+    "id": "req-test-00312",
+    "input_tokens": 1841,
+    "cached_input_tokens": 0,
+    "output_tokens": 144,
+    "usd": 0.00202875
+  },
+  {
+    "split": "test",
+    "id": "req-test-00313",
+    "input_tokens": 1886,
+    "cached_input_tokens": 0,
+    "output_tokens": 165,
+    "usd": 0.002157
+  },
+  {
+    "split": "test",
+    "id": "req-test-00314",
+    "input_tokens": 1771,
+    "cached_input_tokens": 0,
+    "output_tokens": 118,
+    "usd": 0.00185925
+  },
+  {
+    "split": "test",
+    "id": "req-test-00315",
+    "input_tokens": 1882,
+    "cached_input_tokens": 0,
+    "output_tokens": 139,
+    "usd": 0.002037
+  },
+  {
+    "split": "test",
+    "id": "req-test-00317",
+    "input_tokens": 1682,
+    "cached_input_tokens": 0,
+    "output_tokens": 110,
+    "usd": 0.0017565
+  },
+  {
+    "split": "test",
+    "id": "req-test-00318",
+    "input_tokens": 1763,
+    "cached_input_tokens": 0,
+    "output_tokens": 115,
+    "usd": 0.00183975
+  },
+  {
+    "split": "test",
+    "id": "req-test-00320",
+    "input_tokens": 1863,
+    "cached_input_tokens": 0,
+    "output_tokens": 157,
+    "usd": 0.00210375
+  },
+  {
+    "split": "test",
+    "id": "req-test-00321",
+    "input_tokens": 1788,
+    "cached_input_tokens": 0,
+    "output_tokens": 132,
+    "usd": 0.001935
+  },
+  {
+    "split": "test",
+    "id": "req-test-00322",
+    "input_tokens": 1746,
+    "cached_input_tokens": 0,
+    "output_tokens": 109,
+    "usd": 0.0018
+  },
+  {
+    "split": "test",
+    "id": "req-test-00323",
+    "input_tokens": 1868,
+    "cached_input_tokens": 0,
+    "output_tokens": 147,
+    "usd": 0.0020625
+  },
+  {
+    "split": "test",
+    "id": "req-test-00324",
+    "input_tokens": 1668,
+    "cached_input_tokens": 0,
+    "output_tokens": 99,
+    "usd": 0.0016965
+  },
+  {
+    "split": "test",
+    "id": "req-test-00325",
+    "input_tokens": 1898,
+    "cached_input_tokens": 0,
+    "output_tokens": 138,
+    "usd": 0.0020445
+  },
+  {
+    "split": "test",
+    "id": "req-test-00327",
+    "input_tokens": 1872,
+    "cached_input_tokens": 0,
+    "output_tokens": 146,
+    "usd": 0.002061
+  },
+  {
+    "split": "test",
+    "id": "req-test-00328",
+    "input_tokens": 1840,
+    "cached_input_tokens": 0,
+    "output_tokens": 164,
+    "usd": 0.002118
+  },
+  {
+    "split": "test",
+    "id": "req-test-00330",
+    "input_tokens": 1861,
+    "cached_input_tokens": 0,
+    "output_tokens": 163,
+    "usd": 0.00212925
+  },
+  {
+    "split": "test",
+    "id": "req-test-00331",
+    "input_tokens": 1876,
+    "cached_input_tokens": 0,
+    "output_tokens": 145,
+    "usd": 0.0020595
+  },
+  {
+    "split": "test",
+    "id": "req-test-00332",
+    "input_tokens": 1785,
+    "cached_input_tokens": 0,
+    "output_tokens": 143,
+    "usd": 0.00198225
+  },
+  {
+    "split": "test",
+    "id": "req-test-00334",
+    "input_tokens": 1772,
+    "cached_input_tokens": 0,
+    "output_tokens": 44,
+    "usd": 0.001527
+  },
+  {
+    "split": "test",
+    "id": "req-test-00336",
+    "input_tokens": 1751,
+    "cached_input_tokens": 0,
+    "output_tokens": 130,
+    "usd": 0.00189825
+  },
+  {
+    "split": "test",
+    "id": "req-test-00337",
+    "input_tokens": 1786,
+    "cached_input_tokens": 0,
+    "output_tokens": 140,
+    "usd": 0.0019695
+  },
+  {
+    "split": "test",
+    "id": "req-test-00338",
+    "input_tokens": 1859,
+    "cached_input_tokens": 0,
+    "output_tokens": 159,
+    "usd": 0.00210975
+  },
+  {
+    "split": "test",
+    "id": "req-test-00339",
+    "input_tokens": 1855,
+    "cached_input_tokens": 0,
+    "output_tokens": 142,
+    "usd": 0.00203025
+  },
+  {
+    "split": "test",
+    "id": "req-test-00340",
+    "input_tokens": 1918,
+    "cached_input_tokens": 0,
+    "output_tokens": 160,
+    "usd": 0.0021585
+  },
+  {
+    "split": "test",
+    "id": "req-test-00341",
+    "input_tokens": 1857,
+    "cached_input_tokens": 0,
+    "output_tokens": 167,
+    "usd": 0.00214425
+  },
+  {
+    "split": "test",
+    "id": "req-test-00342",
+    "input_tokens": 1872,
+    "cached_input_tokens": 0,
+    "output_tokens": 144,
+    "usd": 0.002052
+  },
+  {
+    "split": "test",
+    "id": "req-test-00343",
+    "input_tokens": 1864,
+    "cached_input_tokens": 0,
+    "output_tokens": 162,
+    "usd": 0.002127
+  },
+  {
+    "split": "test",
+    "id": "req-test-00344",
+    "input_tokens": 1935,
+    "cached_input_tokens": 0,
+    "output_tokens": 152,
+    "usd": 0.00213525
+  },
+  {
+    "split": "test",
+    "id": "req-test-00345",
+    "input_tokens": 1835,
+    "cached_input_tokens": 0,
+    "output_tokens": 155,
+    "usd": 0.00207375
+  },
+  {
+    "split": "test",
+    "id": "req-test-00349",
+    "input_tokens": 1855,
+    "cached_input_tokens": 0,
+    "output_tokens": 155,
+    "usd": 0.00208875
+  },
+  {
+    "split": "test",
+    "id": "req-test-00350",
+    "input_tokens": 1847,
+    "cached_input_tokens": 0,
+    "output_tokens": 52,
+    "usd": 0.00161925
+  },
+  {
+    "split": "test",
+    "id": "req-test-00351",
+    "input_tokens": 1771,
+    "cached_input_tokens": 0,
+    "output_tokens": 117,
+    "usd": 0.00185475
+  },
+  {
+    "split": "test",
+    "id": "req-test-00353",
+    "input_tokens": 1881,
+    "cached_input_tokens": 0,
+    "output_tokens": 165,
+    "usd": 0.00215325
+  },
+  {
+    "split": "test",
+    "id": "req-test-00355",
+    "input_tokens": 1915,
+    "cached_input_tokens": 0,
+    "output_tokens": 147,
+    "usd": 0.00209775
+  },
+  {
+    "split": "test",
+    "id": "req-test-00356",
+    "input_tokens": 1765,
+    "cached_input_tokens": 0,
+    "output_tokens": 114,
+    "usd": 0.00183675
+  },
+  {
+    "split": "test",
+    "id": "req-test-00358",
+    "input_tokens": 1660,
+    "cached_input_tokens": 0,
+    "output_tokens": 92,
+    "usd": 0.001659
+  },
+  {
+    "split": "test",
+    "id": "req-test-00359",
+    "input_tokens": 1763,
+    "cached_input_tokens": 0,
+    "output_tokens": 120,
+    "usd": 0.00186225
+  },
+  {
+    "split": "test",
+    "id": "req-test-00360",
+    "input_tokens": 1852,
+    "cached_input_tokens": 0,
+    "output_tokens": 139,
+    "usd": 0.0020145
+  },
+  {
+    "split": "test",
+    "id": "req-test-00361",
+    "input_tokens": 1858,
+    "cached_input_tokens": 0,
+    "output_tokens": 143,
+    "usd": 0.002037
+  },
+  {
+    "split": "test",
+    "id": "req-test-00362",
+    "input_tokens": 1874,
+    "cached_input_tokens": 0,
+    "output_tokens": 159,
+    "usd": 0.002121
+  },
+  {
+    "split": "test",
+    "id": "req-test-00364",
+    "input_tokens": 1878,
+    "cached_input_tokens": 0,
+    "output_tokens": 151,
+    "usd": 0.002088
+  },
+  {
+    "split": "test",
+    "id": "req-test-00365",
+    "input_tokens": 1801,
+    "cached_input_tokens": 0,
+    "output_tokens": 126,
+    "usd": 0.00191775
+  },
+  {
+    "split": "test",
+    "id": "req-test-00366",
+    "input_tokens": 1842,
+    "cached_input_tokens": 0,
+    "output_tokens": 142,
+    "usd": 0.0020205
+  },
+  {
+    "split": "test",
+    "id": "req-test-00367",
+    "input_tokens": 1909,
+    "cached_input_tokens": 0,
+    "output_tokens": 144,
+    "usd": 0.00207975
+  },
+  {
+    "split": "test",
+    "id": "req-test-00368",
+    "input_tokens": 1766,
+    "cached_input_tokens": 0,
+    "output_tokens": 124,
+    "usd": 0.0018825
+  },
+  {
+    "split": "test",
+    "id": "req-test-00369",
+    "input_tokens": 1880,
+    "cached_input_tokens": 0,
+    "output_tokens": 154,
+    "usd": 0.002103
+  },
+  {
+    "split": "test",
+    "id": "req-test-00370",
+    "input_tokens": 1747,
+    "cached_input_tokens": 0,
+    "output_tokens": 121,
+    "usd": 0.00185475
+  },
+  {
+    "split": "test",
+    "id": "req-test-00371",
+    "input_tokens": 1854,
+    "cached_input_tokens": 0,
+    "output_tokens": 144,
+    "usd": 0.0020385
+  },
+  {
+    "split": "test",
+    "id": "req-test-00372",
+    "input_tokens": 1673,
+    "cached_input_tokens": 0,
+    "output_tokens": 100,
+    "usd": 0.00170475
+  },
+  {
+    "split": "test",
+    "id": "req-test-00373",
+    "input_tokens": 1763,
+    "cached_input_tokens": 0,
+    "output_tokens": 127,
+    "usd": 0.00189375
+  },
+  {
+    "split": "test",
+    "id": "req-test-00374",
+    "input_tokens": 1779,
+    "cached_input_tokens": 0,
+    "output_tokens": 128,
+    "usd": 0.00191025
+  },
+  {
+    "split": "test",
+    "id": "req-test-00375",
+    "input_tokens": 1747,
+    "cached_input_tokens": 0,
+    "output_tokens": 119,
+    "usd": 0.00184575
+  },
+  {
+    "split": "test",
+    "id": "req-test-00376",
+    "input_tokens": 1760,
+    "cached_input_tokens": 0,
+    "output_tokens": 130,
+    "usd": 0.001905
+  },
+  {
+    "split": "paraphrase",
+    "id": "req-paraphrase-00001",
+    "input_tokens": 1756,
+    "cached_input_tokens": 0,
+    "output_tokens": 112,
+    "usd": 0.001821
+  },
+  {
+    "split": "paraphrase",
+    "id": "req-paraphrase-00004",
+    "input_tokens": 1804,
+    "cached_input_tokens": 0,
+    "output_tokens": 133,
+    "usd": 0.0019515
+  },
+  {
+    "split": "paraphrase",
+    "id": "req-paraphrase-00005",
+    "input_tokens": 1900,
+    "cached_input_tokens": 0,
+    "output_tokens": 164,
+    "usd": 0.002163
+  },
+  {
+    "split": "paraphrase",
+    "id": "req-paraphrase-00008",
+    "input_tokens": 1862,
+    "cached_input_tokens": 0,
+    "output_tokens": 153,
+    "usd": 0.002085
+  },
+  {
+    "split": "paraphrase",
+    "id": "req-paraphrase-00010",
+    "input_tokens": 1876,
+    "cached_input_tokens": 0,
+    "output_tokens": 153,
+    "usd": 0.0020955
+  },
+  {
+    "split": "paraphrase",
+    "id": "req-paraphrase-00012",
+    "input_tokens": 1866,
+    "cached_input_tokens": 0,
+    "output_tokens": 169,
+    "usd": 0.00216
+  },
+  {
+    "split": "paraphrase",
+    "id": "req-paraphrase-00014",
+    "input_tokens": 1881,
+    "cached_input_tokens": 0,
+    "output_tokens": 156,
+    "usd": 0.00211275
+  },
+  {
+    "split": "paraphrase",
+    "id": "req-paraphrase-00015",
+    "input_tokens": 1862,
+    "cached_input_tokens": 0,
+    "output_tokens": 146,
+    "usd": 0.0020535
+  },
+  {
+    "split": "paraphrase",
+    "id": "req-paraphrase-00017",
+    "input_tokens": 1791,
+    "cached_input_tokens": 0,
+    "output_tokens": 124,
+    "usd": 0.00190125
+  },
+  {
+    "split": "paraphrase",
+    "id": "req-paraphrase-00020",
+    "input_tokens": 1773,
+    "cached_input_tokens": 0,
+    "output_tokens": 137,
+    "usd": 0.00194625
+  },
+  {
+    "split": "paraphrase",
+    "id": "req-paraphrase-00023",
+    "input_tokens": 1900,
+    "cached_input_tokens": 0,
+    "output_tokens": 132,
+    "usd": 0.002019
+  },
+  {
+    "split": "paraphrase",
+    "id": "req-paraphrase-00027",
+    "input_tokens": 1871,
+    "cached_input_tokens": 0,
+    "output_tokens": 142,
+    "usd": 0.00204225
+  },
+  {
+    "split": "paraphrase",
+    "id": "req-paraphrase-00033",
+    "input_tokens": 1901,
+    "cached_input_tokens": 0,
+    "output_tokens": 141,
+    "usd": 0.00206025
+  },
+  {
+    "split": "paraphrase",
+    "id": "req-paraphrase-00034",
+    "input_tokens": 1793,
+    "cached_input_tokens": 0,
+    "output_tokens": 115,
+    "usd": 0.00186225
+  },
+  {
+    "split": "paraphrase",
+    "id": "req-paraphrase-00035",
+    "input_tokens": 1679,
+    "cached_input_tokens": 0,
+    "output_tokens": 101,
+    "usd": 0.00171375
+  },
+  {
+    "split": "paraphrase",
+    "id": "req-paraphrase-00039",
+    "input_tokens": 1873,
+    "cached_input_tokens": 0,
+    "output_tokens": 140,
+    "usd": 0.00203475
+  },
+  {
+    "split": "paraphrase",
+    "id": "req-paraphrase-00040",
+    "input_tokens": 1857,
+    "cached_input_tokens": 0,
+    "output_tokens": 156,
+    "usd": 0.00209475
+  },
+  {
+    "split": "paraphrase",
+    "id": "req-paraphrase-00042",
+    "input_tokens": 1886,
+    "cached_input_tokens": 0,
+    "output_tokens": 151,
+    "usd": 0.002094
+  },
+  {
+    "split": "paraphrase",
+    "id": "req-paraphrase-00043",
+    "input_tokens": 1899,
+    "cached_input_tokens": 0,
+    "output_tokens": 154,
+    "usd": 0.00211725
+  },
+  {
+    "split": "paraphrase",
+    "id": "req-paraphrase-00045",
+    "input_tokens": 1847,
+    "cached_input_tokens": 0,
+    "output_tokens": 146,
+    "usd": 0.00204225
+  },
+  {
+    "split": "paraphrase",
+    "id": "req-paraphrase-00047",
+    "input_tokens": 1784,
+    "cached_input_tokens": 0,
+    "output_tokens": 122,
+    "usd": 0.001887
+  },
+  {
+    "split": "paraphrase",
+    "id": "req-paraphrase-00048",
+    "input_tokens": 1898,
+    "cached_input_tokens": 0,
+    "output_tokens": 146,
+    "usd": 0.0020805
+  },
+  {
+    "split": "paraphrase",
+    "id": "req-paraphrase-00049",
+    "input_tokens": 1904,
+    "cached_input_tokens": 0,
+    "output_tokens": 163,
+    "usd": 0.0021615
+  },
+  {
+    "split": "paraphrase",
+    "id": "req-paraphrase-00056",
+    "input_tokens": 1884,
+    "cached_input_tokens": 0,
+    "output_tokens": 176,
+    "usd": 0.002205
+  },
+  {
+    "split": "paraphrase",
+    "id": "req-paraphrase-00060",
+    "input_tokens": 1908,
+    "cached_input_tokens": 0,
+    "output_tokens": 151,
+    "usd": 0.0021105
+  },
+  {
+    "split": "paraphrase",
+    "id": "req-paraphrase-00064",
+    "input_tokens": 1873,
+    "cached_input_tokens": 0,
+    "output_tokens": 140,
+    "usd": 0.00203475
+  },
+  {
+    "split": "paraphrase",
+    "id": "req-paraphrase-00065",
+    "input_tokens": 1874,
+    "cached_input_tokens": 0,
+    "output_tokens": 149,
+    "usd": 0.002076
+  },
+  {
+    "split": "paraphrase",
+    "id": "req-paraphrase-00067",
+    "input_tokens": 1875,
+    "cached_input_tokens": 0,
+    "output_tokens": 142,
+    "usd": 0.00204525
+  },
+  {
+    "split": "paraphrase",
+    "id": "req-paraphrase-00069",
+    "input_tokens": 1789,
+    "cached_input_tokens": 0,
+    "output_tokens": 130,
+    "usd": 0.00192675
+  },
+  {
+    "split": "paraphrase",
+    "id": "req-paraphrase-00074",
+    "input_tokens": 1898,
+    "cached_input_tokens": 0,
+    "output_tokens": 142,
+    "usd": 0.0020625
+  },
+  {
+    "split": "paraphrase",
+    "id": "req-paraphrase-00076",
+    "input_tokens": 1768,
+    "cached_input_tokens": 0,
+    "output_tokens": 120,
+    "usd": 0.001866
+  },
+  {
+    "split": "paraphrase",
+    "id": "req-paraphrase-00080",
+    "input_tokens": 1788,
+    "cached_input_tokens": 0,
+    "output_tokens": 130,
+    "usd": 0.001926
+  },
+  {
+    "split": "paraphrase",
+    "id": "req-paraphrase-00081",
+    "input_tokens": 1875,
+    "cached_input_tokens": 0,
+    "output_tokens": 148,
+    "usd": 0.00207225
+  },
+  {
+    "split": "paraphrase",
+    "id": "req-paraphrase-00087",
+    "input_tokens": 1782,
+    "cached_input_tokens": 0,
+    "output_tokens": 137,
+    "usd": 0.001953
+  },
+  {
+    "split": "paraphrase",
+    "id": "req-paraphrase-00089",
+    "input_tokens": 1764,
+    "cached_input_tokens": 0,
+    "output_tokens": 130,
+    "usd": 0.001908
+  },
+  {
+    "split": "paraphrase",
+    "id": "req-paraphrase-00090",
+    "input_tokens": 1852,
+    "cached_input_tokens": 0,
+    "output_tokens": 163,
+    "usd": 0.0021225
+  },
+  {
+    "split": "paraphrase",
+    "id": "req-paraphrase-00104",
+    "input_tokens": 1855,
+    "cached_input_tokens": 0,
+    "output_tokens": 154,
+    "usd": 0.00208425
+  },
+  {
+    "split": "paraphrase",
+    "id": "req-paraphrase-00107",
+    "input_tokens": 1767,
+    "cached_input_tokens": 0,
+    "output_tokens": 52,
+    "usd": 0.00155925
+  },
+  {
+    "split": "paraphrase",
+    "id": "req-paraphrase-00108",
+    "input_tokens": 1859,
+    "cached_input_tokens": 0,
+    "output_tokens": 160,
+    "usd": 0.00211425
+  },
+  {
+    "split": "paraphrase",
+    "id": "req-paraphrase-00112",
+    "input_tokens": 1858,
+    "cached_input_tokens": 0,
+    "output_tokens": 145,
+    "usd": 0.002046
+  },
+  {
+    "split": "paraphrase",
+    "id": "req-paraphrase-00114",
+    "input_tokens": 1875,
+    "cached_input_tokens": 0,
+    "output_tokens": 142,
+    "usd": 0.00204525
+  },
+  {
+    "split": "paraphrase",
+    "id": "req-paraphrase-00117",
+    "input_tokens": 1888,
+    "cached_input_tokens": 0,
+    "output_tokens": 155,
+    "usd": 0.0021135
+  },
+  {
+    "split": "paraphrase",
+    "id": "req-paraphrase-00120",
+    "input_tokens": 1867,
+    "cached_input_tokens": 0,
+    "output_tokens": 148,
+    "usd": 0.00206625
+  },
+  {
+    "split": "paraphrase",
+    "id": "req-paraphrase-00122",
+    "input_tokens": 1764,
+    "cached_input_tokens": 0,
+    "output_tokens": 120,
+    "usd": 0.001863
+  },
+  {
+    "split": "paraphrase",
+    "id": "req-paraphrase-00128",
+    "input_tokens": 1759,
+    "cached_input_tokens": 0,
+    "output_tokens": 126,
+    "usd": 0.00188625
+  },
+  {
+    "split": "paraphrase",
+    "id": "req-paraphrase-00134",
+    "input_tokens": 1863,
+    "cached_input_tokens": 0,
+    "output_tokens": 142,
+    "usd": 0.00203625
+  },
+  {
+    "split": "paraphrase",
+    "id": "req-paraphrase-00135",
+    "input_tokens": 1902,
+    "cached_input_tokens": 0,
+    "output_tokens": 143,
+    "usd": 0.00207
+  },
+  {
+    "split": "paraphrase",
+    "id": "req-paraphrase-00136",
+    "input_tokens": 1912,
+    "cached_input_tokens": 0,
+    "output_tokens": 156,
+    "usd": 0.002136
+  },
+  {
+    "split": "paraphrase",
+    "id": "req-paraphrase-00138",
+    "input_tokens": 1883,
+    "cached_input_tokens": 0,
+    "output_tokens": 144,
+    "usd": 0.00206025
+  },
+  {
+    "split": "paraphrase",
+    "id": "req-paraphrase-00139",
+    "input_tokens": 1855,
+    "cached_input_tokens": 0,
+    "output_tokens": 156,
+    "usd": 0.00209325
+  },
+  {
+    "split": "paraphrase",
+    "id": "req-paraphrase-00140",
+    "input_tokens": 1761,
+    "cached_input_tokens": 0,
+    "output_tokens": 121,
+    "usd": 0.00186525
+  },
+  {
+    "split": "paraphrase",
+    "id": "req-paraphrase-00143",
+    "input_tokens": 1780,
+    "cached_input_tokens": 0,
+    "output_tokens": 125,
+    "usd": 0.0018975
+  },
+  {
+    "split": "paraphrase",
+    "id": "req-paraphrase-00144",
+    "input_tokens": 1851,
+    "cached_input_tokens": 0,
+    "output_tokens": 141,
+    "usd": 0.00202275
+  },
+  {
+    "split": "paraphrase",
+    "id": "req-paraphrase-00146",
+    "input_tokens": 1671,
+    "cached_input_tokens": 0,
+    "output_tokens": 90,
+    "usd": 0.00165825
+  },
+  {
+    "split": "paraphrase",
+    "id": "req-paraphrase-00148",
+    "input_tokens": 1854,
+    "cached_input_tokens": 0,
+    "output_tokens": 144,
+    "usd": 0.0020385
+  },
+  {
+    "split": "paraphrase",
+    "id": "req-paraphrase-00149",
+    "input_tokens": 1804,
+    "cached_input_tokens": 0,
+    "output_tokens": 122,
+    "usd": 0.001902
+  },
+  {
+    "split": "paraphrase",
+    "id": "req-paraphrase-00150",
+    "input_tokens": 1874,
+    "cached_input_tokens": 0,
+    "output_tokens": 146,
+    "usd": 0.0020625
+  },
+  {
+    "split": "paraphrase",
+    "id": "req-paraphrase-00151",
+    "input_tokens": 1882,
+    "cached_input_tokens": 0,
+    "output_tokens": 154,
+    "usd": 0.0021045
+  },
+  {
+    "split": "paraphrase",
+    "id": "req-paraphrase-00152",
+    "input_tokens": 1876,
+    "cached_input_tokens": 0,
+    "output_tokens": 151,
+    "usd": 0.0020865
+  },
+  {
+    "split": "paraphrase",
+    "id": "req-paraphrase-00154",
+    "input_tokens": 1765,
+    "cached_input_tokens": 0,
+    "output_tokens": 129,
+    "usd": 0.00190425
+  },
+  {
+    "split": "paraphrase",
+    "id": "req-paraphrase-00158",
+    "input_tokens": 1877,
+    "cached_input_tokens": 0,
+    "output_tokens": 159,
+    "usd": 0.00212325
+  },
+  {
+    "split": "paraphrase",
+    "id": "req-paraphrase-00159",
+    "input_tokens": 1770,
+    "cached_input_tokens": 0,
+    "output_tokens": 135,
+    "usd": 0.001935
+  },
+  {
+    "split": "paraphrase",
+    "id": "req-paraphrase-00161",
+    "input_tokens": 1871,
+    "cached_input_tokens": 0,
+    "output_tokens": 156,
+    "usd": 0.00210525
+  },
+  {
+    "split": "paraphrase",
+    "id": "req-paraphrase-00164",
+    "input_tokens": 1872,
+    "cached_input_tokens": 0,
+    "output_tokens": 160,
+    "usd": 0.002124
+  },
+  {
+    "split": "paraphrase",
+    "id": "req-paraphrase-00167",
+    "input_tokens": 1762,
+    "cached_input_tokens": 0,
+    "output_tokens": 127,
+    "usd": 0.001893
+  },
+  {
+    "split": "paraphrase",
+    "id": "req-paraphrase-00170",
+    "input_tokens": 1901,
+    "cached_input_tokens": 0,
+    "output_tokens": 170,
+    "usd": 0.00219075
+  },
+  {
+    "split": "paraphrase",
+    "id": "req-paraphrase-00171",
+    "input_tokens": 1767,
+    "cached_input_tokens": 0,
+    "output_tokens": 117,
+    "usd": 0.00185175
+  },
+  {
+    "split": "paraphrase",
+    "id": "req-paraphrase-00173",
+    "input_tokens": 1760,
+    "cached_input_tokens": 0,
+    "output_tokens": 114,
+    "usd": 0.001833
+  },
+  {
+    "split": "paraphrase",
+    "id": "req-paraphrase-00176",
+    "input_tokens": 1787,
+    "cached_input_tokens": 0,
+    "output_tokens": 128,
+    "usd": 0.00191625
+  },
+  {
+    "split": "paraphrase",
+    "id": "req-paraphrase-00178",
+    "input_tokens": 1884,
+    "cached_input_tokens": 0,
+    "output_tokens": 140,
+    "usd": 0.002043
+  },
+  {
+    "split": "paraphrase",
+    "id": "req-paraphrase-00180",
+    "input_tokens": 1873,
+    "cached_input_tokens": 0,
+    "output_tokens": 168,
+    "usd": 0.00216075
+  },
+  {
+    "split": "paraphrase",
+    "id": "req-paraphrase-00181",
+    "input_tokens": 1861,
+    "cached_input_tokens": 0,
+    "output_tokens": 140,
+    "usd": 0.00202575
+  },
+  {
+    "split": "paraphrase",
+    "id": "req-paraphrase-00182",
+    "input_tokens": 1891,
+    "cached_input_tokens": 0,
+    "output_tokens": 151,
+    "usd": 0.00209775
+  },
+  {
+    "split": "paraphrase",
+    "id": "req-paraphrase-00189",
+    "input_tokens": 1899,
+    "cached_input_tokens": 0,
+    "output_tokens": 164,
+    "usd": 0.00216225
+  },
+  {
+    "split": "paraphrase",
+    "id": "req-paraphrase-00191",
+    "input_tokens": 1869,
+    "cached_input_tokens": 0,
+    "output_tokens": 160,
+    "usd": 0.00212175
+  },
+  {
+    "split": "paraphrase",
+    "id": "req-paraphrase-00195",
+    "input_tokens": 1859,
+    "cached_input_tokens": 0,
+    "output_tokens": 155,
+    "usd": 0.00209175
+  },
+  {
+    "split": "paraphrase",
+    "id": "req-paraphrase-00199",
+    "input_tokens": 1772,
+    "cached_input_tokens": 0,
+    "output_tokens": 133,
+    "usd": 0.0019275
+  },
+  {
+    "split": "paraphrase",
+    "id": "req-paraphrase-00201",
+    "input_tokens": 1887,
+    "cached_input_tokens": 0,
+    "output_tokens": 139,
+    "usd": 0.00204075
+  },
+  {
+    "split": "paraphrase",
+    "id": "req-paraphrase-00204",
+    "input_tokens": 1797,
+    "cached_input_tokens": 0,
+    "output_tokens": 119,
+    "usd": 0.00188325
+  },
+  {
+    "split": "paraphrase",
+    "id": "req-paraphrase-00205",
+    "input_tokens": 1856,
+    "cached_input_tokens": 0,
+    "output_tokens": 159,
+    "usd": 0.0021075
+  },
+  {
+    "split": "paraphrase",
+    "id": "req-paraphrase-00207",
+    "input_tokens": 1858,
+    "cached_input_tokens": 0,
+    "output_tokens": 151,
+    "usd": 0.002073
+  },
+  {
+    "split": "paraphrase",
+    "id": "req-paraphrase-00210",
+    "input_tokens": 1767,
+    "cached_input_tokens": 0,
+    "output_tokens": 123,
+    "usd": 0.00187875
+  },
+  {
+    "split": "paraphrase",
+    "id": "req-paraphrase-00212",
+    "input_tokens": 1882,
+    "cached_input_tokens": 0,
+    "output_tokens": 138,
+    "usd": 0.0020325
+  },
+  {
+    "split": "paraphrase",
+    "id": "req-paraphrase-00213",
+    "input_tokens": 1772,
+    "cached_input_tokens": 0,
+    "output_tokens": 114,
+    "usd": 0.001842
+  },
+  {
+    "split": "paraphrase",
+    "id": "req-paraphrase-00215",
+    "input_tokens": 1771,
+    "cached_input_tokens": 0,
+    "output_tokens": 132,
+    "usd": 0.00192225
+  },
+  {
+    "split": "paraphrase",
+    "id": "req-paraphrase-00218",
+    "input_tokens": 1759,
+    "cached_input_tokens": 0,
+    "output_tokens": 109,
+    "usd": 0.00180975
+  },
+  {
+    "split": "paraphrase",
+    "id": "req-paraphrase-00222",
+    "input_tokens": 1855,
+    "cached_input_tokens": 0,
+    "output_tokens": 156,
+    "usd": 0.00209325
+  },
+  {
+    "split": "paraphrase",
+    "id": "req-paraphrase-00224",
+    "input_tokens": 1856,
+    "cached_input_tokens": 0,
+    "output_tokens": 156,
+    "usd": 0.002094
+  },
+  {
+    "split": "paraphrase",
+    "id": "req-paraphrase-00226",
+    "input_tokens": 1765,
+    "cached_input_tokens": 0,
+    "output_tokens": 138,
+    "usd": 0.00194475
+  },
+  {
+    "split": "paraphrase",
+    "id": "req-paraphrase-00227",
+    "input_tokens": 1672,
+    "cached_input_tokens": 0,
+    "output_tokens": 95,
+    "usd": 0.0016815
+  },
+  {
+    "split": "paraphrase",
+    "id": "req-paraphrase-00233",
+    "input_tokens": 1877,
+    "cached_input_tokens": 0,
+    "output_tokens": 151,
+    "usd": 0.00208725
+  },
+  {
+    "split": "paraphrase",
+    "id": "req-paraphrase-00234",
+    "input_tokens": 1782,
+    "cached_input_tokens": 0,
+    "output_tokens": 124,
+    "usd": 0.0018945
+  },
+  {
+    "split": "paraphrase",
+    "id": "req-paraphrase-00236",
+    "input_tokens": 1888,
+    "cached_input_tokens": 0,
+    "output_tokens": 149,
+    "usd": 0.0020865
+  },
+  {
+    "split": "paraphrase",
+    "id": "req-paraphrase-00239",
+    "input_tokens": 1878,
+    "cached_input_tokens": 0,
+    "output_tokens": 154,
+    "usd": 0.0021015
+  },
+  {
+    "split": "paraphrase",
+    "id": "req-paraphrase-00242",
+    "input_tokens": 1877,
+    "cached_input_tokens": 0,
+    "output_tokens": 144,
+    "usd": 0.00205575
+  },
+  {
+    "split": "paraphrase",
+    "id": "req-paraphrase-00245",
+    "input_tokens": 1761,
+    "cached_input_tokens": 0,
+    "output_tokens": 129,
+    "usd": 0.00190125
+  },
+  {
+    "split": "paraphrase",
+    "id": "req-paraphrase-00247",
+    "input_tokens": 1878,
+    "cached_input_tokens": 0,
+    "output_tokens": 149,
+    "usd": 0.002079
+  },
+  {
+    "split": "paraphrase",
+    "id": "req-paraphrase-00249",
+    "input_tokens": 1871,
+    "cached_input_tokens": 0,
+    "output_tokens": 156,
+    "usd": 0.00210525
+  },
+  {
+    "split": "paraphrase",
+    "id": "req-paraphrase-00250",
+    "input_tokens": 1834,
+    "cached_input_tokens": 0,
+    "output_tokens": 140,
+    "usd": 0.0020055
+  },
+  {
+    "split": "paraphrase",
+    "id": "req-paraphrase-00253",
+    "input_tokens": 1869,
+    "cached_input_tokens": 0,
+    "output_tokens": 163,
+    "usd": 0.00213525
+  },
+  {
+    "split": "paraphrase",
+    "id": "req-paraphrase-00258",
+    "input_tokens": 1895,
+    "cached_input_tokens": 0,
+    "output_tokens": 146,
+    "usd": 0.00207825
+  },
+  {
+    "split": "paraphrase",
+    "id": "req-paraphrase-00267",
+    "input_tokens": 1783,
+    "cached_input_tokens": 0,
+    "output_tokens": 116,
+    "usd": 0.00185925
+  },
+  {
+    "split": "paraphrase",
+    "id": "req-paraphrase-00269",
+    "input_tokens": 1920,
+    "cached_input_tokens": 0,
+    "output_tokens": 157,
+    "usd": 0.0021465
+  },
+  {
+    "split": "paraphrase",
+    "id": "req-paraphrase-00270",
+    "input_tokens": 1782,
+    "cached_input_tokens": 0,
+    "output_tokens": 128,
+    "usd": 0.0019125
+  },
+  {
+    "split": "paraphrase",
+    "id": "req-paraphrase-00275",
+    "input_tokens": 1924,
+    "cached_input_tokens": 0,
+    "output_tokens": 168,
+    "usd": 0.002199
+  },
+  {
+    "split": "paraphrase",
+    "id": "req-paraphrase-00279",
+    "input_tokens": 1780,
+    "cached_input_tokens": 0,
+    "output_tokens": 133,
+    "usd": 0.0019335
+  },
+  {
+    "split": "paraphrase",
+    "id": "req-paraphrase-00281",
+    "input_tokens": 1863,
+    "cached_input_tokens": 0,
+    "output_tokens": 148,
+    "usd": 0.00206325
+  },
+  {
+    "split": "paraphrase",
+    "id": "req-paraphrase-00283",
+    "input_tokens": 1760,
+    "cached_input_tokens": 0,
+    "output_tokens": 117,
+    "usd": 0.0018465
+  },
+  {
+    "split": "paraphrase",
+    "id": "req-paraphrase-00284",
+    "input_tokens": 1766,
+    "cached_input_tokens": 0,
+    "output_tokens": 115,
+    "usd": 0.001842
+  },
+  {
+    "split": "paraphrase",
+    "id": "req-paraphrase-00285",
+    "input_tokens": 1877,
+    "cached_input_tokens": 0,
+    "output_tokens": 145,
+    "usd": 0.00206025
+  },
+  {
+    "split": "paraphrase",
+    "id": "req-paraphrase-00295",
+    "input_tokens": 1763,
+    "cached_input_tokens": 0,
+    "output_tokens": 120,
+    "usd": 0.00186225
+  },
+  {
+    "split": "paraphrase",
+    "id": "req-paraphrase-00302",
+    "input_tokens": 1772,
+    "cached_input_tokens": 0,
+    "output_tokens": 128,
+    "usd": 0.001905
+  },
+  {
+    "split": "paraphrase",
+    "id": "req-paraphrase-00303",
+    "input_tokens": 1778,
+    "cached_input_tokens": 0,
+    "output_tokens": 133,
+    "usd": 0.001932
+  },
+  {
+    "split": "paraphrase",
+    "id": "req-paraphrase-00305",
+    "input_tokens": 1858,
+    "cached_input_tokens": 0,
+    "output_tokens": 149,
+    "usd": 0.002064
+  },
+  {
+    "split": "paraphrase",
+    "id": "req-paraphrase-00311",
+    "input_tokens": 1773,
+    "cached_input_tokens": 0,
+    "output_tokens": 124,
+    "usd": 0.00188775
+  },
+  {
+    "split": "paraphrase",
+    "id": "req-paraphrase-00314",
+    "input_tokens": 1743,
+    "cached_input_tokens": 0,
+    "output_tokens": 118,
+    "usd": 0.00183825
+  },
+  {
+    "split": "paraphrase",
+    "id": "req-paraphrase-00315",
+    "input_tokens": 1864,
+    "cached_input_tokens": 0,
+    "output_tokens": 158,
+    "usd": 0.002109
+  },
+  {
+    "split": "paraphrase",
+    "id": "req-paraphrase-00317",
+    "input_tokens": 1880,
+    "cached_input_tokens": 0,
+    "output_tokens": 167,
+    "usd": 0.0021615
+  },
+  {
+    "split": "paraphrase",
+    "id": "req-paraphrase-00318",
+    "input_tokens": 1863,
+    "cached_input_tokens": 0,
+    "output_tokens": 173,
+    "usd": 0.00217575
+  },
+  {
+    "split": "paraphrase",
+    "id": "req-paraphrase-00319",
+    "input_tokens": 1784,
+    "cached_input_tokens": 0,
+    "output_tokens": 146,
+    "usd": 0.001995
+  },
+  {
+    "split": "paraphrase",
+    "id": "req-paraphrase-00323",
+    "input_tokens": 1853,
+    "cached_input_tokens": 0,
+    "output_tokens": 161,
+    "usd": 0.00211425
+  },
+  {
+    "split": "paraphrase",
+    "id": "req-paraphrase-00324",
+    "input_tokens": 1884,
+    "cached_input_tokens": 0,
+    "output_tokens": 159,
+    "usd": 0.0021285
+  },
+  {
+    "split": "paraphrase",
+    "id": "req-paraphrase-00327",
+    "input_tokens": 1684,
+    "cached_input_tokens": 0,
+    "output_tokens": 102,
+    "usd": 0.001722
+  },
+  {
+    "split": "paraphrase",
+    "id": "req-paraphrase-00329",
+    "input_tokens": 1876,
+    "cached_input_tokens": 0,
+    "output_tokens": 157,
+    "usd": 0.0021135
+  },
+  {
+    "split": "paraphrase",
+    "id": "req-paraphrase-00330",
+    "input_tokens": 1907,
+    "cached_input_tokens": 0,
+    "output_tokens": 141,
+    "usd": 0.00206475
+  },
+  {
+    "split": "paraphrase",
+    "id": "req-paraphrase-00332",
+    "input_tokens": 1866,
+    "cached_input_tokens": 0,
+    "output_tokens": 165,
+    "usd": 0.002142
+  },
+  {
+    "split": "paraphrase",
+    "id": "req-paraphrase-00335",
+    "input_tokens": 1898,
+    "cached_input_tokens": 0,
+    "output_tokens": 145,
+    "usd": 0.002076
+  },
+  {
+    "split": "paraphrase",
+    "id": "req-paraphrase-00338",
+    "input_tokens": 1880,
+    "cached_input_tokens": 0,
+    "output_tokens": 158,
+    "usd": 0.002121
+  },
+  {
+    "split": "paraphrase",
+    "id": "req-paraphrase-00340",
+    "input_tokens": 1915,
+    "cached_input_tokens": 0,
+    "output_tokens": 155,
+    "usd": 0.00213375
+  },
+  {
+    "split": "paraphrase",
+    "id": "req-paraphrase-00341",
+    "input_tokens": 1893,
+    "cached_input_tokens": 0,
+    "output_tokens": 159,
+    "usd": 0.00213525
+  },
+  {
+    "split": "paraphrase",
+    "id": "req-paraphrase-00343",
+    "input_tokens": 1883,
+    "cached_input_tokens": 0,
+    "output_tokens": 157,
+    "usd": 0.00211875
+  },
+  {
+    "split": "paraphrase",
+    "id": "req-paraphrase-00345",
+    "input_tokens": 1761,
+    "cached_input_tokens": 0,
+    "output_tokens": 128,
+    "usd": 0.00189675
+  },
+  {
+    "split": "paraphrase",
+    "id": "req-paraphrase-00347",
+    "input_tokens": 1898,
+    "cached_input_tokens": 0,
+    "output_tokens": 159,
+    "usd": 0.002139
+  },
+  {
+    "split": "paraphrase",
+    "id": "req-paraphrase-00348",
+    "input_tokens": 1668,
+    "cached_input_tokens": 0,
+    "output_tokens": 97,
+    "usd": 0.0016875
+  },
+  {
+    "split": "paraphrase",
+    "id": "req-paraphrase-00349",
+    "input_tokens": 1844,
+    "cached_input_tokens": 0,
+    "output_tokens": 154,
+    "usd": 0.002076
+  },
+  {
+    "split": "paraphrase",
+    "id": "req-paraphrase-00353",
+    "input_tokens": 1788,
+    "cached_input_tokens": 0,
+    "output_tokens": 126,
+    "usd": 0.001908
+  },
+  {
+    "split": "paraphrase",
+    "id": "req-paraphrase-00356",
+    "input_tokens": 1768,
+    "cached_input_tokens": 0,
+    "output_tokens": 131,
+    "usd": 0.0019155
+  },
+  {
+    "split": "paraphrase",
+    "id": "req-paraphrase-00358",
+    "input_tokens": 1783,
+    "cached_input_tokens": 0,
+    "output_tokens": 116,
+    "usd": 0.00185925
+  },
+  {
+    "split": "paraphrase",
+    "id": "req-paraphrase-00361",
+    "input_tokens": 1876,
+    "cached_input_tokens": 0,
+    "output_tokens": 151,
+    "usd": 0.0020865
+  },
+  {
+    "split": "paraphrase",
+    "id": "req-paraphrase-00362",
+    "input_tokens": 1858,
+    "cached_input_tokens": 0,
+    "output_tokens": 158,
+    "usd": 0.0021045
+  },
+  {
+    "split": "paraphrase",
+    "id": "req-paraphrase-00373",
+    "input_tokens": 1767,
+    "cached_input_tokens": 0,
+    "output_tokens": 113,
+    "usd": 0.00183375
+  },
+  {
+    "split": "paraphrase",
+    "id": "req-paraphrase-00381",
+    "input_tokens": 1784,
+    "cached_input_tokens": 0,
+    "output_tokens": 138,
+    "usd": 0.001959
+  },
+  {
+    "split": "paraphrase",
+    "id": "req-paraphrase-00383",
+    "input_tokens": 1858,
+    "cached_input_tokens": 0,
+    "output_tokens": 50,
+    "usd": 0.0016185
+  },
+  {
+    "split": "paraphrase",
+    "id": "req-paraphrase-00390",
+    "input_tokens": 1782,
+    "cached_input_tokens": 0,
+    "output_tokens": 139,
+    "usd": 0.001962
+  },
+  {
+    "split": "paraphrase",
+    "id": "req-paraphrase-00392",
+    "input_tokens": 1781,
+    "cached_input_tokens": 0,
+    "output_tokens": 119,
+    "usd": 0.00187125
+  },
+  {
+    "split": "paraphrase",
+    "id": "req-paraphrase-00394",
+    "input_tokens": 1769,
+    "cached_input_tokens": 0,
+    "output_tokens": 121,
+    "usd": 0.00187125
+  },
+  {
+    "split": "paraphrase",
+    "id": "req-paraphrase-00401",
+    "input_tokens": 1897,
+    "cached_input_tokens": 0,
+    "output_tokens": 167,
+    "usd": 0.00217425
+  },
+  {
+    "split": "paraphrase",
+    "id": "req-paraphrase-00411",
+    "input_tokens": 1774,
+    "cached_input_tokens": 0,
+    "output_tokens": 122,
+    "usd": 0.0018795
+  },
+  {
+    "split": "paraphrase",
+    "id": "req-paraphrase-00412",
+    "input_tokens": 1781,
+    "cached_input_tokens": 0,
+    "output_tokens": 140,
+    "usd": 0.00196575
+  },
+  {
+    "split": "paraphrase",
+    "id": "req-paraphrase-00413",
+    "input_tokens": 1882,
+    "cached_input_tokens": 0,
+    "output_tokens": 162,
+    "usd": 0.0021405
+  },
+  {
+    "split": "demo",
+    "id": "req-demo-main-fall-unconscious",
+    "input_tokens": 1856,
+    "cached_input_tokens": 1664,
+    "output_tokens": 139,
+    "usd": 0.0008943
+  },
+  {
+    "split": "demo",
+    "id": "req-demo-main-fall-early",
+    "input_tokens": 1853,
+    "cached_input_tokens": 0,
+    "output_tokens": 142,
+    "usd": 0.00202875
+  },
+  {
+    "split": "demo",
+    "id": "req-demo-collapse-unknown",
+    "input_tokens": 1843,
+    "cached_input_tokens": 0,
+    "output_tokens": 44,
+    "usd": 0.00158025
+  },
+  {
+    "split": "demo",
+    "id": "req-demo-collapse-now-known",
+    "input_tokens": 1843,
+    "cached_input_tokens": 0,
+    "output_tokens": 164,
+    "usd": 0.00212025
+  },
+  {
+    "split": "demo",
+    "id": "req-demo-third-call-chest",
+    "input_tokens": 1845,
+    "cached_input_tokens": 0,
+    "output_tokens": 148,
+    "usd": 0.00204975
+  },
+  {
+    "split": "demo",
+    "id": "req-demo-third-call-chest-sweaty",
+    "input_tokens": 1851,
+    "cached_input_tokens": 0,
+    "output_tokens": 150,
+    "usd": 0.00206325
+  },
+  {
+    "split": "demo",
+    "id": "req-demo-arrest-cpr",
+    "input_tokens": 1850,
+    "cached_input_tokens": 0,
+    "output_tokens": 147,
+    "usd": 0.002049
+  },
+  {
+    "split": "demo",
+    "id": "req-demo-choking-blue",
+    "input_tokens": 1847,
+    "cached_input_tokens": 0,
+    "output_tokens": 144,
+    "usd": 0.00203325
+  },
+  {
+    "split": "demo",
+    "id": "req-demo-exception-delta",
+    "input_tokens": 1846,
+    "cached_input_tokens": 0,
+    "output_tokens": 147,
+    "usd": 0.002046
+  },
+  {
+    "split": "demo",
+    "id": "req-demo-exception-not-for-charlie",
+    "input_tokens": 1848,
+    "cached_input_tokens": 0,
+    "output_tokens": 138,
+    "usd": 0.002007
+  },
+  {
+    "split": "demo",
+    "id": "req-demo-exception-echo",
+    "input_tokens": 1848,
+    "cached_input_tokens": 0,
+    "output_tokens": 156,
+    "usd": 0.002088
+  },
+  {
+    "split": "demo",
+    "id": "req-demo-bls-only-delta",
+    "input_tokens": 1662,
+    "cached_input_tokens": 0,
+    "output_tokens": 89,
+    "usd": 0.001647
+  },
+  {
+    "split": "demo",
+    "id": "req-demo-bls-only-alpha",
+    "input_tokens": 1656,
+    "cached_input_tokens": 0,
+    "output_tokens": 92,
+    "usd": 0.001656
+  },
+  {
+    "split": "demo",
+    "id": "req-demo-minor-cut",
+    "input_tokens": 1847,
+    "cached_input_tokens": 0,
+    "output_tokens": 152,
+    "usd": 0.00206925
+  },
+  {
+    "split": "demo",
+    "id": "req-demo-heavy-bleed",
+    "input_tokens": 1848,
+    "cached_input_tokens": 0,
+    "output_tokens": 149,
+    "usd": 0.0020565
+  },
+  {
+    "split": "demo",
+    "id": "req-demo-ankle",
+    "input_tokens": 1850,
+    "cached_input_tokens": 0,
+    "output_tokens": 148,
+    "usd": 0.0020535
+  },
+  {
+    "split": "demo",
+    "id": "req-demo-diabetic",
+    "input_tokens": 1849,
+    "cached_input_tokens": 0,
+    "output_tokens": 142,
+    "usd": 0.00202575
+  },
+  {
+    "split": "demo",
+    "id": "req-demo-seizure-stopped",
+    "input_tokens": 1852,
+    "cached_input_tokens": 0,
+    "output_tokens": 165,
+    "usd": 0.0021315
+  },
+  {
+    "split": "demo",
+    "id": "req-demo-overdose-awake",
+    "input_tokens": 1847,
+    "cached_input_tokens": 0,
+    "output_tokens": 132,
+    "usd": 0.00197925
+  },
+  {
+    "split": "demo",
+    "id": "req-demo-overdose-unconscious",
+    "input_tokens": 1848,
+    "cached_input_tokens": 0,
+    "output_tokens": 143,
+    "usd": 0.0020295
+  },
+  {
+    "split": "demo",
+    "id": "req-demo-confused",
+    "input_tokens": 1849,
+    "cached_input_tokens": 0,
+    "output_tokens": 152,
+    "usd": 0.00207075
+  },
+  {
+    "split": "demo",
+    "id": "req-demo-assault",
+    "input_tokens": 1857,
+    "cached_input_tokens": 0,
+    "output_tokens": 150,
+    "usd": 0.00206775
+  },
+  {
+    "split": "demo",
+    "id": "req-demo-hip-fall",
+    "input_tokens": 1751,
+    "cached_input_tokens": 0,
+    "output_tokens": 110,
+    "usd": 0.00180825
+  },
+  {
+    "split": "demo",
+    "id": "req-demo-roof-fall",
+    "input_tokens": 1849,
+    "cached_input_tokens": 0,
+    "output_tokens": 147,
+    "usd": 0.00204825
+  },
+  {
+    "split": "demo",
+    "id": "req-demo-chest-young",
+    "input_tokens": 1847,
+    "cached_input_tokens": 0,
+    "output_tokens": 156,
+    "usd": 0.00208725
+  },
+  {
+    "split": "demo",
+    "id": "req-demo-rash",
+    "input_tokens": 1844,
+    "cached_input_tokens": 0,
+    "output_tokens": 145,
+    "usd": 0.0020355
+  },
+  {
+    "split": "demo",
+    "id": "req-demo-unwell-unknown",
+    "input_tokens": 1847,
+    "cached_input_tokens": 0,
+    "output_tokens": 49,
+    "usd": 0.00160575
+  },
+  {
+    "split": "demo",
+    "id": "req-demo-no-complaint-yet",
+    "input_tokens": 1846,
+    "cached_input_tokens": 0,
+    "output_tokens": 52,
+    "usd": 0.0016185
+  },
+  {
+    "split": "demo",
+    "id": "req-demo-struck-by-car",
+    "input_tokens": 1756,
+    "cached_input_tokens": 0,
+    "output_tokens": 126,
+    "usd": 0.001884
+  },
+  {
+    "split": "demo",
+    "id": "req-demo-allergy-gasping",
+    "input_tokens": 1849,
+    "cached_input_tokens": 0,
+    "output_tokens": 159,
+    "usd": 0.00210225
+  },
+  {
+    "split": "demo",
+    "id": "req-demo-main-fall-early-paraphrase",
+    "input_tokens": 1857,
+    "cached_input_tokens": 0,
+    "output_tokens": 155,
+    "usd": 0.00209025
+  },
+  {
+    "split": "demo",
+    "id": "req-demo-third-call-chest-sweaty-paraphrase",
+    "input_tokens": 1863,
+    "cached_input_tokens": 0,
+    "output_tokens": 158,
+    "usd": 0.00210825
+  },
+  {
+    "split": "demo",
+    "id": "req-demo-arrest-cpr-paraphrase",
+    "input_tokens": 1855,
+    "cached_input_tokens": 0,
+    "output_tokens": 148,
+    "usd": 0.00205725
+  },
+  {
+    "split": "demo",
+    "id": "req-demo-choking-blue-paraphrase",
+    "input_tokens": 1863,
+    "cached_input_tokens": 0,
+    "output_tokens": 147,
+    "usd": 0.00205875
+  },
+  {
+    "split": "demo",
+    "id": "req-demo-bls-only-alpha-paraphrase",
+    "input_tokens": 1662,
+    "cached_input_tokens": 0,
+    "output_tokens": 99,
+    "usd": 0.001692
+  },
+  {
+    "split": "demo",
+    "id": "req-demo-ankle-paraphrase",
+    "input_tokens": 1857,
+    "cached_input_tokens": 0,
+    "output_tokens": 136,
+    "usd": 0.00200475
+  },
+  {
+    "split": "demo",
+    "id": "req-demo-diabetic-paraphrase",
+    "input_tokens": 1856,
+    "cached_input_tokens": 0,
+    "output_tokens": 145,
+    "usd": 0.0020445
+  },
+  {
+    "split": "demo",
+    "id": "req-demo-seizure-stopped-paraphrase",
+    "input_tokens": 1866,
+    "cached_input_tokens": 0,
+    "output_tokens": 140,
+    "usd": 0.0020295
+  },
+  {
+    "split": "demo",
+    "id": "req-demo-overdose-awake-paraphrase",
+    "input_tokens": 1858,
+    "cached_input_tokens": 0,
+    "output_tokens": 148,
+    "usd": 0.0020595
+  },
+  {
+    "split": "demo",
+    "id": "req-demo-roof-fall-paraphrase",
+    "input_tokens": 1863,
+    "cached_input_tokens": 0,
+    "output_tokens": 151,
+    "usd": 0.00207675
+  }
+]

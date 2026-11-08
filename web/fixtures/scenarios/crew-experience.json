@@ -1,0 +1,16 @@
+{
+  "$comment": "Judge demo of the existing model rubric's experience exception. Expected choice is a rehearsal target, never an enforced recommendation.",
+  "id": "crew-experience",
+  "title": "Unconscious fall — compare two ALS crews",
+  "callerNumber": null,
+  "location": { "text": "14 Riverside Dr (fictional)", "coords": { "lat": 42.096, "lng": -75.9235 }, "confidence": "confirmed" },
+  "steps": [
+    {
+      "atSeconds": 0,
+      "locationText": "14 Riverside Dr (fictional)",
+      "facts": { "chiefComplaint": "Father fell down the stairs and is unconscious", "patientCount": 1, "patientAge": 67, "patientSex": "male", "conscious": false, "breathingNormally": true, "severeBleeding": false, "traumaMechanism": "fall down stairs", "callerRelation": "family" },
+      "transcript": [{ "role": "caller", "text": "My father fell down the stairs. He is unconscious but breathing normally. He is 67. We are at 14 Riverside Drive." }]
+    }
+  ],
+  "expected": { "acuity": "Delta", "recommendedAmbulanceId": "amb-3" }
+}

@@ -41,3 +41,39 @@ python -I -c "import json; from jsonschema import Draft202012Validator as V; rq=
 ## Status reports
 
 Append to `model/STATUS.md` at hours 6, 12 and 18: what works, what's blocked, GPU/serving details.
+
+## OpenAI model comparisons
+
+Latest: [GPT-6 Luna, GPT-5.4-mini, and both Qwen baselines](benchmarks/2026-11-08-luna-comparison/README.md),
+including 490-case results, cache-aware costs, raw outputs and the test/demo/paraphrase definitions.
+
+Saved results for base Qwen 4B, fine-tuned Qwen 4B r1, and GPT-5.4-mini,
+including per-request costs and hosting break-even assumptions:
+[November 7 benchmark archive](benchmarks/2026-11-07-qwen4b-vs-gpt54mini/README.md).
+
+From the repository root, run:
+
+```bash
+model/.venv/bin/python -I model/eval/compare_openai.py
+```
+
+Select another supported model with `--model gpt-6-luna` or `--model gpt-5.4`.
+Each model gets its own output directory and pricing. The GPT-5.4 run was cancelled
+at the user's request; its partial outputs are not a completed benchmark.
+Luna's cost includes reported cache-write tokens at the applicable write rate.
+
+This evaluates the same 40 demo, 300 test and 150 paraphrase cases as the saved
+fine-tuned Qwen 4B `runs/r1/eval-ft-*.json` results. It uses the full rubric prompt,
+strict schema decoding, no reasoning tokens and sequential requests. The OpenAI
+schema requires a transport wrapper, which is removed before scoring. Both models
+use a 600-token output cap. Credentials come from `OPENAI_API_KEY` / `MODEL_API_KEY`
+in the environment, or `web/.env.local`; use `--env-file` to select another file.
+Credentials are never included in saved artifacts.
+
+Outputs go to `model/runs/gpt54mini-vs-r1/`, including `comparison.md`, raw scored
+responses, token usage and configuration/data hashes. Repeating the command resumes
+saved rows; changed inputs require a fresh `--out` directory. API failures stop the
+run rather than being reported as model mistakes. For a smoke test use `--limit 1`
+with a separate `--out` directory. These are synthetic rubric benchmarks, not a
+measure of clinical correctness. Latencies compare the actual serving paths, which
+use different infrastructure.

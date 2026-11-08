@@ -11,48 +11,6 @@
   -webkit-font-smoothing: antialiased;
 }
 
-/* Materials ---------------------------------------------------------------- */
-
-/* Headings and row contents share a 16px inset. Rows contribute their own
-   12px horizontal / 8px vertical padding inside the compact list body. */
-.dispatch-list-card {
-  --card-spacing: 16px;
-  gap: 8px;
-  padding-top: 16px;
-  padding-bottom: 8px;
-}
-.dispatch-section-title {
-  font-size: 12px;
-  line-height: 18px;
-  font-weight: 500;
-  letter-spacing: 0.01em;
-  color: var(--muted-foreground);
-}
-
-/* Translucent cards: thicker blur on bigger surfaces; a bright top edge = light on glass. */
-.dispatch-card-surface {
-  font-family: var(--font-geist-sans), system-ui, sans-serif;
-  background: var(--card);
-  color: var(--card-foreground);
-}
-.dispatch [data-slot="card"],
-.dispatch-card-surface {
-  -webkit-backdrop-filter: blur(28px) saturate(1.7);
-  backdrop-filter: blur(28px) saturate(1.7);
-  box-shadow:
-    inset 0 1px 0 0 oklch(1 0 0 / 0.08),
-    0 18px 50px -12px oklch(0 0 0 / 0.55);
-}
-
-@media (prefers-reduced-transparency: reduce) {
-  .dispatch [data-slot="card"],
-  .dispatch-card-surface {
-    background: oklch(0.19 0.005 260);
-    backdrop-filter: none;
-    -webkit-backdrop-filter: none;
-  }
-}
-
 /* Numbers align in columns without switching to a monospace face. */
 .dispatch .num {
   font-variant-numeric: tabular-nums;
@@ -472,23 +430,12 @@
   height: auto;
   max-height: calc(100dvh - 80px);
   overflow-y: auto;
-  gap: 16px;
-  padding: 16px;
-  border: 0;
-  border-radius: calc(var(--radius) + 4px);
   transition: none;
   animation: none;
   outline: none;
 }
-/* Center the 28px close target on the 18px title at the 16px inset.
-   The icon's right edge aligns with the panel's content edge. */
-.demo-panel [data-slot="sheet-close"] {
-  top: 11px;
-  right: 10px;
-}
 @media (prefers-reduced-transparency: reduce), (prefers-contrast: more) {
-  .dispatch-surface,
-  .dispatch-card-surface {
+  .dispatch-surface {
     background: oklch(0.2 0.006 260);
     -webkit-backdrop-filter: none;
     backdrop-filter: none;

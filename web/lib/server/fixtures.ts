@@ -3,11 +3,13 @@ import fleetJson from "@/fixtures/fleet.json";
 import busyFirstCall from "@/fixtures/scenarios/busy-first-call.json";
 import fallUnconscious from "@/fixtures/scenarios/fall-unconscious.json";
 import breathingCharlie from "@/fixtures/scenarios/breathing-charlie.json";
+import crewExperience from "@/fixtures/scenarios/crew-experience.json";
+import premadeIncidents from "@/fixtures/scenarios/premade-incidents.json";
 
 export const fleetFixture: FleetFixture = FleetFixture.parse(fleetJson);
 
 export const scenarios: Record<string, ScenarioFixture> = Object.fromEntries(
-  [busyFirstCall, fallUnconscious, breathingCharlie].map((s) => {
+  [busyFirstCall, fallUnconscious, breathingCharlie, crewExperience, ...premadeIncidents].map((s) => {
     const parsed = ScenarioFixture.parse(s);
     return [parsed.id, parsed];
   }),

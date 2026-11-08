@@ -45,12 +45,15 @@ function SheetOverlay({
   )
 }
 
+// With asChild, the child owns its appearance and close control; Sheet keeps
+// dialog semantics, focus management, dismissal, and portal behavior.
 function SheetContent({
   className,
   children,
   side = "right",
   showCloseButton = true,
   showOverlay = true,
+  asChild = false,
   ...props
 }: React.ComponentProps<typeof SheetPrimitive.Content> & {
   side?: "top" | "right" | "bottom" | "left"
@@ -61,26 +64,27 @@ function SheetContent({
     <SheetPortal>
       {showOverlay && <SheetOverlay />}
       <SheetPrimitive.Content
+        asChild={asChild}
         data-slot="sheet-content"
         data-side={side}
         className={cn(
-          "fixed z-50 flex flex-col gap-4 bg-popover bg-clip-padding text-sm text-popover-foreground shadow-lg transition duration-200 ease-in-out data-[side=bottom]:inset-x-0 data-[side=bottom]:bottom-0 data-[side=bottom]:h-auto data-[side=bottom]:border-t data-[side=left]:inset-y-0 data-[side=left]:left-0 data-[side=left]:h-full data-[side=left]:w-3/4 data-[side=left]:border-r data-[side=right]:inset-y-0 data-[side=right]:right-0 data-[side=right]:h-full data-[side=right]:w-3/4 data-[side=right]:border-l data-[side=top]:inset-x-0 data-[side=top]:top-0 data-[side=top]:h-auto data-[side=top]:border-b data-[side=left]:sm:max-w-sm data-[side=right]:sm:max-w-sm ",
+          asChild ? "fixed z-50 outline-none" : "fixed z-50 flex flex-col gap-4 bg-popover bg-clip-padding text-sm text-popover-foreground shadow-lg transition duration-200 ease-in-out data-[side=bottom]:inset-x-0 data-[side=bottom]:bottom-0 data-[side=bottom]:h-auto data-[side=bottom]:border-t data-[side=left]:inset-y-0 data-[side=left]:left-0 data-[side=left]:h-full data-[side=left]:w-3/4 data-[side=left]:border-r data-[side=right]:inset-y-0 data-[side=right]:right-0 data-[side=right]:h-full data-[side=right]:w-3/4 data-[side=right]:border-l data-[side=top]:inset-x-0 data-[side=top]:top-0 data-[side=top]:h-auto data-[side=top]:border-b data-[side=left]:sm:max-w-sm data-[side=right]:sm:max-w-sm ",
           className
         )}
         {...props}
       >
-        {children}
-        {showCloseButton && (
-          <SheetPrimitive.Close data-slot="sheet-close" asChild>
-            <Button
-              variant="ghost"
-              className="absolute top-3 right-3"
-              size="icon-sm"
-            >
-              <XIcon className="size-4" />
-              <span className="sr-only">Close</span>
-            </Button>
-          </SheetPrimitive.Close>
+        {asChild ? children : (
+          <>
+            {children}
+            {showCloseButton && (
+              <SheetPrimitive.Close data-slot="sheet-close" asChild>
+                <Button variant="ghost" className="absolute top-3 right-3" size="icon-sm">
+                  <XIcon className="size-4" />
+                  <span className="sr-only">Close</span>
+                </Button>
+              </SheetPrimitive.Close>
+            )}
+          </>
         )}
       </SheetPrimitive.Content>
     </SheetPortal>
@@ -109,13 +113,15 @@ function SheetFooter({ className, ...props }: React.ComponentProps<"div">) {
 
 function SheetTitle({
   className,
+  asChild = false,
   ...props
 }: React.ComponentProps<typeof SheetPrimitive.Title>) {
   return (
     <SheetPrimitive.Title
+      asChild={asChild}
       data-slot="sheet-title"
       className={cn(
-        "cn-font-heading text-base font-medium text-foreground",
+        !asChild && "cn-font-heading text-base font-medium text-foreground",
         className
       )}
       {...props}
@@ -125,12 +131,14 @@ function SheetTitle({
 
 function SheetDescription({
   className,
+  asChild = false,
   ...props
 }: React.ComponentProps<typeof SheetPrimitive.Description>) {
   return (
     <SheetPrimitive.Description
+      asChild={asChild}
       data-slot="sheet-description"
-      className={cn("text-sm text-muted-foreground", className)}
+      className={cn(!asChild && "text-sm text-muted-foreground", className)}
       {...props}
     />
   )

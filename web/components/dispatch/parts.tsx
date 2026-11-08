@@ -142,7 +142,9 @@ export function CallRow({
         </span>
       </span>
       <span className="shrink-0 text-xs text-muted-foreground">
-        {assignedUnit ?? fieldLabel(call.status.replaceAll("_", " "))}
+        {call.status === "closed"
+          ? `${assignedUnit ? `${assignedUnit} · ` : ""}Done`
+          : assignedUnit ?? fieldLabel(call.status.replaceAll("_", " "))}
       </span>
     </button>
   );

@@ -30,6 +30,20 @@ export function buildFleetDemo(id: string, now = new Date()): DispatchState | nu
     const unit = state.ambulances["amb-1"];
     unit.position = { ...unit.homeStation };
   }
+  if (id === "fleet-experience") {
+    state.ambulances["amb-1"].position = { ...state.ambulances["amb-1"].homeStation };
+    // Two crews returning from the same hospital: Medic 3 is a little farther
+    // along the journey home, so takes slightly longer to divert to Riverside.
+    state.ambulances["amb-2"].position = { ...state.hospitals.find((h) => h.id === "hosp-lourdes")!.coords };
+    state.ambulances["amb-3"].position = { lat: 42.0915, lng: -75.9375 };
+    for (const id of ["amb-2", "amb-3"]) state.ambulances[id].returnTrip = { route: null, endsAt: null };
+    return DispatchState.parse(state);
+  }
+  // A substantial remaining transport gives the presenter time to explain queuing.
+  if (id === "fleet-mixed" || id === "fleet-busy") {
+    state.ambulances["amb-2"].position = { lat: 42.078, lng: -75.987 };
+  }
+  if (id === "fleet-busy") state.ambulances["amb-3"].position = { lat: 42.095, lng: -75.9245 };
 
   function job(unitId: string, phase: "en_route" | "on_scene" | "transporting" | "queued", label: string) {
     const unit = state.ambulances[unitId];
@@ -63,11 +77,11 @@ export function buildFleetDemo(id: string, now = new Date()): DispatchState | nu
     else { unit.activeTaskId = task.id; unit.status = "busy"; }
   }
 
-  job("amb-3", "on_scene", "Vestal kitchen fall");
-  if (id !== "fleet-spread") job("amb-2", "transporting", "Johnson City patient transport");
+  job("amb-3", "on_scene", id === "fleet-busy" ? "Riverside kitchen fall" : "Vestal kitchen fall");
+  if (id !== "fleet-spread") job("amb-2", "transporting", "Vestal patient transport");
   if (id === "fleet-busy") {
     job("amb-1", "en_route", "Downtown fall");
-    job("amb-3", "queued", "Vestal follow-up incident");
+    job("amb-3", "queued", "Riverside follow-up incident");
   }
   // Fail before replacing live state if a setup ever violates the contracts.
   return DispatchState.parse(state);

@@ -9,6 +9,8 @@ import {
 import { selectedCall, selectedCandidate } from "./dispatch-view";
 import { createCommandRunner, type CommandAction } from "./command-action";
 import { FLEET_DEMO_SCENARIOS, fleetDemoScenario } from "@/lib/demo/scenarios";
+import { RANDOM_INCIDENT_OPTIONS, randomIncidentOption } from "@/lib/demo/random-incidents";
+import { PREMADE_INCIDENTS } from "@/lib/demo/premade-incidents";
 
 type Operation = {
   status: "pending" | "uncertain" | "acknowledged" | "error";
@@ -18,9 +20,11 @@ type Operation = {
 };
 export const DEMO_SCENARIOS = [
   ...FLEET_DEMO_SCENARIOS,
-  { id: "fall-unconscious", label: "Fall · staged intake" },
-  { id: "busy-first-call", label: "Initial Bravo incident" },
-  { id: "breathing-charlie", label: "Breathing difficulty" },
+  { id: "fall-unconscious", label: "Unconscious fall · Incident" },
+  { id: "busy-first-call", label: "Kitchen wrist injury · Incident" },
+  { id: "breathing-charlie", label: "Breathing difficulty · Incident" },
+  ...PREMADE_INCIDENTS,
+  ...RANDOM_INCIDENT_OPTIONS,
 ] as const;
 
 export function useDispatchUi() {
@@ -32,15 +36,23 @@ export function useDispatchUi() {
   const [operation, setOperation] = useState<Operation | null>(null);
   const [demoPending, setDemoPending] = useState(false);
   const [demoMessage, setDemoMessage] = useState<string | null>(null);
+  const [demoConversationId, setDemoConversationId] = useState<string | null>(null);
   const [lastHadCalls, setLastHadCalls] = useState(false);
   const runner = useRef(createCommandRunner(sendCommand));
   const demoLock = useRef(false);
   const previousHadCalls = useRef(false);
-  const call = selectedCall(state, selectedId);
+  const demoCall = demoConversationId
+    ? Object.values(state?.calls ?? {}).find((item) => item.conversationId === demoConversationId)
+    : null;
+  const call = selectedCall(state, demoCall?.id ?? selectedId);
+  if (demoCall) {
+    setDemoConversationId(null);
+    setCandidateId(null);
+  }
   const set = call?.recommendationSetId
     ? (state?.recommendations[call.recommendationSetId] ?? null)
     : null;
-  const candidate = selectedCandidate(set?.candidates ?? [], candidateId);
+  const candidate = selectedCandidate(set?.candidates ?? [], demoCall ? null : candidateId);
   const task = call?.taskId ? (state?.tasks[call.taskId] ?? null) : null;
   if (call && selectedId !== call.id) setSelectedId(call.id);
   if (candidate && candidateId !== candidate.ambulanceId)
@@ -66,6 +78,7 @@ export function useDispatchUi() {
     !!state &&
     state.revision >= operation.revision!;
   if (observed && operation?.action?.command.type === "reset_demo") {
+    setDemoConversationId(null);
     setSelectedId(null);
     setCandidateId(null);
     setTrackedId(null);
@@ -130,10 +143,13 @@ export function useDispatchUi() {
         typeof result.conversationId !== "string"
       )
         throw new Error();
+      setDemoConversationId(result.conversationId);
       setDemoMessage(
         fleetDemoScenario(scenario)
           ? "Fleet staged. A new sample call is incoming. Clear returns all units to the squad room."
-          : "Scripted demo started. Incident updates will appear as the scenario progresses.",
+          : randomIncidentOption(scenario)
+            ? "Random incidents started. Existing calls and assignments are preserved. Clear cancels remaining arrivals."
+            : "Scripted demo started. Incident updates will appear as the scenario progresses.",
       );
     } catch {
       setDemoMessage(

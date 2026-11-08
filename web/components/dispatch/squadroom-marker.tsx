@@ -19,49 +19,50 @@ export function SquadroomMarker({ units, state, trackedId, onSelectUnit }: {
   const tracked = units.some((unit) => unit.id === trackedId);
   return (
     <div className="squadroom-anchor">
-    <Popover open={open} onOpenChange={setOpen}>
-      <PopoverTrigger asChild>
-        <Button
-          variant="outline"
-          aria-label="Squad Room"
-          className="squadroom-trigger"
-          data-tracked={tracked}
+      <Popover open={open} onOpenChange={setOpen}>
+        <PopoverTrigger asChild>
+          <Button
+            variant="outline"
+            aria-label="Squad Room"
+            className="squadroom-trigger"
+            data-tracked={tracked}
+            data-keyboard={keyboard}
+            onPointerEnter={() => setKeyboard(false)}
+            onPointerDown={() => setKeyboard(false)}
+            onKeyDown={() => setKeyboard(true)}
+          >
+            <Building2 className="squadroom-icon" aria-hidden="true" />
+            <span className="squadroom-label" aria-hidden="true">Squad Room</span>
+            <ChevronDown className="squadroom-chevron" aria-hidden="true" />
+          </Button>
+        </PopoverTrigger>
+        <PopoverContent
+          asChild
+          portalled={false}
+          side="top"
+          avoidCollisions={false}
+          aria-label="Cars at Squad Room"
           data-keyboard={keyboard}
-          onPointerEnter={() => setKeyboard(false)}
-          onPointerDown={() => setKeyboard(false)}
-          onKeyDown={() => setKeyboard(true)}
+          onKeyDownCapture={() => setKeyboard(true)}
+          onInteractOutside={(event) => {
+            // Keep the card attached while the operator pans or zooms the map.
+            if (event.target instanceof Element && event.target.closest(".mapboxgl-canvas-container")) event.preventDefault();
+          }}
+          className="squadroom-popover w-72"
         >
-          <Building2 className="squadroom-icon" aria-hidden="true" />
-          <span className="squadroom-label" aria-hidden="true">Squad Room</span>
-          <ChevronDown className="squadroom-chevron" aria-hidden="true" />
-        </Button>
-      </PopoverTrigger>
-      <PopoverContent
-        portalled={false}
-        side="top"
-        avoidCollisions={false}
-        aria-label="Cars at Squad Room"
-        data-keyboard={keyboard}
-        onKeyDownCapture={() => setKeyboard(true)}
-        onInteractOutside={(event) => {
-          // Keep the card attached while the operator pans or zooms the map.
-          if (event.target instanceof Element && event.target.closest(".mapboxgl-canvas-container")) event.preventDefault();
-        }}
-        className="squadroom-popover w-72 gap-0 bg-transparent p-0 shadow-none ring-0"
-      >
-        <Card size="sm" className="dispatch-list-card">
-          <CardHeader>
-            <CardTitle className="dispatch-section-title">Squad Room</CardTitle>
-          </CardHeader>
-          <CardContent className="flex flex-col px-1">
-            {units.map((unit) => (
-              <FleetRow key={unit.id} unit={unit} state={state} tracked={unit.id === trackedId} onClick={() => { onSelectUnit(unit.id); setOpen(false); }} />
-            ))}
-            {!units.length && <p className="px-3 py-2 text-xs text-muted-foreground">No cars parked at base.</p>}
-          </CardContent>
-        </Card>
-      </PopoverContent>
-    </Popover>
+          <Card layout="list">
+            <CardHeader>
+              <CardTitle variant="section">Squad Room</CardTitle>
+            </CardHeader>
+            <CardContent>
+              {units.map((unit) => (
+                <FleetRow key={unit.id} unit={unit} state={state} tracked={unit.id === trackedId} onClick={() => { onSelectUnit(unit.id); setOpen(false); }} />
+              ))}
+              {!units.length && <p className="px-3 py-2 text-xs text-muted-foreground">No cars parked at base.</p>}
+            </CardContent>
+          </Card>
+        </PopoverContent>
+      </Popover>
     </div>
   );
 }

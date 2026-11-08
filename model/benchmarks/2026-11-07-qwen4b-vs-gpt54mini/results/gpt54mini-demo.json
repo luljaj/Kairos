@@ -1,0 +1,1631 @@
+{
+ "meta": {
+  "model": "gpt-5.4-mini",
+  "split": "demo",
+  "data_sha256": "3211874bdbb8fcb652a7be86f001a3b84d7810e3343133543b945e38d251e068",
+  "prompt_sha256": "03f60d550d02e820c79904b0719c2fc357d82b91ee08467f9c3ab64199cd7264",
+  "schema_sha256": "cd074dd6661e3c5e98af91e591dab9e2cd25b0d497daecb7391eee4ab9ee98d1",
+  "baseline_sha256": "11d9db351939278fd2cdb6965aae01c77435f40c31b133ca95586233c018d6e2",
+  "reasoning_effort": "none",
+  "max_completion_tokens": 600,
+  "limit": 0,
+  "concurrency": 1,
+  "system": "http",
+  "guided": true
+ },
+ "metrics": {
+  "n": 40,
+  "schema_valid": 1.0,
+  "coverage": 0.95,
+  "acuity_exact": 0.775,
+  "acuity_within1": 0.925,
+  "nmi_precision": 1.0,
+  "nmi_recall": 0.6,
+  "rec_match": 0.9143,
+  "acuity_reason_consistent": 0.9459,
+  "acuity_reason_grounded": 1.0,
+  "suit_acc": 0.9905,
+  "reasons_grounded": 0.9905,
+  "exception_cases": 2,
+  "exception_rec_match": 0.0,
+  "latency_p50_ms": 1073,
+  "latency_p95_ms": 1376,
+  "gate_pass": false
+ },
+ "rows": [
+  {
+   "schema_valid": true,
+   "coverage": true,
+   "status_match": true,
+   "acuity_exact": true,
+   "acuity_within1": true,
+   "rec_match": true,
+   "suit_acc": 1.0,
+   "reasons_grounded": 1.0,
+   "pred_status": "ready",
+   "pred_acuity": "Delta",
+   "kind": "fastest_suitable",
+   "reason_consistent": true,
+   "reason_grounded": true,
+   "id": "req-demo-main-fall-unconscious",
+   "gold_status": "ready",
+   "gold_acuity": "Delta",
+   "family": "main-fall-unconscious",
+   "latency_ms": 1070.9110419993522,
+   "output": "{\"status\": \"ready\", \"acuityReason\": \"conscious = false after a fall, so Delta; ALS required.\", \"acuity\": \"Delta\", \"summary\": \"67-year-old male not answering after falling down stairs.\", \"recommendedAmbulanceId\": \"amb-2\", \"candidates\": [{\"ambulanceId\": \"amb-2\", \"crewSuitable\": true, \"reason\": \"ALS, arriving in 6 minutes.\"}, {\"ambulanceId\": \"amb-1\", \"crewSuitable\": false, \"reason\": \"BLS only, arriving in 4 minutes.\"}, {\"ambulanceId\": \"amb-3\", \"crewSuitable\": true, \"reason\": \"ALS, arriving in 22 minutes.\"}]}",
+   "error": null,
+   "usage": {
+    "prompt_tokens": 1856,
+    "completion_tokens": 139,
+    "total_tokens": 1995,
+    "prompt_tokens_details": {
+     "cached_tokens": 1664,
+     "audio_tokens": 0
+    },
+    "completion_tokens_details": {
+     "reasoning_tokens": 0,
+     "audio_tokens": 0,
+     "accepted_prediction_tokens": 0,
+     "rejected_prediction_tokens": 0
+    }
+   },
+   "resolved_model": "gpt-5.4-mini-2026-03-17",
+   "finish_reason": "stop",
+   "refusal": null
+  },
+  {
+   "schema_valid": true,
+   "coverage": false,
+   "status_match": false,
+   "acuity_exact": false,
+   "acuity_within1": false,
+   "rec_match": null,
+   "suit_acc": null,
+   "reasons_grounded": null,
+   "pred_status": "ready",
+   "pred_acuity": "Charlie",
+   "kind": null,
+   "reason_consistent": true,
+   "reason_grounded": true,
+   "id": "req-demo-main-fall-early",
+   "gold_status": "needs_more_info",
+   "gold_acuity": null,
+   "family": "main-fall-early",
+   "latency_ms": 1193.3234579992131,
+   "output": "{\"status\": \"ready\", \"acuityReason\": \"Not answering me (chiefComplaint), so Charlie; ALS required.\", \"acuity\": \"Charlie\", \"summary\": \"Dad fell down the stairs and is not answering.\", \"recommendedAmbulanceId\": \"amb-2\", \"candidates\": [{\"ambulanceId\": \"amb-2\", \"crewSuitable\": true, \"reason\": \"ALS unit, arrives in 6 minutes.\"}, {\"ambulanceId\": \"amb-3\", \"crewSuitable\": true, \"reason\": \"ALS unit, arrives in 22 minutes after queued work.\"}, {\"ambulanceId\": \"amb-1\", \"crewSuitable\": false, \"reason\": \"BLS only, arrives in 4 minutes.\"}]}",
+   "error": null,
+   "usage": {
+    "prompt_tokens": 1853,
+    "completion_tokens": 142,
+    "total_tokens": 1995,
+    "prompt_tokens_details": {
+     "cached_tokens": 0,
+     "audio_tokens": 0
+    },
+    "completion_tokens_details": {
+     "reasoning_tokens": 0,
+     "audio_tokens": 0,
+     "accepted_prediction_tokens": 0,
+     "rejected_prediction_tokens": 0
+    }
+   },
+   "resolved_model": "gpt-5.4-mini-2026-03-17",
+   "finish_reason": "stop",
+   "refusal": null
+  },
+  {
+   "schema_valid": true,
+   "coverage": true,
+   "status_match": true,
+   "acuity_exact": true,
+   "acuity_within1": true,
+   "rec_match": null,
+   "suit_acc": null,
+   "reasons_grounded": null,
+   "pred_status": "needs_more_info",
+   "pred_acuity": null,
+   "kind": null,
+   "id": "req-demo-collapse-unknown",
+   "gold_status": "needs_more_info",
+   "gold_acuity": null,
+   "family": "collapse-unknown",
+   "latency_ms": 701.5191250029602,
+   "output": "{\"status\": \"needs_more_info\", \"acuity\": null, \"missingFields\": [\"conscious\", \"breathingNormally\"], \"reason\": \"Collapsed with no confirmed consciousness or breathing status.\"}",
+   "error": null,
+   "usage": {
+    "prompt_tokens": 1843,
+    "completion_tokens": 44,
+    "total_tokens": 1887,
+    "prompt_tokens_details": {
+     "cached_tokens": 0,
+     "audio_tokens": 0
+    },
+    "completion_tokens_details": {
+     "reasoning_tokens": 0,
+     "audio_tokens": 0,
+     "accepted_prediction_tokens": 0,
+     "rejected_prediction_tokens": 0
+    }
+   },
+   "resolved_model": "gpt-5.4-mini-2026-03-17",
+   "finish_reason": "stop",
+   "refusal": null
+  },
+  {
+   "schema_valid": true,
+   "coverage": true,
+   "status_match": true,
+   "acuity_exact": true,
+   "acuity_within1": true,
+   "rec_match": true,
+   "suit_acc": 1.0,
+   "reasons_grounded": 0.6666666666666666,
+   "pred_status": "ready",
+   "pred_acuity": "Echo",
+   "kind": "fastest_suitable",
+   "reason_consistent": true,
+   "reason_grounded": true,
+   "id": "req-demo-collapse-now-known",
+   "gold_status": "ready",
+   "gold_acuity": "Echo",
+   "family": "collapse-now-known",
+   "latency_ms": 1157.5555419985903,
+   "output": "{\"status\": \"ready\", \"acuityReason\": \"conscious = false and breathingNormally = false, so Echo; ALS required.\", \"acuity\": \"Echo\", \"summary\": \"72-year-old female collapsed and is unconscious with abnormal breathing.\", \"recommendedAmbulanceId\": \"amb-2\", \"candidates\": [{\"ambulanceId\": \"amb-2\", \"crewSuitable\": true, \"reason\": \"ALS, arriving in 6 minutes, with 41 months chief service.\"}, {\"ambulanceId\": \"amb-3\", \"crewSuitable\": true, \"reason\": \"ALS, arriving in 22 minutes; 66 months chief service, but slower by more than 60 seconds.\"}, {\"ambulanceId\": \"amb-1\", \"crewSuitable\": false, \"reason\": \"BLS only, arriving in 4 minutes.\"}]}",
+   "error": null,
+   "usage": {
+    "prompt_tokens": 1843,
+    "completion_tokens": 164,
+    "total_tokens": 2007,
+    "prompt_tokens_details": {
+     "cached_tokens": 0,
+     "audio_tokens": 0
+    },
+    "completion_tokens_details": {
+     "reasoning_tokens": 0,
+     "audio_tokens": 0,
+     "accepted_prediction_tokens": 0,
+     "rejected_prediction_tokens": 0
+    }
+   },
+   "resolved_model": "gpt-5.4-mini-2026-03-17",
+   "finish_reason": "stop",
+   "refusal": null
+  },
+  {
+   "schema_valid": true,
+   "coverage": true,
+   "status_match": true,
+   "acuity_exact": true,
+   "acuity_within1": true,
+   "rec_match": true,
+   "suit_acc": 1.0,
+   "reasons_grounded": 1.0,
+   "pred_status": "ready",
+   "pred_acuity": "Charlie",
+   "kind": "fastest_suitable",
+   "reason_consistent": true,
+   "reason_grounded": true,
+   "id": "req-demo-third-call-chest",
+   "gold_status": "ready",
+   "gold_acuity": "Charlie",
+   "family": "third-call-chest",
+   "latency_ms": 1335.799375003262,
+   "output": "{\"status\": \"ready\", \"acuityReason\": \"Chest pain with age 58, so Charlie; ALS required.\", \"acuity\": \"Charlie\", \"summary\": \"58-year-old male with chest pain.\", \"recommendedAmbulanceId\": \"amb-3\", \"candidates\": [{\"ambulanceId\": \"amb-3\", \"crewSuitable\": true, \"reason\": \"ALS, arrival 13 minutes, chief has 66 months.\"}, {\"ambulanceId\": \"amb-2\", \"crewSuitable\": true, \"reason\": \"ALS, arrival 16 minutes, chief has 41 months.\"}, {\"ambulanceId\": \"amb-1\", \"crewSuitable\": false, \"reason\": \"BLS only for ALS-required call, arrival 5 minutes.\"}]}",
+   "error": null,
+   "usage": {
+    "prompt_tokens": 1845,
+    "completion_tokens": 148,
+    "total_tokens": 1993,
+    "prompt_tokens_details": {
+     "cached_tokens": 0,
+     "audio_tokens": 0
+    },
+    "completion_tokens_details": {
+     "reasoning_tokens": 0,
+     "audio_tokens": 0,
+     "accepted_prediction_tokens": 0,
+     "rejected_prediction_tokens": 0
+    }
+   },
+   "resolved_model": "gpt-5.4-mini-2026-03-17",
+   "finish_reason": "stop",
+   "refusal": null
+  },
+  {
+   "schema_valid": true,
+   "coverage": true,
+   "status_match": true,
+   "acuity_exact": true,
+   "acuity_within1": true,
+   "rec_match": true,
+   "suit_acc": 1.0,
+   "reasons_grounded": 1.0,
+   "pred_status": "ready",
+   "pred_acuity": "Delta",
+   "kind": "fastest_suitable",
+   "reason_consistent": true,
+   "reason_grounded": true,
+   "id": "req-demo-third-call-chest-sweaty",
+   "gold_status": "ready",
+   "gold_acuity": "Delta",
+   "family": "third-call-chest-sweaty",
+   "latency_ms": 1376.2442500010366,
+   "output": "{\"status\": \"ready\", \"acuityReason\": \"Chest pain with age 58 and sweating, so Delta; ALS required.\", \"acuity\": \"Delta\", \"summary\": \"58-year-old male with chest pain and sweating.\", \"recommendedAmbulanceId\": \"amb-3\", \"candidates\": [{\"ambulanceId\": \"amb-3\", \"crewSuitable\": true, \"reason\": \"ALS, arrival 800 seconds, crew chief 66 months service.\"}, {\"ambulanceId\": \"amb-2\", \"crewSuitable\": true, \"reason\": \"ALS, arrival 930 seconds, crew chief 41 months service.\"}, {\"ambulanceId\": \"amb-1\", \"crewSuitable\": false, \"reason\": \"BLS only, arrival 300 seconds.\"}]}",
+   "error": null,
+   "usage": {
+    "prompt_tokens": 1851,
+    "completion_tokens": 150,
+    "total_tokens": 2001,
+    "prompt_tokens_details": {
+     "cached_tokens": 0,
+     "audio_tokens": 0
+    },
+    "completion_tokens_details": {
+     "reasoning_tokens": 0,
+     "audio_tokens": 0,
+     "accepted_prediction_tokens": 0,
+     "rejected_prediction_tokens": 0
+    }
+   },
+   "resolved_model": "gpt-5.4-mini-2026-03-17",
+   "finish_reason": "stop",
+   "refusal": null
+  },
+  {
+   "schema_valid": true,
+   "coverage": true,
+   "status_match": true,
+   "acuity_exact": true,
+   "acuity_within1": true,
+   "rec_match": true,
+   "suit_acc": 1.0,
+   "reasons_grounded": 1.0,
+   "pred_status": "ready",
+   "pred_acuity": "Echo",
+   "kind": "fastest_suitable",
+   "reason_consistent": true,
+   "reason_grounded": true,
+   "id": "req-demo-arrest-cpr",
+   "gold_status": "ready",
+   "gold_acuity": "Echo",
+   "family": "arrest-cpr",
+   "latency_ms": 1197.62400000036,
+   "output": "{\"status\": \"ready\", \"acuityReason\": \"He's not breathing and CPR is in use, so Echo; ALS required.\", \"acuity\": \"Echo\", \"summary\": \"Adult male is not breathing and CPR has started.\", \"recommendedAmbulanceId\": \"amb-2\", \"candidates\": [{\"ambulanceId\": \"amb-2\", \"crewSuitable\": true, \"reason\": \"ALS, arrival 6 minutes, crew chief 41 months.\"}, {\"ambulanceId\": \"amb-1\", \"crewSuitable\": false, \"reason\": \"BLS, arrival 4 minutes.\"}, {\"ambulanceId\": \"amb-3\", \"crewSuitable\": true, \"reason\": \"ALS, arrival 22 minutes, crew chief 66 months.\"}]}",
+   "error": null,
+   "usage": {
+    "prompt_tokens": 1850,
+    "completion_tokens": 147,
+    "total_tokens": 1997,
+    "prompt_tokens_details": {
+     "cached_tokens": 0,
+     "audio_tokens": 0
+    },
+    "completion_tokens_details": {
+     "reasoning_tokens": 0,
+     "audio_tokens": 0,
+     "accepted_prediction_tokens": 0,
+     "rejected_prediction_tokens": 0
+    }
+   },
+   "resolved_model": "gpt-5.4-mini-2026-03-17",
+   "finish_reason": "stop",
+   "refusal": null
+  },
+  {
+   "schema_valid": true,
+   "coverage": true,
+   "status_match": true,
+   "acuity_exact": false,
+   "acuity_within1": true,
+   "rec_match": true,
+   "suit_acc": 1.0,
+   "reasons_grounded": 1.0,
+   "pred_status": "ready",
+   "pred_acuity": "Delta",
+   "kind": "fastest_suitable",
+   "reason_consistent": true,
+   "reason_grounded": true,
+   "id": "req-demo-choking-blue",
+   "gold_status": "ready",
+   "gold_acuity": "Echo",
+   "family": "choking-blue",
+   "latency_ms": 1397.9384999984177,
+   "output": "{\"status\": \"ready\", \"acuityReason\": \"Choking with some air and turning blue, so Delta; ALS required.\", \"acuity\": \"Delta\", \"summary\": \"4-year-old male choking and turning blue.\", \"recommendedAmbulanceId\": \"amb-2\", \"candidates\": [{\"ambulanceId\": \"amb-2\", \"crewSuitable\": true, \"reason\": \"ALS, arriving in 6 minutes.\"}, {\"ambulanceId\": \"amb-1\", \"crewSuitable\": false, \"reason\": \"BLS only, arriving in 4 minutes.\"}, {\"ambulanceId\": \"amb-3\", \"crewSuitable\": true, \"reason\": \"ALS, arriving in 22 minutes; 66 months chief experience.\"}]}",
+   "error": null,
+   "usage": {
+    "prompt_tokens": 1847,
+    "completion_tokens": 144,
+    "total_tokens": 1991,
+    "prompt_tokens_details": {
+     "cached_tokens": 0,
+     "audio_tokens": 0
+    },
+    "completion_tokens_details": {
+     "reasoning_tokens": 0,
+     "audio_tokens": 0,
+     "accepted_prediction_tokens": 0,
+     "rejected_prediction_tokens": 0
+    }
+   },
+   "resolved_model": "gpt-5.4-mini-2026-03-17",
+   "finish_reason": "stop",
+   "refusal": null
+  },
+  {
+   "schema_valid": true,
+   "coverage": true,
+   "status_match": true,
+   "acuity_exact": false,
+   "acuity_within1": true,
+   "rec_match": false,
+   "suit_acc": 1.0,
+   "reasons_grounded": 1.0,
+   "pred_status": "ready",
+   "pred_acuity": "Charlie",
+   "kind": "experience_exception",
+   "reason_consistent": true,
+   "reason_grounded": true,
+   "id": "req-demo-exception-delta",
+   "gold_status": "ready",
+   "gold_acuity": "Delta",
+   "family": "exception-delta",
+   "latency_ms": 1202.8780000036932,
+   "output": "{\"status\": \"ready\", \"acuityReason\": \"breathingNormally = false with shortness of breath, so Charlie; ALS required.\", \"acuity\": \"Charlie\", \"summary\": \"70-year-old female is struggling to breathe.\", \"recommendedAmbulanceId\": \"amb-2\", \"candidates\": [{\"ambulanceId\": \"amb-2\", \"crewSuitable\": true, \"reason\": \"ALS, 330 seconds arrival, crew chief 41 months.\"}, {\"ambulanceId\": \"amb-3\", \"crewSuitable\": true, \"reason\": \"ALS, 370 seconds arrival, crew chief 66 months.\"}, {\"ambulanceId\": \"amb-1\", \"crewSuitable\": false, \"reason\": \"BLS only; ALS required.\"}]}",
+   "error": null,
+   "usage": {
+    "prompt_tokens": 1846,
+    "completion_tokens": 147,
+    "total_tokens": 1993,
+    "prompt_tokens_details": {
+     "cached_tokens": 0,
+     "audio_tokens": 0
+    },
+    "completion_tokens_details": {
+     "reasoning_tokens": 0,
+     "audio_tokens": 0,
+     "accepted_prediction_tokens": 0,
+     "rejected_prediction_tokens": 0
+    }
+   },
+   "resolved_model": "gpt-5.4-mini-2026-03-17",
+   "finish_reason": "stop",
+   "refusal": null
+  },
+  {
+   "schema_valid": true,
+   "coverage": true,
+   "status_match": true,
+   "acuity_exact": true,
+   "acuity_within1": true,
+   "rec_match": true,
+   "suit_acc": 1.0,
+   "reasons_grounded": 1.0,
+   "pred_status": "ready",
+   "pred_acuity": "Charlie",
+   "kind": "fastest_suitable",
+   "reason_consistent": true,
+   "reason_grounded": true,
+   "id": "req-demo-exception-not-for-charlie",
+   "gold_status": "ready",
+   "gold_acuity": "Charlie",
+   "family": "exception-not-for-charlie",
+   "latency_ms": 1202.0029589984915,
+   "output": "{\"status\": \"ready\", \"acuityReason\": \"breathingNormally = false with asthma attack, so Charlie; ALS required.\", \"acuity\": \"Charlie\", \"summary\": \"Asthma attack with breathing not normal.\", \"recommendedAmbulanceId\": \"amb-2\", \"candidates\": [{\"ambulanceId\": \"amb-2\", \"crewSuitable\": true, \"reason\": \"ALS, arrives in 6 minutes.\"}, {\"ambulanceId\": \"amb-3\", \"crewSuitable\": true, \"reason\": \"ALS, arrives in 6 minutes.\"}, {\"ambulanceId\": \"amb-1\", \"crewSuitable\": false, \"reason\": \"BLS only; not suitable for ALS-required Charlie.\"}]}",
+   "error": null,
+   "usage": {
+    "prompt_tokens": 1848,
+    "completion_tokens": 138,
+    "total_tokens": 1986,
+    "prompt_tokens_details": {
+     "cached_tokens": 0,
+     "audio_tokens": 0
+    },
+    "completion_tokens_details": {
+     "reasoning_tokens": 0,
+     "audio_tokens": 0,
+     "accepted_prediction_tokens": 0,
+     "rejected_prediction_tokens": 0
+    }
+   },
+   "resolved_model": "gpt-5.4-mini-2026-03-17",
+   "finish_reason": "stop",
+   "refusal": null
+  },
+  {
+   "schema_valid": true,
+   "coverage": true,
+   "status_match": true,
+   "acuity_exact": true,
+   "acuity_within1": true,
+   "rec_match": false,
+   "suit_acc": 1.0,
+   "reasons_grounded": 1.0,
+   "pred_status": "ready",
+   "pred_acuity": "Echo",
+   "kind": "experience_exception",
+   "reason_consistent": true,
+   "reason_grounded": true,
+   "id": "req-demo-exception-echo",
+   "gold_status": "ready",
+   "gold_acuity": "Echo",
+   "family": "exception-echo",
+   "latency_ms": 1086.0539169952972,
+   "output": "{\"status\": \"ready\", \"acuityReason\": \"conscious = false and breathingNormally = false, so Echo; ALS required.\", \"acuity\": \"Echo\", \"summary\": \"Found him on the floor and not breathing.\", \"recommendedAmbulanceId\": \"amb-2\", \"candidates\": [{\"ambulanceId\": \"amb-2\", \"crewSuitable\": true, \"reason\": \"ALS unit, 330 seconds arrival, crew chief 41 months.\"}, {\"ambulanceId\": \"amb-3\", \"crewSuitable\": true, \"reason\": \"ALS unit, 370 seconds arrival, crew chief 66 months; more experienced than fastest unit.\"}, {\"ambulanceId\": \"amb-1\", \"crewSuitable\": false, \"reason\": \"BLS unit, 200 seconds arrival.\"}]}",
+   "error": null,
+   "usage": {
+    "prompt_tokens": 1848,
+    "completion_tokens": 156,
+    "total_tokens": 2004,
+    "prompt_tokens_details": {
+     "cached_tokens": 0,
+     "audio_tokens": 0
+    },
+    "completion_tokens_details": {
+     "reasoning_tokens": 0,
+     "audio_tokens": 0,
+     "accepted_prediction_tokens": 0,
+     "rejected_prediction_tokens": 0
+    }
+   },
+   "resolved_model": "gpt-5.4-mini-2026-03-17",
+   "finish_reason": "stop",
+   "refusal": null
+  },
+  {
+   "schema_valid": true,
+   "coverage": true,
+   "status_match": true,
+   "acuity_exact": true,
+   "acuity_within1": true,
+   "rec_match": true,
+   "suit_acc": 1.0,
+   "reasons_grounded": 1.0,
+   "pred_status": "ready",
+   "pred_acuity": "Delta",
+   "kind": "no_suitable",
+   "reason_consistent": true,
+   "reason_grounded": true,
+   "id": "req-demo-bls-only-delta",
+   "gold_status": "ready",
+   "gold_acuity": "Delta",
+   "family": "bls-only-delta",
+   "latency_ms": 907.7307080005994,
+   "output": "{\"status\": \"ready\", \"acuityReason\": \"High-speed crash (traumaMechanism), so Delta; ALS required.\", \"acuity\": \"Delta\", \"summary\": \"High-speed highway crash with trapped driver.\", \"recommendedAmbulanceId\": \"amb-1\", \"candidates\": [{\"ambulanceId\": \"amb-1\", \"crewSuitable\": false, \"reason\": \"BLS only; arrival in 4 minutes.\"}]}",
+   "error": null,
+   "usage": {
+    "prompt_tokens": 1662,
+    "completion_tokens": 89,
+    "total_tokens": 1751,
+    "prompt_tokens_details": {
+     "cached_tokens": 0,
+     "audio_tokens": 0
+    },
+    "completion_tokens_details": {
+     "reasoning_tokens": 0,
+     "audio_tokens": 0,
+     "accepted_prediction_tokens": 0,
+     "rejected_prediction_tokens": 0
+    }
+   },
+   "resolved_model": "gpt-5.4-mini-2026-03-17",
+   "finish_reason": "stop",
+   "refusal": null
+  },
+  {
+   "schema_valid": true,
+   "coverage": true,
+   "status_match": true,
+   "acuity_exact": true,
+   "acuity_within1": true,
+   "rec_match": true,
+   "suit_acc": 1.0,
+   "reasons_grounded": 1.0,
+   "pred_status": "ready",
+   "pred_acuity": "Alpha",
+   "kind": "fastest_suitable",
+   "reason_consistent": true,
+   "reason_grounded": true,
+   "id": "req-demo-bls-only-alpha",
+   "gold_status": "ready",
+   "gold_acuity": "Alpha",
+   "family": "bls-only-alpha",
+   "latency_ms": 1287.7434580004774,
+   "output": "{\"status\": \"ready\", \"acuityReason\": \"Fever and sore throat with no red flags, so Alpha; BLS required.\", \"acuity\": \"Alpha\", \"summary\": \"24-year-old female with fever and sore throat.\", \"recommendedAmbulanceId\": \"amb-1\", \"candidates\": [{\"ambulanceId\": \"amb-1\", \"crewSuitable\": true, \"reason\": \"BLS, arrival in 4 minutes.\"}]}",
+   "error": null,
+   "usage": {
+    "prompt_tokens": 1656,
+    "completion_tokens": 92,
+    "total_tokens": 1748,
+    "prompt_tokens_details": {
+     "cached_tokens": 0,
+     "audio_tokens": 0
+    },
+    "completion_tokens_details": {
+     "reasoning_tokens": 0,
+     "audio_tokens": 0,
+     "accepted_prediction_tokens": 0,
+     "rejected_prediction_tokens": 0
+    }
+   },
+   "resolved_model": "gpt-5.4-mini-2026-03-17",
+   "finish_reason": "stop",
+   "refusal": null
+  },
+  {
+   "schema_valid": true,
+   "coverage": true,
+   "status_match": true,
+   "acuity_exact": false,
+   "acuity_within1": true,
+   "rec_match": true,
+   "suit_acc": 1.0,
+   "reasons_grounded": 1.0,
+   "pred_status": "ready",
+   "pred_acuity": "Alpha",
+   "kind": "fastest_suitable",
+   "reason_consistent": true,
+   "reason_grounded": true,
+   "id": "req-demo-minor-cut",
+   "gold_status": "ready",
+   "gold_acuity": "Bravo",
+   "family": "minor-cut",
+   "latency_ms": 1133.8122079978348,
+   "output": "{\"status\": \"ready\", \"acuityReason\": \"Small cut cooking injury with no red flags, so Alpha; BLS required.\", \"acuity\": \"Alpha\", \"summary\": \"Small finger cut with stable breathing and no severe bleeding.\", \"recommendedAmbulanceId\": \"amb-1\", \"candidates\": [{\"ambulanceId\": \"amb-1\", \"crewSuitable\": true, \"reason\": \"BLS, arriving in 4 minutes, and available now.\"}, {\"ambulanceId\": \"amb-2\", \"crewSuitable\": true, \"reason\": \"ALS, arriving in 6 minutes, and available now.\"}, {\"ambulanceId\": \"amb-3\", \"crewSuitable\": true, \"reason\": \"ALS, arriving in 22 minutes, after queued work.\"}]}",
+   "error": null,
+   "usage": {
+    "prompt_tokens": 1847,
+    "completion_tokens": 152,
+    "total_tokens": 1999,
+    "prompt_tokens_details": {
+     "cached_tokens": 0,
+     "audio_tokens": 0
+    },
+    "completion_tokens_details": {
+     "reasoning_tokens": 0,
+     "audio_tokens": 0,
+     "accepted_prediction_tokens": 0,
+     "rejected_prediction_tokens": 0
+    }
+   },
+   "resolved_model": "gpt-5.4-mini-2026-03-17",
+   "finish_reason": "stop",
+   "refusal": null
+  },
+  {
+   "schema_valid": true,
+   "coverage": true,
+   "status_match": true,
+   "acuity_exact": true,
+   "acuity_within1": true,
+   "rec_match": true,
+   "suit_acc": 1.0,
+   "reasons_grounded": 1.0,
+   "pred_status": "ready",
+   "pred_acuity": "Delta",
+   "kind": "fastest_suitable",
+   "reason_consistent": true,
+   "reason_grounded": true,
+   "id": "req-demo-heavy-bleed",
+   "gold_status": "ready",
+   "gold_acuity": "Delta",
+   "family": "heavy-bleed",
+   "latency_ms": 1160.2259580031387,
+   "output": "{\"status\": \"ready\", \"acuityReason\": \"Severe bleeding (severeBleeding = true), so Delta; ALS required.\", \"acuity\": \"Delta\", \"summary\": \"45-year-old female with severe leg bleeding.\", \"recommendedAmbulanceId\": \"amb-2\", \"candidates\": [{\"ambulanceId\": \"amb-2\", \"crewSuitable\": true, \"reason\": \"ALS unit, arrives in 6 minutes.\"}, {\"ambulanceId\": \"amb-3\", \"crewSuitable\": true, \"reason\": \"ALS unit, arrives in 22 minutes; queued work adds 15 minutes.\"}, {\"ambulanceId\": \"amb-1\", \"crewSuitable\": false, \"reason\": \"BLS only; arrives in 4 minutes.\"}]}",
+   "error": null,
+   "usage": {
+    "prompt_tokens": 1848,
+    "completion_tokens": 149,
+    "total_tokens": 1997,
+    "prompt_tokens_details": {
+     "cached_tokens": 0,
+     "audio_tokens": 0
+    },
+    "completion_tokens_details": {
+     "reasoning_tokens": 0,
+     "audio_tokens": 0,
+     "accepted_prediction_tokens": 0,
+     "rejected_prediction_tokens": 0
+    }
+   },
+   "resolved_model": "gpt-5.4-mini-2026-03-17",
+   "finish_reason": "stop",
+   "refusal": null
+  },
+  {
+   "schema_valid": true,
+   "coverage": true,
+   "status_match": true,
+   "acuity_exact": false,
+   "acuity_within1": true,
+   "rec_match": true,
+   "suit_acc": 1.0,
+   "reasons_grounded": 1.0,
+   "pred_status": "ready",
+   "pred_acuity": "Alpha",
+   "kind": "fastest_suitable",
+   "reason_consistent": true,
+   "reason_grounded": true,
+   "id": "req-demo-ankle",
+   "gold_status": "ready",
+   "gold_acuity": "Bravo",
+   "family": "ankle",
+   "latency_ms": 1051.68662500364,
+   "output": "{\"status\": \"ready\", \"acuityReason\": \"Twisted ankle with no red flags, so Alpha; BLS required.\", \"acuity\": \"Alpha\", \"summary\": \"19-year-old female with a twisted ankle and no red flags.\", \"recommendedAmbulanceId\": \"amb-1\", \"candidates\": [{\"ambulanceId\": \"amb-1\", \"crewSuitable\": true, \"reason\": \"BLS, arrives in 4 minutes.\"}, {\"ambulanceId\": \"amb-2\", \"crewSuitable\": true, \"reason\": \"ALS, arrives in 6 minutes.\"}, {\"ambulanceId\": \"amb-3\", \"crewSuitable\": true, \"reason\": \"ALS, arrives in 22 minutes, after 15 minutes queued work.\"}]}",
+   "error": null,
+   "usage": {
+    "prompt_tokens": 1850,
+    "completion_tokens": 148,
+    "total_tokens": 1998,
+    "prompt_tokens_details": {
+     "cached_tokens": 0,
+     "audio_tokens": 0
+    },
+    "completion_tokens_details": {
+     "reasoning_tokens": 0,
+     "audio_tokens": 0,
+     "accepted_prediction_tokens": 0,
+     "rejected_prediction_tokens": 0
+    }
+   },
+   "resolved_model": "gpt-5.4-mini-2026-03-17",
+   "finish_reason": "stop",
+   "refusal": null
+  },
+  {
+   "schema_valid": true,
+   "coverage": true,
+   "status_match": true,
+   "acuity_exact": true,
+   "acuity_within1": true,
+   "rec_match": true,
+   "suit_acc": 1.0,
+   "reasons_grounded": 1.0,
+   "pred_status": "ready",
+   "pred_acuity": "Charlie",
+   "kind": "fastest_suitable",
+   "reason_consistent": true,
+   "reason_grounded": true,
+   "id": "req-demo-diabetic",
+   "gold_status": "ready",
+   "gold_acuity": "Charlie",
+   "family": "diabetic",
+   "latency_ms": 1054.5277909986908,
+   "output": "{\"status\": \"ready\", \"acuityReason\": \"Diabetic low sugar, so Charlie; ALS required.\", \"acuity\": \"Charlie\", \"summary\": \"81-year-old male with low blood sugar.\", \"recommendedAmbulanceId\": \"amb-2\", \"candidates\": [{\"ambulanceId\": \"amb-2\", \"crewSuitable\": true, \"reason\": \"ALS, arrives in 6 minutes.\"}, {\"ambulanceId\": \"amb-3\", \"crewSuitable\": true, \"reason\": \"ALS, arrives in 22 minutes; crew chief has 25 more months.\"}, {\"ambulanceId\": \"amb-1\", \"crewSuitable\": false, \"reason\": \"BLS only, arrives in 4 minutes.\"}]}",
+   "error": null,
+   "usage": {
+    "prompt_tokens": 1849,
+    "completion_tokens": 142,
+    "total_tokens": 1991,
+    "prompt_tokens_details": {
+     "cached_tokens": 0,
+     "audio_tokens": 0
+    },
+    "completion_tokens_details": {
+     "reasoning_tokens": 0,
+     "audio_tokens": 0,
+     "accepted_prediction_tokens": 0,
+     "rejected_prediction_tokens": 0
+    }
+   },
+   "resolved_model": "gpt-5.4-mini-2026-03-17",
+   "finish_reason": "stop",
+   "refusal": null
+  },
+  {
+   "schema_valid": true,
+   "coverage": true,
+   "status_match": true,
+   "acuity_exact": true,
+   "acuity_within1": true,
+   "rec_match": true,
+   "suit_acc": 1.0,
+   "reasons_grounded": 1.0,
+   "pred_status": "ready",
+   "pred_acuity": "Charlie",
+   "kind": "fastest_suitable",
+   "reason_consistent": true,
+   "reason_grounded": true,
+   "id": "req-demo-seizure-stopped",
+   "gold_status": "ready",
+   "gold_acuity": "Charlie",
+   "family": "seizure-stopped",
+   "latency_ms": 1108.0657920028898,
+   "output": "{\"status\": \"ready\", \"acuityReason\": \"Seizure just ended (chiefComplaint), so Charlie; ALS required.\", \"acuity\": \"Charlie\", \"summary\": \"Seizure has stopped; patient is conscious and breathing normally.\", \"recommendedAmbulanceId\": \"amb-2\", \"candidates\": [{\"ambulanceId\": \"amb-2\", \"crewSuitable\": true, \"reason\": \"ALS unit, arriving in 6 minutes, crew chief 41 months.\"}, {\"ambulanceId\": \"amb-1\", \"crewSuitable\": false, \"reason\": \"BLS only for ALS-required Charlie; arriving in 4 minutes.\"}, {\"ambulanceId\": \"amb-3\", \"crewSuitable\": true, \"reason\": \"ALS unit, arriving in 22 minutes, crew chief 66 months, wait from queued work.\"}]}",
+   "error": null,
+   "usage": {
+    "prompt_tokens": 1852,
+    "completion_tokens": 165,
+    "total_tokens": 2017,
+    "prompt_tokens_details": {
+     "cached_tokens": 0,
+     "audio_tokens": 0
+    },
+    "completion_tokens_details": {
+     "reasoning_tokens": 0,
+     "audio_tokens": 0,
+     "accepted_prediction_tokens": 0,
+     "rejected_prediction_tokens": 0
+    }
+   },
+   "resolved_model": "gpt-5.4-mini-2026-03-17",
+   "finish_reason": "stop",
+   "refusal": null
+  },
+  {
+   "schema_valid": true,
+   "coverage": true,
+   "status_match": true,
+   "acuity_exact": true,
+   "acuity_within1": true,
+   "rec_match": true,
+   "suit_acc": 1.0,
+   "reasons_grounded": 1.0,
+   "pred_status": "ready",
+   "pred_acuity": "Charlie",
+   "kind": "fastest_suitable",
+   "reason_consistent": true,
+   "reason_grounded": true,
+   "id": "req-demo-overdose-awake",
+   "gold_status": "ready",
+   "gold_acuity": "Charlie",
+   "family": "overdose-awake",
+   "latency_ms": 994.460000001709,
+   "output": "{\"status\": \"ready\", \"acuityReason\": \"Too many pills/drugs, so Charlie; ALS required.\", \"acuity\": \"Charlie\", \"summary\": \"One patient took too many pills.\", \"recommendedAmbulanceId\": \"amb-2\", \"candidates\": [{\"ambulanceId\": \"amb-2\", \"crewSuitable\": true, \"reason\": \"ALS, arrives in 6 minutes.\"}, {\"ambulanceId\": \"amb-1\", \"crewSuitable\": false, \"reason\": \"BLS, arrives in 4 minutes.\"}, {\"ambulanceId\": \"amb-3\", \"crewSuitable\": true, \"reason\": \"ALS, arrives in 22 minutes.\"}]}",
+   "error": null,
+   "usage": {
+    "prompt_tokens": 1847,
+    "completion_tokens": 132,
+    "total_tokens": 1979,
+    "prompt_tokens_details": {
+     "cached_tokens": 0,
+     "audio_tokens": 0
+    },
+    "completion_tokens_details": {
+     "reasoning_tokens": 0,
+     "audio_tokens": 0,
+     "accepted_prediction_tokens": 0,
+     "rejected_prediction_tokens": 0
+    }
+   },
+   "resolved_model": "gpt-5.4-mini-2026-03-17",
+   "finish_reason": "stop",
+   "refusal": null
+  },
+  {
+   "schema_valid": true,
+   "coverage": true,
+   "status_match": true,
+   "acuity_exact": false,
+   "acuity_within1": true,
+   "rec_match": true,
+   "suit_acc": 1.0,
+   "reasons_grounded": 1.0,
+   "pred_status": "ready",
+   "pred_acuity": "Charlie",
+   "kind": "fastest_suitable",
+   "reason_consistent": true,
+   "reason_grounded": true,
+   "id": "req-demo-overdose-unconscious",
+   "gold_status": "ready",
+   "gold_acuity": "Delta",
+   "family": "overdose-unconscious",
+   "latency_ms": 996.223000001919,
+   "output": "{\"status\": \"ready\", \"acuityReason\": \"conscious = false, so Charlie; ALS required.\", \"acuity\": \"Charlie\", \"summary\": \"21-year-old took too many pills and is unconscious.\", \"recommendedAmbulanceId\": \"amb-2\", \"candidates\": [{\"ambulanceId\": \"amb-2\", \"crewSuitable\": true, \"reason\": \"ALS, arriving in 6 minutes.\"}, {\"ambulanceId\": \"amb-1\", \"crewSuitable\": false, \"reason\": \"BLS only, arriving in 4 minutes.\"}, {\"ambulanceId\": \"amb-3\", \"crewSuitable\": true, \"reason\": \"ALS, arriving in 22 minutes; chief has 25 more months.\"}]}",
+   "error": null,
+   "usage": {
+    "prompt_tokens": 1848,
+    "completion_tokens": 143,
+    "total_tokens": 1991,
+    "prompt_tokens_details": {
+     "cached_tokens": 0,
+     "audio_tokens": 0
+    },
+    "completion_tokens_details": {
+     "reasoning_tokens": 0,
+     "audio_tokens": 0,
+     "accepted_prediction_tokens": 0,
+     "rejected_prediction_tokens": 0
+    }
+   },
+   "resolved_model": "gpt-5.4-mini-2026-03-17",
+   "finish_reason": "stop",
+   "refusal": null
+  },
+  {
+   "schema_valid": true,
+   "coverage": true,
+   "status_match": true,
+   "acuity_exact": true,
+   "acuity_within1": true,
+   "rec_match": true,
+   "suit_acc": 1.0,
+   "reasons_grounded": 1.0,
+   "pred_status": "ready",
+   "pred_acuity": "Charlie",
+   "kind": "fastest_suitable",
+   "reason_consistent": true,
+   "reason_grounded": true,
+   "id": "req-demo-confused",
+   "gold_status": "ready",
+   "gold_acuity": "Charlie",
+   "family": "confused",
+   "latency_ms": 1035.3412920012488,
+   "output": "{\"status\": \"ready\", \"acuityReason\": \"Confusion is present, so Charlie; ALS required.\", \"acuity\": \"Charlie\", \"summary\": \"77-year-old female is confused at 14 Riverside Dr.\", \"recommendedAmbulanceId\": \"amb-2\", \"candidates\": [{\"ambulanceId\": \"amb-2\", \"crewSuitable\": true, \"reason\": \"ALS, arrives in 6 minutes, crew chief 41 months.\"}, {\"ambulanceId\": \"amb-1\", \"crewSuitable\": false, \"reason\": \"BLS, arrives in 4 minutes; below ALS requirement.\"}, {\"ambulanceId\": \"amb-3\", \"crewSuitable\": true, \"reason\": \"ALS, arrives in 22 minutes, crew chief 66 months.\"}]}",
+   "error": null,
+   "usage": {
+    "prompt_tokens": 1849,
+    "completion_tokens": 152,
+    "total_tokens": 2001,
+    "prompt_tokens_details": {
+     "cached_tokens": 0,
+     "audio_tokens": 0
+    },
+    "completion_tokens_details": {
+     "reasoning_tokens": 0,
+     "audio_tokens": 0,
+     "accepted_prediction_tokens": 0,
+     "rejected_prediction_tokens": 0
+    }
+   },
+   "resolved_model": "gpt-5.4-mini-2026-03-17",
+   "finish_reason": "stop",
+   "refusal": null
+  },
+  {
+   "schema_valid": true,
+   "coverage": true,
+   "status_match": true,
+   "acuity_exact": true,
+   "acuity_within1": true,
+   "rec_match": true,
+   "suit_acc": 1.0,
+   "reasons_grounded": 1.0,
+   "pred_status": "ready",
+   "pred_acuity": "Bravo",
+   "kind": "fastest_suitable",
+   "reason_consistent": true,
+   "reason_grounded": true,
+   "id": "req-demo-assault",
+   "gold_status": "ready",
+   "gold_acuity": "Bravo",
+   "family": "assault",
+   "latency_ms": 1132.1866660000524,
+   "output": "{\"status\": \"ready\", \"acuityReason\": \"Punched with a bleeding wound (assault with injury), so Bravo; BLS required.\", \"acuity\": \"Bravo\", \"summary\": \"A 29-year-old man was punched outside a bar and has a nosebleed.\", \"recommendedAmbulanceId\": \"amb-1\", \"candidates\": [{\"ambulanceId\": \"amb-1\", \"crewSuitable\": true, \"reason\": \"BLS, arrives in 4 minutes.\"}, {\"ambulanceId\": \"amb-2\", \"crewSuitable\": true, \"reason\": \"ALS, arrives in 6 minutes.\"}, {\"ambulanceId\": \"amb-3\", \"crewSuitable\": true, \"reason\": \"ALS, arrives in 22 minutes.\"}]}",
+   "error": null,
+   "usage": {
+    "prompt_tokens": 1857,
+    "completion_tokens": 150,
+    "total_tokens": 2007,
+    "prompt_tokens_details": {
+     "cached_tokens": 0,
+     "audio_tokens": 0
+    },
+    "completion_tokens_details": {
+     "reasoning_tokens": 0,
+     "audio_tokens": 0,
+     "accepted_prediction_tokens": 0,
+     "rejected_prediction_tokens": 0
+    }
+   },
+   "resolved_model": "gpt-5.4-mini-2026-03-17",
+   "finish_reason": "stop",
+   "refusal": null
+  },
+  {
+   "schema_valid": true,
+   "coverage": true,
+   "status_match": true,
+   "acuity_exact": true,
+   "acuity_within1": true,
+   "rec_match": true,
+   "suit_acc": 1.0,
+   "reasons_grounded": 1.0,
+   "pred_status": "ready",
+   "pred_acuity": "Bravo",
+   "kind": "fastest_suitable",
+   "reason_consistent": true,
+   "reason_grounded": true,
+   "id": "req-demo-hip-fall",
+   "gold_status": "ready",
+   "gold_acuity": "Bravo",
+   "family": "hip-fall",
+   "latency_ms": 1061.8381669992232,
+   "output": "{\"status\": \"ready\", \"acuityReason\": \"Fall with possible hip fracture, so Bravo; BLS required.\", \"acuity\": \"Bravo\", \"summary\": \"Grandma fell and hurt her hip.\", \"recommendedAmbulanceId\": \"amb-1\", \"candidates\": [{\"ambulanceId\": \"amb-1\", \"crewSuitable\": true, \"reason\": \"BLS unit arrives in 4 minutes.\"}, {\"ambulanceId\": \"amb-2\", \"crewSuitable\": true, \"reason\": \"ALS unit arrives in 6 minutes.\"}]}",
+   "error": null,
+   "usage": {
+    "prompt_tokens": 1751,
+    "completion_tokens": 110,
+    "total_tokens": 1861,
+    "prompt_tokens_details": {
+     "cached_tokens": 0,
+     "audio_tokens": 0
+    },
+    "completion_tokens_details": {
+     "reasoning_tokens": 0,
+     "audio_tokens": 0,
+     "accepted_prediction_tokens": 0,
+     "rejected_prediction_tokens": 0
+    }
+   },
+   "resolved_model": "gpt-5.4-mini-2026-03-17",
+   "finish_reason": "stop",
+   "refusal": null
+  },
+  {
+   "schema_valid": true,
+   "coverage": true,
+   "status_match": true,
+   "acuity_exact": true,
+   "acuity_within1": true,
+   "rec_match": true,
+   "suit_acc": 1.0,
+   "reasons_grounded": 1.0,
+   "pred_status": "ready",
+   "pred_acuity": "Delta",
+   "kind": "fastest_suitable",
+   "reason_consistent": true,
+   "reason_grounded": true,
+   "id": "req-demo-roof-fall",
+   "gold_status": "ready",
+   "gold_acuity": "Delta",
+   "family": "roof-fall",
+   "latency_ms": 1090.9387089996017,
+   "output": "{\"status\": \"ready\", \"acuityReason\": \"Fall from roof (traumaMechanism = fall from roof), so Delta; ALS required.\", \"acuity\": \"Delta\", \"summary\": \"52-year-old male fell from the roof.\", \"recommendedAmbulanceId\": \"amb-2\", \"candidates\": [{\"ambulanceId\": \"amb-2\", \"crewSuitable\": true, \"reason\": \"ALS unit, arriving in 6 minutes.\"}, {\"ambulanceId\": \"amb-1\", \"crewSuitable\": false, \"reason\": \"BLS only; Delta requires ALS.\"}, {\"ambulanceId\": \"amb-3\", \"crewSuitable\": true, \"reason\": \"ALS unit, arriving in 22 minutes; wait from queued work.\"}]}",
+   "error": null,
+   "usage": {
+    "prompt_tokens": 1849,
+    "completion_tokens": 147,
+    "total_tokens": 1996,
+    "prompt_tokens_details": {
+     "cached_tokens": 0,
+     "audio_tokens": 0
+    },
+    "completion_tokens_details": {
+     "reasoning_tokens": 0,
+     "audio_tokens": 0,
+     "accepted_prediction_tokens": 0,
+     "rejected_prediction_tokens": 0
+    }
+   },
+   "resolved_model": "gpt-5.4-mini-2026-03-17",
+   "finish_reason": "stop",
+   "refusal": null
+  },
+  {
+   "schema_valid": true,
+   "coverage": true,
+   "status_match": true,
+   "acuity_exact": true,
+   "acuity_within1": true,
+   "rec_match": true,
+   "suit_acc": 1.0,
+   "reasons_grounded": 1.0,
+   "pred_status": "ready",
+   "pred_acuity": "Charlie",
+   "kind": "fastest_suitable",
+   "reason_consistent": false,
+   "reason_grounded": true,
+   "id": "req-demo-chest-young",
+   "gold_status": "ready",
+   "gold_acuity": "Charlie",
+   "family": "chest-young",
+   "latency_ms": 980.3671249974286,
+   "output": "{\"status\": \"ready\", \"acuityReason\": \"Chest pain with age 22 and no Delta symptoms, so Charlie; ALS required.\", \"acuity\": \"Charlie\", \"summary\": \"One patient with chest pain after lifting weights.\", \"recommendedAmbulanceId\": \"amb-2\", \"candidates\": [{\"ambulanceId\": \"amb-2\", \"crewSuitable\": true, \"reason\": \"ALS unit, arrival 6 minutes, crew chief 41 months.\"}, {\"ambulanceId\": \"amb-3\", \"crewSuitable\": true, \"reason\": \"ALS unit, arrival 22 minutes, crew chief 66 months, waits 900 seconds.\"}, {\"ambulanceId\": \"amb-1\", \"crewSuitable\": false, \"reason\": \"BLS unit, arrival 4 minutes.\"}]}",
+   "error": null,
+   "usage": {
+    "prompt_tokens": 1847,
+    "completion_tokens": 156,
+    "total_tokens": 2003,
+    "prompt_tokens_details": {
+     "cached_tokens": 0,
+     "audio_tokens": 0
+    },
+    "completion_tokens_details": {
+     "reasoning_tokens": 0,
+     "audio_tokens": 0,
+     "accepted_prediction_tokens": 0,
+     "rejected_prediction_tokens": 0
+    }
+   },
+   "resolved_model": "gpt-5.4-mini-2026-03-17",
+   "finish_reason": "stop",
+   "refusal": null
+  },
+  {
+   "schema_valid": true,
+   "coverage": true,
+   "status_match": true,
+   "acuity_exact": true,
+   "acuity_within1": true,
+   "rec_match": true,
+   "suit_acc": 1.0,
+   "reasons_grounded": 1.0,
+   "pred_status": "ready",
+   "pred_acuity": "Alpha",
+   "kind": "fastest_suitable",
+   "reason_consistent": true,
+   "reason_grounded": true,
+   "id": "req-demo-rash",
+   "gold_status": "ready",
+   "gold_acuity": "Alpha",
+   "family": "rash",
+   "latency_ms": 1157.9814579963568,
+   "output": "{\"status\": \"ready\", \"acuityReason\": \"Rash with no red flags, so Alpha; BLS required.\", \"acuity\": \"Alpha\", \"summary\": \"A 6-year-old has a rash and is conscious and breathing normally.\", \"recommendedAmbulanceId\": \"amb-1\", \"candidates\": [{\"ambulanceId\": \"amb-1\", \"crewSuitable\": true, \"reason\": \"BLS, arriving in 4 minutes.\"}, {\"ambulanceId\": \"amb-2\", \"crewSuitable\": true, \"reason\": \"ALS, arriving in 6 minutes.\"}, {\"ambulanceId\": \"amb-3\", \"crewSuitable\": true, \"reason\": \"ALS, arriving in 22 minutes after queued work.\"}]}",
+   "error": null,
+   "usage": {
+    "prompt_tokens": 1844,
+    "completion_tokens": 145,
+    "total_tokens": 1989,
+    "prompt_tokens_details": {
+     "cached_tokens": 0,
+     "audio_tokens": 0
+    },
+    "completion_tokens_details": {
+     "reasoning_tokens": 0,
+     "audio_tokens": 0,
+     "accepted_prediction_tokens": 0,
+     "rejected_prediction_tokens": 0
+    }
+   },
+   "resolved_model": "gpt-5.4-mini-2026-03-17",
+   "finish_reason": "stop",
+   "refusal": null
+  },
+  {
+   "schema_valid": true,
+   "coverage": true,
+   "status_match": true,
+   "acuity_exact": true,
+   "acuity_within1": true,
+   "rec_match": null,
+   "suit_acc": null,
+   "reasons_grounded": null,
+   "pred_status": "needs_more_info",
+   "pred_acuity": null,
+   "kind": null,
+   "id": "req-demo-unwell-unknown",
+   "gold_status": "needs_more_info",
+   "gold_acuity": null,
+   "family": "unwell-unknown",
+   "latency_ms": 681.3447079985053,
+   "output": "{\"status\": \"needs_more_info\", \"acuity\": null, \"missingFields\": [\"conscious\", \"breathingNormally\"], \"reason\": \"Chief complaint is nonspecific and both consciousness and breathing status are unknown.\"}",
+   "error": null,
+   "usage": {
+    "prompt_tokens": 1847,
+    "completion_tokens": 49,
+    "total_tokens": 1896,
+    "prompt_tokens_details": {
+     "cached_tokens": 0,
+     "audio_tokens": 0
+    },
+    "completion_tokens_details": {
+     "reasoning_tokens": 0,
+     "audio_tokens": 0,
+     "accepted_prediction_tokens": 0,
+     "rejected_prediction_tokens": 0
+    }
+   },
+   "resolved_model": "gpt-5.4-mini-2026-03-17",
+   "finish_reason": "stop",
+   "refusal": null
+  },
+  {
+   "schema_valid": true,
+   "coverage": true,
+   "status_match": true,
+   "acuity_exact": true,
+   "acuity_within1": true,
+   "rec_match": null,
+   "suit_acc": null,
+   "reasons_grounded": null,
+   "pred_status": "needs_more_info",
+   "pred_acuity": null,
+   "kind": null,
+   "id": "req-demo-no-complaint-yet",
+   "gold_status": "needs_more_info",
+   "gold_acuity": null,
+   "family": "no-complaint-yet",
+   "latency_ms": 644.8885829959181,
+   "output": "{\"status\": \"needs_more_info\", \"acuity\": null, \"missingFields\": [\"chiefComplaint\", \"conscious\", \"breathingNormally\"], \"reason\": \"No specific problem is described and both conscious and breathingNormally are unknown.\"}",
+   "error": null,
+   "usage": {
+    "prompt_tokens": 1846,
+    "completion_tokens": 52,
+    "total_tokens": 1898,
+    "prompt_tokens_details": {
+     "cached_tokens": 0,
+     "audio_tokens": 0
+    },
+    "completion_tokens_details": {
+     "reasoning_tokens": 0,
+     "audio_tokens": 0,
+     "accepted_prediction_tokens": 0,
+     "rejected_prediction_tokens": 0
+    }
+   },
+   "resolved_model": "gpt-5.4-mini-2026-03-17",
+   "finish_reason": "stop",
+   "refusal": null
+  },
+  {
+   "schema_valid": true,
+   "coverage": true,
+   "status_match": true,
+   "acuity_exact": true,
+   "acuity_within1": true,
+   "rec_match": true,
+   "suit_acc": 1.0,
+   "reasons_grounded": 1.0,
+   "pred_status": "ready",
+   "pred_acuity": "Delta",
+   "kind": "fastest_suitable",
+   "reason_consistent": true,
+   "reason_grounded": true,
+   "id": "req-demo-struck-by-car",
+   "gold_status": "ready",
+   "gold_acuity": "Delta",
+   "family": "struck-by-car",
+   "latency_ms": 935.3580409951974,
+   "output": "{\"status\": \"ready\", \"acuityReason\": \"Hit by a car (traumaMechanism), so Delta; ALS required.\", \"acuity\": \"Delta\", \"summary\": \"A child was hit by a car at 14 Riverside Dr.\", \"recommendedAmbulanceId\": \"amb-2\", \"candidates\": [{\"ambulanceId\": \"amb-2\", \"crewSuitable\": true, \"reason\": \"ALS available; arrives in 6 minutes, crew chief 41 months of service.\"}, {\"ambulanceId\": \"amb-1\", \"crewSuitable\": false, \"reason\": \"BLS only; Delta requires ALS.\"}]}",
+   "error": null,
+   "usage": {
+    "prompt_tokens": 1756,
+    "completion_tokens": 126,
+    "total_tokens": 1882,
+    "prompt_tokens_details": {
+     "cached_tokens": 0,
+     "audio_tokens": 0
+    },
+    "completion_tokens_details": {
+     "reasoning_tokens": 0,
+     "audio_tokens": 0,
+     "accepted_prediction_tokens": 0,
+     "rejected_prediction_tokens": 0
+    }
+   },
+   "resolved_model": "gpt-5.4-mini-2026-03-17",
+   "finish_reason": "stop",
+   "refusal": null
+  },
+  {
+   "schema_valid": true,
+   "coverage": true,
+   "status_match": true,
+   "acuity_exact": false,
+   "acuity_within1": true,
+   "rec_match": true,
+   "suit_acc": 1.0,
+   "reasons_grounded": 1.0,
+   "pred_status": "ready",
+   "pred_acuity": "Charlie",
+   "kind": "fastest_suitable",
+   "reason_consistent": true,
+   "reason_grounded": true,
+   "id": "req-demo-allergy-gasping",
+   "gold_status": "ready",
+   "gold_acuity": "Delta",
+   "family": "allergy-gasping",
+   "latency_ms": 1034.7223339995253,
+   "output": "{\"status\": \"ready\", \"acuityReason\": \"breathingNormally = false with allergic reaction and gasping, so Charlie; ALS required.\", \"acuity\": \"Charlie\", \"summary\": \"One patient is gasping with an allergic reaction and not breathing normally.\", \"recommendedAmbulanceId\": \"amb-3\", \"candidates\": [{\"ambulanceId\": \"amb-3\", \"crewSuitable\": true, \"reason\": \"ALS, arrives in 13 minutes, crew chief has 66 months service.\"}, {\"ambulanceId\": \"amb-2\", \"crewSuitable\": true, \"reason\": \"ALS, arrives in 16 minutes, crew chief has 41 months service.\"}, {\"ambulanceId\": \"amb-1\", \"crewSuitable\": false, \"reason\": \"BLS only; ALS required.\"}]}",
+   "error": null,
+   "usage": {
+    "prompt_tokens": 1849,
+    "completion_tokens": 159,
+    "total_tokens": 2008,
+    "prompt_tokens_details": {
+     "cached_tokens": 0,
+     "audio_tokens": 0
+    },
+    "completion_tokens_details": {
+     "reasoning_tokens": 0,
+     "audio_tokens": 0,
+     "accepted_prediction_tokens": 0,
+     "rejected_prediction_tokens": 0
+    }
+   },
+   "resolved_model": "gpt-5.4-mini-2026-03-17",
+   "finish_reason": "stop",
+   "refusal": null
+  },
+  {
+   "schema_valid": true,
+   "coverage": false,
+   "status_match": false,
+   "acuity_exact": false,
+   "acuity_within1": false,
+   "rec_match": null,
+   "suit_acc": null,
+   "reasons_grounded": null,
+   "pred_status": "ready",
+   "pred_acuity": "Alpha",
+   "kind": null,
+   "reason_consistent": false,
+   "reason_grounded": true,
+   "id": "req-demo-main-fall-early-paraphrase",
+   "gold_status": "needs_more_info",
+   "gold_acuity": null,
+   "family": "main-fall-early-paraphrase",
+   "latency_ms": 1172.1981669979868,
+   "output": "{\"status\": \"ready\", \"acuityReason\": \"Chief complaint suggests possible unresponsive patient (\\u201cwon't talk\\u201d), so needs more info; no specific problem is confirmed.\", \"acuity\": \"Alpha\", \"summary\": \"Family reports dad fell down stairs and is not responding.\", \"recommendedAmbulanceId\": \"amb-2\", \"candidates\": [{\"ambulanceId\": \"amb-2\", \"crewSuitable\": true, \"reason\": \"ALS, arrives in 6 minutes.\"}, {\"ambulanceId\": \"amb-1\", \"crewSuitable\": false, \"reason\": \"BLS only, arrives in 4 minutes.\"}, {\"ambulanceId\": \"amb-3\", \"crewSuitable\": true, \"reason\": \"ALS, arrives in 22 minutes; queued work adds 15 minutes.\"}]}",
+   "error": null,
+   "usage": {
+    "prompt_tokens": 1857,
+    "completion_tokens": 155,
+    "total_tokens": 2012,
+    "prompt_tokens_details": {
+     "cached_tokens": 0,
+     "audio_tokens": 0
+    },
+    "completion_tokens_details": {
+     "reasoning_tokens": 0,
+     "audio_tokens": 0,
+     "accepted_prediction_tokens": 0,
+     "rejected_prediction_tokens": 0
+    }
+   },
+   "resolved_model": "gpt-5.4-mini-2026-03-17",
+   "finish_reason": "stop",
+   "refusal": null
+  },
+  {
+   "schema_valid": true,
+   "coverage": true,
+   "status_match": true,
+   "acuity_exact": true,
+   "acuity_within1": true,
+   "rec_match": true,
+   "suit_acc": 1.0,
+   "reasons_grounded": 1.0,
+   "pred_status": "ready",
+   "pred_acuity": "Delta",
+   "kind": "fastest_suitable",
+   "reason_consistent": true,
+   "reason_grounded": true,
+   "id": "req-demo-third-call-chest-sweaty-paraphrase",
+   "gold_status": "ready",
+   "gold_acuity": "Delta",
+   "family": "third-call-chest-sweaty-paraphrase",
+   "latency_ms": 1137.7309579984285,
+   "output": "{\"status\": \"ready\", \"acuityReason\": \"Chest pain with age 58 and clammy skin, so Delta; ALS required.\", \"acuity\": \"Delta\", \"summary\": \"58-year-old male with chest pressure and clammy skin.\", \"recommendedAmbulanceId\": \"amb-3\", \"candidates\": [{\"ambulanceId\": \"amb-3\", \"crewSuitable\": true, \"reason\": \"ALS, arrives in 13 minutes, crew chief has 66 months of service.\"}, {\"ambulanceId\": \"amb-2\", \"crewSuitable\": true, \"reason\": \"ALS, arrives in 16 minutes, crew chief has 41 months of service.\"}, {\"ambulanceId\": \"amb-1\", \"crewSuitable\": false, \"reason\": \"BLS only; ALS required.\"}]}",
+   "error": null,
+   "usage": {
+    "prompt_tokens": 1863,
+    "completion_tokens": 158,
+    "total_tokens": 2021,
+    "prompt_tokens_details": {
+     "cached_tokens": 0,
+     "audio_tokens": 0
+    },
+    "completion_tokens_details": {
+     "reasoning_tokens": 0,
+     "audio_tokens": 0,
+     "accepted_prediction_tokens": 0,
+     "rejected_prediction_tokens": 0
+    }
+   },
+   "resolved_model": "gpt-5.4-mini-2026-03-17",
+   "finish_reason": "stop",
+   "refusal": null
+  },
+  {
+   "schema_valid": true,
+   "coverage": true,
+   "status_match": true,
+   "acuity_exact": true,
+   "acuity_within1": true,
+   "rec_match": true,
+   "suit_acc": 1.0,
+   "reasons_grounded": 1.0,
+   "pred_status": "ready",
+   "pred_acuity": "Echo",
+   "kind": "fastest_suitable",
+   "reason_consistent": true,
+   "reason_grounded": true,
+   "id": "req-demo-arrest-cpr-paraphrase",
+   "gold_status": "ready",
+   "gold_acuity": "Echo",
+   "family": "arrest-cpr-paraphrase",
+   "latency_ms": 1006.9795840026927,
+   "output": "{\"status\": \"ready\", \"acuityReason\": \"Chest isn't moving and compressions are in progress, so Echo; ALS required.\", \"acuity\": \"Echo\", \"summary\": \"One patient with CPR in progress at 14 Riverside Dr.\", \"recommendedAmbulanceId\": \"amb-2\", \"candidates\": [{\"ambulanceId\": \"amb-2\", \"crewSuitable\": true, \"reason\": \"ALS, arrives in 6 minutes.\"}, {\"ambulanceId\": \"amb-1\", \"crewSuitable\": false, \"reason\": \"BLS only; not suitable for ALS-required call.\"}, {\"ambulanceId\": \"amb-3\", \"crewSuitable\": true, \"reason\": \"ALS, arrives in 22 minutes; 900 seconds queued.\"}]}",
+   "error": null,
+   "usage": {
+    "prompt_tokens": 1855,
+    "completion_tokens": 148,
+    "total_tokens": 2003,
+    "prompt_tokens_details": {
+     "cached_tokens": 0,
+     "audio_tokens": 0
+    },
+    "completion_tokens_details": {
+     "reasoning_tokens": 0,
+     "audio_tokens": 0,
+     "accepted_prediction_tokens": 0,
+     "rejected_prediction_tokens": 0
+    }
+   },
+   "resolved_model": "gpt-5.4-mini-2026-03-17",
+   "finish_reason": "stop",
+   "refusal": null
+  },
+  {
+   "schema_valid": true,
+   "coverage": true,
+   "status_match": true,
+   "acuity_exact": true,
+   "acuity_within1": true,
+   "rec_match": true,
+   "suit_acc": 1.0,
+   "reasons_grounded": 1.0,
+   "pred_status": "ready",
+   "pred_acuity": "Echo",
+   "kind": "fastest_suitable",
+   "reason_consistent": true,
+   "reason_grounded": true,
+   "id": "req-demo-choking-blue-paraphrase",
+   "gold_status": "ready",
+   "gold_acuity": "Echo",
+   "family": "choking-blue-paraphrase",
+   "latency_ms": 1097.346665999794,
+   "output": "{\"status\": \"ready\", \"acuityReason\": \"Cannot make a sound and lips have gone purple, so Echo; ALS required.\", \"acuity\": \"Echo\", \"summary\": \"Child choking with no air and purple lips.\", \"recommendedAmbulanceId\": \"amb-2\", \"candidates\": [{\"ambulanceId\": \"amb-2\", \"crewSuitable\": true, \"reason\": \"ALS, arrives in 6 minutes.\"}, {\"ambulanceId\": \"amb-1\", \"crewSuitable\": false, \"reason\": \"BLS only, arrives in 4 minutes.\"}, {\"ambulanceId\": \"amb-3\", \"crewSuitable\": true, \"reason\": \"ALS, arrives in 22 minutes; crew chief has 25 more months.\"}]}",
+   "error": null,
+   "usage": {
+    "prompt_tokens": 1863,
+    "completion_tokens": 147,
+    "total_tokens": 2010,
+    "prompt_tokens_details": {
+     "cached_tokens": 0,
+     "audio_tokens": 0
+    },
+    "completion_tokens_details": {
+     "reasoning_tokens": 0,
+     "audio_tokens": 0,
+     "accepted_prediction_tokens": 0,
+     "rejected_prediction_tokens": 0
+    }
+   },
+   "resolved_model": "gpt-5.4-mini-2026-03-17",
+   "finish_reason": "stop",
+   "refusal": null
+  },
+  {
+   "schema_valid": true,
+   "coverage": true,
+   "status_match": true,
+   "acuity_exact": true,
+   "acuity_within1": true,
+   "rec_match": true,
+   "suit_acc": 1.0,
+   "reasons_grounded": 1.0,
+   "pred_status": "ready",
+   "pred_acuity": "Alpha",
+   "kind": "fastest_suitable",
+   "reason_consistent": true,
+   "reason_grounded": true,
+   "id": "req-demo-bls-only-alpha-paraphrase",
+   "gold_status": "ready",
+   "gold_acuity": "Alpha",
+   "family": "bls-only-alpha-paraphrase",
+   "latency_ms": 868.0981669967878,
+   "output": "{\"status\": \"ready\", \"acuityReason\": \"Fever and sore throat symptoms, with conscious = true and breathingNormally = true, so Alpha; BLS required.\", \"acuity\": \"Alpha\", \"summary\": \"24-year-old female with fever and painful swallowing.\", \"recommendedAmbulanceId\": \"amb-1\", \"candidates\": [{\"ambulanceId\": \"amb-1\", \"crewSuitable\": true, \"reason\": \"BLS and arrives in 4 minutes.\"}]}",
+   "error": null,
+   "usage": {
+    "prompt_tokens": 1662,
+    "completion_tokens": 99,
+    "total_tokens": 1761,
+    "prompt_tokens_details": {
+     "cached_tokens": 0,
+     "audio_tokens": 0
+    },
+    "completion_tokens_details": {
+     "reasoning_tokens": 0,
+     "audio_tokens": 0,
+     "accepted_prediction_tokens": 0,
+     "rejected_prediction_tokens": 0
+    }
+   },
+   "resolved_model": "gpt-5.4-mini-2026-03-17",
+   "finish_reason": "stop",
+   "refusal": null
+  },
+  {
+   "schema_valid": true,
+   "coverage": true,
+   "status_match": true,
+   "acuity_exact": true,
+   "acuity_within1": true,
+   "rec_match": true,
+   "suit_acc": 1.0,
+   "reasons_grounded": 1.0,
+   "pred_status": "ready",
+   "pred_acuity": "Bravo",
+   "kind": "fastest_suitable",
+   "reason_consistent": true,
+   "reason_grounded": true,
+   "id": "req-demo-ankle-paraphrase",
+   "gold_status": "ready",
+   "gold_acuity": "Bravo",
+   "family": "ankle-paraphrase",
+   "latency_ms": 1057.2626670036698,
+   "output": "{\"status\": \"ready\", \"acuityReason\": \"Turned ankle with inability to stand, so Bravo; BLS required.\", \"acuity\": \"Bravo\", \"summary\": \"Single ankle injury with no red flags.\", \"recommendedAmbulanceId\": \"amb-1\", \"candidates\": [{\"ambulanceId\": \"amb-1\", \"crewSuitable\": true, \"reason\": \"BLS, arriving in 4 minutes.\"}, {\"ambulanceId\": \"amb-2\", \"crewSuitable\": true, \"reason\": \"ALS, arriving in 6 minutes.\"}, {\"ambulanceId\": \"amb-3\", \"crewSuitable\": true, \"reason\": \"ALS, arriving in 22 minutes.\"}]}",
+   "error": null,
+   "usage": {
+    "prompt_tokens": 1857,
+    "completion_tokens": 136,
+    "total_tokens": 1993,
+    "prompt_tokens_details": {
+     "cached_tokens": 0,
+     "audio_tokens": 0
+    },
+    "completion_tokens_details": {
+     "reasoning_tokens": 0,
+     "audio_tokens": 0,
+     "accepted_prediction_tokens": 0,
+     "rejected_prediction_tokens": 0
+    }
+   },
+   "resolved_model": "gpt-5.4-mini-2026-03-17",
+   "finish_reason": "stop",
+   "refusal": null
+  },
+  {
+   "schema_valid": true,
+   "coverage": true,
+   "status_match": true,
+   "acuity_exact": true,
+   "acuity_within1": true,
+   "rec_match": true,
+   "suit_acc": 1.0,
+   "reasons_grounded": 1.0,
+   "pred_status": "ready",
+   "pred_acuity": "Charlie",
+   "kind": "fastest_suitable",
+   "reason_consistent": true,
+   "reason_grounded": true,
+   "id": "req-demo-diabetic-paraphrase",
+   "gold_status": "ready",
+   "gold_acuity": "Charlie",
+   "family": "diabetic-paraphrase",
+   "latency_ms": 1074.3652499950258,
+   "output": "{\"status\": \"ready\", \"acuityReason\": \"Glucose problem (meter reads LOW), so Charlie; ALS required.\", \"acuity\": \"Charlie\", \"summary\": \"81-year-old man with a low glucose reading.\", \"recommendedAmbulanceId\": \"amb-2\", \"candidates\": [{\"ambulanceId\": \"amb-2\", \"crewSuitable\": true, \"reason\": \"ALS, arrives in 6 minutes.\"}, {\"ambulanceId\": \"amb-1\", \"crewSuitable\": false, \"reason\": \"BLS only, arrives in 4 minutes.\"}, {\"ambulanceId\": \"amb-3\", \"crewSuitable\": true, \"reason\": \"ALS, arrives in 22 minutes; crew chief has 66 months.\"}]}",
+   "error": null,
+   "usage": {
+    "prompt_tokens": 1856,
+    "completion_tokens": 145,
+    "total_tokens": 2001,
+    "prompt_tokens_details": {
+     "cached_tokens": 0,
+     "audio_tokens": 0
+    },
+    "completion_tokens_details": {
+     "reasoning_tokens": 0,
+     "audio_tokens": 0,
+     "accepted_prediction_tokens": 0,
+     "rejected_prediction_tokens": 0
+    }
+   },
+   "resolved_model": "gpt-5.4-mini-2026-03-17",
+   "finish_reason": "stop",
+   "refusal": null
+  },
+  {
+   "schema_valid": true,
+   "coverage": true,
+   "status_match": true,
+   "acuity_exact": true,
+   "acuity_within1": true,
+   "rec_match": true,
+   "suit_acc": 1.0,
+   "reasons_grounded": 1.0,
+   "pred_status": "ready",
+   "pred_acuity": "Charlie",
+   "kind": "fastest_suitable",
+   "reason_consistent": true,
+   "reason_grounded": true,
+   "id": "req-demo-seizure-stopped-paraphrase",
+   "gold_status": "ready",
+   "gold_acuity": "Charlie",
+   "family": "seizure-stopped-paraphrase",
+   "latency_ms": 985.1857090034173,
+   "output": "{\"status\": \"ready\", \"acuityReason\": \"Seizure just ended, so Charlie; ALS required.\", \"acuity\": \"Charlie\", \"summary\": \"Seizure ended and she is awake now.\", \"recommendedAmbulanceId\": \"amb-2\", \"candidates\": [{\"ambulanceId\": \"amb-2\", \"crewSuitable\": true, \"reason\": \"ALS, arrives in 6 minutes.\"}, {\"ambulanceId\": \"amb-1\", \"crewSuitable\": false, \"reason\": \"BLS, arrives in 4 minutes.\"}, {\"ambulanceId\": \"amb-3\", \"crewSuitable\": true, \"reason\": \"ALS, arrives in 22 minutes; wait 15 minutes.\"}]}",
+   "error": null,
+   "usage": {
+    "prompt_tokens": 1866,
+    "completion_tokens": 140,
+    "total_tokens": 2006,
+    "prompt_tokens_details": {
+     "cached_tokens": 0,
+     "audio_tokens": 0
+    },
+    "completion_tokens_details": {
+     "reasoning_tokens": 0,
+     "audio_tokens": 0,
+     "accepted_prediction_tokens": 0,
+     "rejected_prediction_tokens": 0
+    }
+   },
+   "resolved_model": "gpt-5.4-mini-2026-03-17",
+   "finish_reason": "stop",
+   "refusal": null
+  },
+  {
+   "schema_valid": true,
+   "coverage": true,
+   "status_match": true,
+   "acuity_exact": true,
+   "acuity_within1": true,
+   "rec_match": true,
+   "suit_acc": 1.0,
+   "reasons_grounded": 1.0,
+   "pred_status": "ready",
+   "pred_acuity": "Charlie",
+   "kind": "fastest_suitable",
+   "reason_consistent": true,
+   "reason_grounded": true,
+   "id": "req-demo-overdose-awake-paraphrase",
+   "gold_status": "ready",
+   "gold_acuity": "Charlie",
+   "family": "overdose-awake-paraphrase",
+   "latency_ms": 1067.6084169972455,
+   "output": "{\"status\": \"ready\", \"acuityReason\": \"Overdose or too many pills/drugs from chiefComplaint, so Charlie; ALS required.\", \"acuity\": \"Charlie\", \"summary\": \"Possible medication overdose with the patient awake and breathing normally.\", \"recommendedAmbulanceId\": \"amb-2\", \"candidates\": [{\"ambulanceId\": \"amb-2\", \"crewSuitable\": true, \"reason\": \"ALS, arrives in 6 minutes.\"}, {\"ambulanceId\": \"amb-1\", \"crewSuitable\": false, \"reason\": \"BLS only; Charlie requires ALS.\"}, {\"ambulanceId\": \"amb-3\", \"crewSuitable\": true, \"reason\": \"ALS, arrives in 22 minutes; queued work adds 15 minutes.\"}]}",
+   "error": null,
+   "usage": {
+    "prompt_tokens": 1858,
+    "completion_tokens": 148,
+    "total_tokens": 2006,
+    "prompt_tokens_details": {
+     "cached_tokens": 0,
+     "audio_tokens": 0
+    },
+    "completion_tokens_details": {
+     "reasoning_tokens": 0,
+     "audio_tokens": 0,
+     "accepted_prediction_tokens": 0,
+     "rejected_prediction_tokens": 0
+    }
+   },
+   "resolved_model": "gpt-5.4-mini-2026-03-17",
+   "finish_reason": "stop",
+   "refusal": null
+  },
+  {
+   "schema_valid": true,
+   "coverage": true,
+   "status_match": true,
+   "acuity_exact": false,
+   "acuity_within1": false,
+   "rec_match": false,
+   "suit_acc": 0.6666666666666666,
+   "reasons_grounded": 1.0,
+   "pred_status": "ready",
+   "pred_acuity": "Bravo",
+   "kind": "fastest_suitable",
+   "reason_consistent": true,
+   "reason_grounded": true,
+   "id": "req-demo-roof-fall-paraphrase",
+   "gold_status": "ready",
+   "gold_acuity": "Delta",
+   "family": "roof-fall-paraphrase",
+   "latency_ms": 1036.4807910009404,
+   "output": "{\"status\": \"ready\", \"acuityReason\": \"Dropped from gutter height to the ground is a fall with possible fracture, so Bravo; BLS required.\", \"acuity\": \"Bravo\", \"summary\": \"Fall injury after coming off the top of the house while clearing gutters.\", \"recommendedAmbulanceId\": \"amb-1\", \"candidates\": [{\"ambulanceId\": \"amb-1\", \"crewSuitable\": true, \"reason\": \"BLS, arrives in 4 minutes.\"}, {\"ambulanceId\": \"amb-2\", \"crewSuitable\": true, \"reason\": \"ALS, arrives in 6 minutes.\"}, {\"ambulanceId\": \"amb-3\", \"crewSuitable\": true, \"reason\": \"ALS, arrives in 22 minutes after queued work.\"}]}",
+   "error": null,
+   "usage": {
+    "prompt_tokens": 1863,
+    "completion_tokens": 151,
+    "total_tokens": 2014,
+    "prompt_tokens_details": {
+     "cached_tokens": 0,
+     "audio_tokens": 0
+    },
+    "completion_tokens_details": {
+     "reasoning_tokens": 0,
+     "audio_tokens": 0,
+     "accepted_prediction_tokens": 0,
+     "rejected_prediction_tokens": 0
+    }
+   },
+   "resolved_model": "gpt-5.4-mini-2026-03-17",
+   "finish_reason": "stop",
+   "refusal": null
+  }
+ ]
+}

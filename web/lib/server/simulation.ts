@@ -9,7 +9,7 @@ import { scheduleAwaitingRecommendations } from "./recommend";
 
 export const SIM_TICK_MS = 250;
 export const SCENE_SECONDS = 480;
-const SIM_VERSION = "return-to-squadroom-v1";
+const SIM_VERSION = "judge-demo-speed-v2";
 type Store = {
   getState: () => DispatchState;
   mutate: (fn: (state: DispatchState) => void | false) => unknown;
@@ -154,17 +154,21 @@ export function createSimulation(
 declare global {
   var __simulation: {
     version?: string;
+    speed: number;
     engine: ReturnType<typeof createSimulation>;
     timer: ReturnType<typeof setInterval>;
   } | undefined;
 }
 
-export function ensureSimulationStarted() {
-  if (globalThis.__simulation?.version === SIM_VERSION) return;
+export function ensureSimulationStarted(speedOverride?: number) {
+  if (globalThis.__simulation?.version === SIM_VERSION) {
+    if (speedOverride !== undefined) globalThis.__simulation.speed = speedOverride;
+    return;
+  }
   // HMR preserves globals: retire an older engine without resetting dispatch state.
   resetSimulation();
   const engine = createSimulation({ getState, mutate }, getRoute, scheduleAwaitingRecommendations);
-  const configured = Number(process.env.SIM_SPEED ?? 6);
+  const configured = speedOverride ?? Number(process.env.SIM_SPEED ?? 6);
   const speed = Number.isFinite(configured) && configured >= 0 ? configured : 6;
   let last = performance.now();
   const timer = setInterval(() => {
@@ -172,10 +176,10 @@ export function ensureSimulationStarted() {
     // Resume from persisted sim time; do not replay hours of downtime or laptop sleep.
     const elapsed = Math.min(1, (now - last) / 1000);
     last = now;
-    engine.tick(elapsed * speed);
+    engine.tick(elapsed * (globalThis.__simulation?.speed ?? speed));
   }, SIM_TICK_MS);
   timer.unref();
-  globalThis.__simulation = { version: SIM_VERSION, engine, timer };
+  globalThis.__simulation = { version: SIM_VERSION, engine, timer, speed };
 }
 
 export function resetSimulation() {

@@ -54,11 +54,11 @@ export function TriageCard({ s, className }: { s: DispatchUiState; className?: s
   return (
     <Card className={cardClass}>
       <CardHeader>
-        <CardTitle className="flex min-w-0 items-center gap-2 text-[13px]">
+        <CardTitle className="flex min-w-0 items-center gap-2">
           {call.status !== "closed" && <span className="live-dot shrink-0" />}
           <span className="truncate">{callTitle(call)}</span>
         </CardTitle>
-        <CardDescription className="flex min-w-0 items-center gap-2 text-xs">
+        <CardDescription className="flex min-w-0 items-center gap-2">
           <AcuityMark acuity={call.acuity?.value ?? null} source={call.acuity?.source} />
           <span>·</span><span className="truncate">{call.location.text ?? "Location unknown"}</span>
         </CardDescription>
@@ -123,7 +123,7 @@ export function TriageCard({ s, className }: { s: DispatchUiState; className?: s
         )}
       </CardContent>
       {set && call.status !== "closed" && (
-        <CardFooter className="gap-2">
+        <CardFooter>
           <div className="flex flex-1 gap-1" aria-hidden>
             {set.candidates.map((option, i) => <span key={option.ambulanceId} className={cn("h-0.5 flex-1 rounded-full bg-foreground/15 transition-colors duration-200", i === index && "bg-foreground/80")} />)}
           </div>

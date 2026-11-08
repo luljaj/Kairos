@@ -31,6 +31,7 @@ export function DispatchDashboard() {
   const s = useDispatchUi();
   const mapRef = useRef<DispatchMapHandle>(null);
   const { state, call } = s;
+  const queuedCalls = Object.values(state?.calls ?? {}).filter((item) => item.status !== "closed");
   const tracked = s.trackedId ? state?.ambulances[s.trackedId] : null;
   return (
     <main className="dispatch dark">
@@ -63,7 +64,7 @@ export function DispatchDashboard() {
         {call && (
           <Card key={call.id}>
             <CardHeader>
-              <CardDescription className="flex justify-between gap-2 text-xs">
+              <CardDescription className="flex justify-between gap-2">
                 <span>
                   {call.conversationId?.startsWith("scripted-")
                     ? "Scripted demo"
@@ -74,10 +75,10 @@ export function DispatchDashboard() {
                   source={call.acuity?.source}
                 />
               </CardDescription>
-              <CardTitle className="text-xl font-normal">
+              <CardTitle variant="headline">
                 {callTitle(call)}
               </CardTitle>
-              <CardDescription className="text-xs">
+              <CardDescription>
                 {call.location.text ?? "Location unknown"}
               </CardDescription>
             </CardHeader>
@@ -88,15 +89,15 @@ export function DispatchDashboard() {
             </CardContent>
           </Card>
         )}
-        <Card size="sm" className="dispatch-list-card">
+        <Card layout="list">
           <CardHeader>
-            <CardTitle className="dispatch-section-title">
+            <CardTitle variant="section">
               Queue
             </CardTitle>
           </CardHeader>
-          <CardContent className="flex flex-col px-1">
+          <CardContent>
             {state &&
-              Object.values(state.calls).map((item) => {
+              queuedCalls.map((item) => {
                 const task = item.taskId ? state.tasks[item.taskId] : null;
                 const unit = task ? state.ambulances[task.ambulanceId] : null;
                 return (
@@ -113,20 +114,20 @@ export function DispatchDashboard() {
                   />
                 );
               })}
-            {state && Object.keys(state.calls).length === 0 && (
+            {state && queuedCalls.length === 0 && (
               <p className="px-3 py-2 text-xs text-muted-foreground">
                 No active incidents.
               </p>
             )}
           </CardContent>
         </Card>
-        <Card size="sm" className="dispatch-list-card">
+        <Card layout="list">
           <CardHeader>
-            <CardTitle className="dispatch-section-title">
+            <CardTitle variant="section">
               Fleet
             </CardTitle>
           </CardHeader>
-          <CardContent className="flex flex-col px-1">
+          <CardContent>
             {state &&
               Object.values(state.ambulances).map((unit) => (
                 <FleetRow
@@ -157,30 +158,25 @@ export function DispatchDashboard() {
           </Button>
         </div>
         {s.connectionError && (
-          <div
-            role="alert"
-            className="rounded-xl border border-urgent/40 bg-background p-3 text-xs text-urgent"
-          >
-            {s.connectionError}
-          </div>
+          <Card role="alert">
+            <CardContent className="text-xs text-urgent">{s.connectionError}</CardContent>
+          </Card>
         )}
         {s.operation && (
-          <div
-            role="status"
-            className="rounded-xl border border-border bg-background p-3 text-xs"
-          >
+          <Card role="status">
+            <CardContent className="flex flex-col gap-2 text-xs">
             <p>{s.operation.message}</p>
             {s.operation.status === "uncertain" && (
               <Button
                 size="sm"
-                className="mt-2"
                 disabled={s.connection !== "open"}
                 onClick={() => void s.retry()}
               >
                 Retry same action
               </Button>
             )}
-          </div>
+            </CardContent>
+          </Card>
         )}
         {tracked && state && (
           <Card>

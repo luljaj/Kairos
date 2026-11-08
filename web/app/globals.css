@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@import "../components/ui/card.css";
 
 @custom-variant dark (&:is(.dark *));
 

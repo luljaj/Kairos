@@ -4,6 +4,8 @@ One Next.js 16 app (App Router, TypeScript), run as **one long-lived Node proces
 
 ## Integrated dashboard
 
+Dashboard surfaces use `components/ui/card.tsx` and its shared `card.css` styles (loaded by `app/globals.css`). Use `Card` for the standard 16px inset, `Card layout="list"` for padded rows, and `CardTitle variant="section"` for labels such as Queue and Fleet. The headline variant is for incident titles. Keep surface, spacing, and typography changes in these shared components; screen CSS should only handle placement and motion. Sheets and popovers can wrap a Card with `asChild`, preserving their focus and dismissal behavior without adding another styled surface.
+
 The main screen now uses the backend recommendation pipeline. Start fictional scenarios from **Demo incident**, select incidents from the queue, and assign a displayed candidate. See [frontend integration handoff](INTEGRATION.md) for tested behavior, live-provider evidence and remaining runtime dependencies. The `/debug` screen remains available for diagnostics.
 
 Hospital markers and new simulated transport destinations use real facilities:
@@ -128,10 +130,19 @@ After completing or cancelling the last active job, a unit drives home using the
 
 ### Staged fleet demos
 
-Open demo controls with **⌘D / Ctrl+D** and choose a **Fleet** scenario:
+Open demo controls with **⌘D / Ctrl+D**. Each numbered scenario loads a fresh fleet setup, focuses its incoming scripted call, and runs the simulation at **1×** speed. The panel includes a short “Show the judges” guide.
 
-- **Returning from hospitals:** two available units driving back to the squad room from Lourdes and Wilson, and Medic 3 on scene.
-- **Mixed active incidents:** one available unit at the squad room, one transporting, and one on scene.
-- **All busy with a queue:** units en route, transporting, and on scene, plus a queued job.
+1. **A second caller arrives** (`fleet-spread`): Medic 1 and Medic 2 return from hospitals while Medic 3 handles another patient. Compare the nearer BLS crew against ALS capability, review staged intake, and approve a response.
+2. **Available versus suitable** (`fleet-mixed`): a BLS crew is ready at base; ALS crews are transporting from Vestal or on scene. Compare availability plus travel, then assign a busy ALS crew to demonstrate queueing without abandoning its patient.
+3. **Nearby, but already committed** (`fleet-busy`): Medic 3 is close to the new Riverside incident but has an active patient and another job queued. Inspect that backlog and compare total arrival estimates before assigning.
+4. **A more experienced crew** (`fleet-experience`): both ALS crews are returning from Lourdes. At setup, Medic 2 is estimated at 145 seconds and Medic 3 at 159 seconds; their chiefs have 41 and 66 months of service. The existing model rubric allows the more experienced chief on Delta/Echo when the extra arrival time is at most 60 seconds and the experience difference is at least 24 months. These are illustrative fictional-demo rules, not a clinical protocol. Estimates change as units move.
 
-Starting a fleet scenario replaces the current demo, teleports the units into position, and begins a scripted incoming call. Staged jobs use the normal simulation, routes, dispatch and queue behavior. The original intake-only scenarios remain available. **Clear** cancels pending intake updates, removes incidents and tasks, and returns all three units to the squad room. Run `pnpm demo:check` to verify setup and cleanup.
+The fourth scenario sends ordinary incident facts, crew qualifications/experience, and computed arrival times through the existing model pipeline. It never inserts a recommendation or changes the model prompt. The 66-month chief also works with an AEMT-qualified driver; inspect both crew panels and the actual model explanation. **Mock/fallback chooses the faster suitable unit and does not implement the experience exception.** Use a configured trained model for this comparison and check the assessment's source/model identity; a different model choice remains visible rather than being rewritten. No model configuration or training files are changed by the demos.
+
+Starting another fleet scenario replaces the current demo. Original intake-only scenarios append calls. **Clear** cancels delayed intake and route work, removes tasks and calls, returns every unit to base, and restores the configured simulation speed. Vehicles away from base are responding, on an assigned scene, transporting, or returning home. Run `pnpm demo:check` to verify setup, queue consistency, the crew tradeoff, simulation speed and cleanup.
+
+For a 2–3 minute judging flow, start scenario 1, show accumulating facts and the actual arrival/capability comparison, explicitly select a candidate, approve, and show the new route. Use scenario 4 next to show model judgement beyond choosing the fastest ALS crew. Scenarios 2 and 3 are short follow-ups for questions about capacity and queues. Use displayed estimates and the returned recommendation rather than rehearsed promises; scripted intake supplies reliable coordinates while phone geocoding is still pending.
+
+The demo selector also offers **Random · one incident** and **Random · three overlapping calls**. These append calls without moving units or replacing current assignments. Random calls draw from ankle injuries, minor cuts, breathing difficulty, chest pain, and seizures, using five fictional local scenes with varied ages. A burst uses three different incident types and locations, arriving six seconds apart with follow-up facts four seconds after each arrival. Clear cancels any remaining arrivals and updates.
+
+**Premade incidents** are individually selectable fixed scripts: campus ankle injury, minor hand cut, chest pressure with sweating, seizure just ended, collapse with a critical breathing update, and vehicle rollover. Each uses a fixed fictional location and caller transcript, adds follow-up facts after eight seconds, and appends to the current demo without moving or assigning ambulances. They can be layered onto any fleet setup, and Clear removes them through the same cancellation path.

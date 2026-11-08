@@ -1,0 +1,300 @@
+[
+  {
+    "id": "ankle-injury",
+    "title": "campus ankle injury",
+    "callerNumber": null,
+    "location": {
+      "text": "Campus library steps (fictional)",
+      "coords": {
+        "lat": 42.0893,
+        "lng": -75.9698
+      },
+      "confidence": "confirmed"
+    },
+    "steps": [
+      {
+        "atSeconds": 0,
+        "locationText": "Campus library steps (fictional)",
+        "facts": {
+          "chiefComplaint": "Fell on the steps, possible ankle fracture",
+          "traumaMechanism": "fall from standing",
+          "callerRelation": "bystander"
+        },
+        "transcript": [
+          {
+            "role": "caller",
+            "text": "My friend missed a step outside the library and hurt her ankle."
+          }
+        ]
+      },
+      {
+        "atSeconds": 8,
+        "facts": {
+          "conscious": true,
+          "breathingNormally": true,
+          "severeBleeding": false,
+          "patientAge": 22,
+          "patientCount": 1
+        },
+        "transcript": [
+          {
+            "role": "caller",
+            "text": "She is awake and breathing normally. There is no bleeding, but she cannot put weight on it."
+          }
+        ]
+      }
+    ],
+    "expected": {
+      "acuity": "Bravo",
+      "recommendedAmbulanceId": null
+    }
+  },
+  {
+    "id": "minor-cut",
+    "title": "minor hand cut",
+    "callerNumber": null,
+    "location": {
+      "text": "Vestal kitchen (fictional)",
+      "coords": {
+        "lat": 42.079,
+        "lng": -75.985
+      },
+      "confidence": "confirmed"
+    },
+    "steps": [
+      {
+        "atSeconds": 0,
+        "locationText": "Vestal kitchen (fictional)",
+        "facts": {
+          "chiefComplaint": "Small cut on hand, bleeding stopped",
+          "callerRelation": "self"
+        },
+        "transcript": [
+          {
+            "role": "caller",
+            "text": "I cut my hand while cooking. It is a small cut and the bleeding has stopped."
+          }
+        ]
+      },
+      {
+        "atSeconds": 8,
+        "facts": {
+          "conscious": true,
+          "breathingNormally": true,
+          "severeBleeding": false,
+          "patientAge": 34,
+          "patientCount": 1
+        },
+        "transcript": [
+          {
+            "role": "caller",
+            "text": "I am 34, awake and breathing normally. Nothing else is wrong."
+          }
+        ]
+      }
+    ],
+    "expected": {
+      "acuity": "Alpha",
+      "recommendedAmbulanceId": null
+    }
+  },
+  {
+    "id": "chest-pressure",
+    "title": "chest pressure and sweating",
+    "callerNumber": null,
+    "location": {
+      "text": "Downtown office lobby (fictional)",
+      "coords": {
+        "lat": 42.0995,
+        "lng": -75.9165
+      },
+      "confidence": "confirmed"
+    },
+    "steps": [
+      {
+        "atSeconds": 0,
+        "locationText": "Downtown office lobby (fictional)",
+        "facts": {
+          "chiefComplaint": "Chest pressure",
+          "chestPain": true,
+          "callerRelation": "bystander"
+        },
+        "transcript": [
+          {
+            "role": "caller",
+            "text": "My coworker has pressure in his chest."
+          }
+        ]
+      },
+      {
+        "atSeconds": 8,
+        "facts": {
+          "chiefComplaint": "Chest pressure with sweating and nausea",
+          "conscious": true,
+          "breathingNormally": true,
+          "patientAge": 58,
+          "patientCount": 1,
+          "severeBleeding": false
+        },
+        "transcript": [
+          {
+            "role": "caller",
+            "text": "He is 58 and now sweating and nauseated. He is awake and breathing normally."
+          }
+        ]
+      }
+    ],
+    "expected": {
+      "acuity": "Delta",
+      "recommendedAmbulanceId": null
+    }
+  },
+  {
+    "id": "seizure-ended",
+    "title": "seizure just ended",
+    "callerNumber": null,
+    "location": {
+      "text": "Johnson City apartment (fictional)",
+      "coords": {
+        "lat": 42.1105,
+        "lng": -75.948
+      },
+      "confidence": "confirmed"
+    },
+    "steps": [
+      {
+        "atSeconds": 0,
+        "locationText": "Johnson City apartment (fictional)",
+        "facts": {
+          "chiefComplaint": "Seizure just ended",
+          "callerRelation": "family"
+        },
+        "transcript": [
+          {
+            "role": "caller",
+            "text": "My sister had a seizure. The shaking just stopped."
+          }
+        ]
+      },
+      {
+        "atSeconds": 8,
+        "facts": {
+          "conscious": true,
+          "breathingNormally": true,
+          "patientAge": 29,
+          "patientCount": 1,
+          "severeBleeding": false
+        },
+        "transcript": [
+          {
+            "role": "caller",
+            "text": "She is awake now and breathing normally. She is 29. There is no bleeding."
+          }
+        ]
+      }
+    ],
+    "expected": {
+      "acuity": "Charlie",
+      "recommendedAmbulanceId": null
+    }
+  },
+  {
+    "id": "collapse-not-breathing",
+    "title": "collapse, then critical update",
+    "callerNumber": null,
+    "location": {
+      "text": "Riverside home (fictional)",
+      "coords": {
+        "lat": 42.096,
+        "lng": -75.9235
+      },
+      "confidence": "confirmed"
+    },
+    "steps": [
+      {
+        "atSeconds": 0,
+        "locationText": "Riverside home (fictional)",
+        "facts": {
+          "chiefComplaint": "Collapsed, something is wrong",
+          "callerRelation": "family"
+        },
+        "transcript": [
+          {
+            "role": "caller",
+            "text": "My dad just collapsed. Something is wrong."
+          }
+        ]
+      },
+      {
+        "atSeconds": 8,
+        "facts": {
+          "chiefComplaint": "Collapsed, unconscious and not breathing normally",
+          "conscious": false,
+          "breathingNormally": false,
+          "patientAge": 67,
+          "patientCount": 1
+        },
+        "transcript": [
+          {
+            "role": "caller",
+            "text": "He is 67. He is unconscious and is not breathing normally."
+          }
+        ]
+      }
+    ],
+    "expected": {
+      "acuity": "Echo",
+      "recommendedAmbulanceId": null
+    }
+  },
+  {
+    "id": "vehicle-rollover",
+    "title": "vehicle rollover",
+    "callerNumber": null,
+    "location": {
+      "text": "Vestal road junction (fictional)",
+      "coords": {
+        "lat": 42.084,
+        "lng": -75.994
+      },
+      "confidence": "confirmed"
+    },
+    "steps": [
+      {
+        "atSeconds": 0,
+        "locationText": "Vestal road junction (fictional)",
+        "facts": {
+          "chiefComplaint": "Injury after a vehicle rollover",
+          "traumaMechanism": "vehicle rollover",
+          "patientCount": 1,
+          "callerRelation": "bystander"
+        },
+        "transcript": [
+          {
+            "role": "caller",
+            "text": "A car rolled over at the junction. There is one person inside."
+          }
+        ]
+      },
+      {
+        "atSeconds": 8,
+        "facts": {
+          "conscious": true,
+          "breathingNormally": true,
+          "patientAge": 45,
+          "severeBleeding": null
+        },
+        "transcript": [
+          {
+            "role": "caller",
+            "text": "The driver is awake and breathing normally. He says he is 45. I cannot tell if he is bleeding."
+          }
+        ]
+      }
+    ],
+    "expected": {
+      "acuity": "Delta",
+      "recommendedAmbulanceId": null
+    }
+  }
+]

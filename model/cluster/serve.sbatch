@@ -13,6 +13,8 @@ set -euo pipefail
 source cluster/common.sh
 BASE=${BASE_MODEL:-Qwen/Qwen3-4B-Instruct-2507}
 PORT=${PORT:-8000}
+LOAD="$BASE"
+SERVED_BASE="$BASE"
 ADAPTER_NAME=qwen3-4b-dispatch-lora
 CHAT_TEMPLATE=()
 if [[ "$BASE" == Qwen/Qwen3-1.7B ]]; then
@@ -22,15 +24,29 @@ fi
 LORA=()
 SERVED="$BASE"
 if [ -n "${1:-}" ]; then
-  LORA=(--enable-lora --max-lora-rank 16 --max-loras 1 --lora-modules "$ADAPTER_NAME=$PROJ/runs/$1/adapter")
+  ADAPTER="$PROJ/runs/$1/adapter"
   SERVED="$ADAPTER_NAME"
+  if [[ "${SERVE_MERGED:-0}" == 1 ]]; then
+    DIGEST=$(sha256sum "$ADAPTER/adapter_model.safetensors" | cut -c1-16)
+    LOAD="$PROJ/runs/$1/merged-$DIGEST"
+    if [[ ! -f "$LOAD/config.json" ]]; then
+      "$VENV_TRAIN/bin/python" -I training/merge.py --base "$BASE" --adapter "$ADAPTER" --out "$LOAD"
+    fi
+    SERVED_BASE="$ADAPTER_NAME"
+  else
+    LORA=(--enable-lora --max-lora-rank 16 --max-loras 1 --lora-modules "$ADAPTER_NAME=$ADAPTER")
+  fi
 fi
-echo "SERVING on $(hostname):$PORT  base=$BASE adapter=${1:-none}"
+echo "SERVING on $(hostname):$PORT  base=$BASE adapter=${1:-none} merged=${SERVE_MERGED:-0}"
 if [[ "$PORT" == 8000 ]]; then
   hostname > "$PROJ/logs/serve-node.txt"
 fi
 API_KEY_ARGS=()
 [ -n "${MODEL_API_KEY:-}" ] && API_KEY_ARGS=(--api-key "$MODEL_API_KEY")
+SPEC=()
+if [[ "${SERVE_NGRAM:-0}" == 1 ]]; then
+  SPEC=(--speculative-config '{"method":"ngram","num_speculative_tokens":5,"prompt_lookup_min":2,"prompt_lookup_max":4}')
+fi
 if [[ -n "${SERVE_WARMUP:-}" ]]; then
   WARMUP_ARGS=()
   [[ "$SERVE_WARMUP" == guided ]] && WARMUP_ARGS+=(--guided)
@@ -47,8 +63,8 @@ if [[ -n "${SERVE_WARMUP:-}" ]]; then
     echo "Warmup timed out waiting for vLLM" >&2
   ) &
 fi
-exec "$VENV_SERVE/bin/vllm" serve "$BASE" --served-model-name "$BASE" \
+exec "$VENV_SERVE/bin/vllm" serve "$LOAD" --served-model-name "$SERVED_BASE" \
   --host 0.0.0.0 --port "$PORT" \
   --quantization fp8 --dtype bfloat16 \
   --max-model-len 4096 --max-num-seqs 4 --gpu-memory-utilization 0.90 \
-  --enable-prefix-caching "${CHAT_TEMPLATE[@]}" "${LORA[@]}" "${API_KEY_ARGS[@]}"
+  --enable-prefix-caching "${CHAT_TEMPLATE[@]}" "${LORA[@]}" "${SPEC[@]}" "${API_KEY_ARGS[@]}"

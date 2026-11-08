@@ -1,6 +1,9 @@
 /** Scripted caller: replays a scenario's timed payloads through the voice code path. */
 import { scenarios } from "./fixtures";
 import { updateIncident } from "./voice";
+import type { ScenarioFixture } from "@/lib/contracts";
+import { randomIncidents } from "./random-incidents";
+import { RANDOM_INCIDENT_OPTIONS, randomIncidentOption } from "@/lib/demo/random-incidents";
 
 type ScriptedState = { generation: number; timers: Set<ReturnType<typeof setTimeout>> };
 
@@ -18,8 +21,17 @@ export function cancelScriptedCalls(): void {
 }
 
 export function startScriptedCall(scenarioId: string, speed = 1): { conversationId: string } | null {
+  if (randomIncidentOption(scenarioId)) {
+    const calls = randomIncidents(scenarioId === "random-burst" ? 3 : 1)
+      .map((scenario) => startScenario(scenario, speed));
+    return calls[0];
+  }
   const scenario = scenarios[scenarioId];
   if (!scenario) return null;
+  return startScenario(scenario, speed);
+}
+
+function startScenario(scenario: ScenarioFixture, speed: number): { conversationId: string } {
   const conversationId = `scripted-${scenario.id}-${crypto.randomUUID().slice(0, 6)}`;
 
   const state = scriptState();
@@ -50,4 +62,4 @@ export function startScriptedCall(scenarioId: string, speed = 1): { conversation
   return { conversationId };
 }
 
-export const scenarioIds = () => Object.keys(scenarios);
+export const scenarioIds = () => [...Object.keys(scenarios), ...RANDOM_INCIDENT_OPTIONS.map((item) => item.id)];

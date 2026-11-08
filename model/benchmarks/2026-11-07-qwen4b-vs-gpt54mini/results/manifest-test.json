@@ -1,0 +1,14 @@
+{
+  "model": "gpt-5.4-mini",
+  "split": "test",
+  "data_sha256": "48270ad5468908bca9b19355a9fcfd72a3bf7dac1787a7fd0c73bb111e6b44e1",
+  "prompt_sha256": "03f60d550d02e820c79904b0719c2fc357d82b91ee08467f9c3ab64199cd7264",
+  "schema_sha256": "cd074dd6661e3c5e98af91e591dab9e2cd25b0d497daecb7391eee4ab9ee98d1",
+  "baseline_sha256": "7d5f8dc3153f5c4a20963830e450617859c278d00bf13eb4e6a9c55382e65523",
+  "reasoning_effort": "none",
+  "max_completion_tokens": 600,
+  "limit": 0,
+  "concurrency": 1,
+  "system": "http",
+  "guided": true
+}

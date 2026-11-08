@@ -1,0 +1,134 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "model-response.json",
+  "title": "ModelResponse",
+  "description": "Model -> backend. anyOf (not oneOf) so guided-decoding backends accept it; the status const discriminates. Semantic checks (IDs match request, each candidate exactly once, recommended id among them) are done in code, not here.",
+  "anyOf": [
+    {
+      "$ref": "#/$defs/Ready"
+    },
+    {
+      "$ref": "#/$defs/NeedsMoreInfo"
+    }
+  ],
+  "$defs": {
+    "Acuity": {
+      "description": "MPDS-style, unofficial demo scale. Not the licensed IAED protocol. Omega not used.",
+      "enum": [
+        "Alpha",
+        "Bravo",
+        "Charlie",
+        "Delta",
+        "Echo"
+      ]
+    },
+    "Ready": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "acuityReason",
+        "acuity",
+        "summary",
+        "recommendedAmbulanceId",
+        "candidates"
+      ],
+      "properties": {
+        "status": {
+          "const": "ready"
+        },
+        "acuityReason": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 200,
+          "description": "Written BEFORE acuity: the deciding fact(s) and why they give this level, ending with the level and required care (e.g. 'Unconscious after a fall (conscious = false), so Delta; ALS required.'). Only supplied facts."
+        },
+        "acuity": {
+          "$ref": "#/$defs/Acuity"
+        },
+        "summary": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 200
+        },
+        "recommendedAmbulanceId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "candidates": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 3,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "ambulanceId",
+              "crewSuitable",
+              "reason"
+            ],
+            "properties": {
+              "ambulanceId": {
+                "type": "string",
+                "minLength": 1
+              },
+              "crewSuitable": {
+                "type": "boolean"
+              },
+              "reason": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 160,
+                "description": "<= ~20 words, only facts from the request."
+              }
+            }
+          }
+        }
+      }
+    },
+    "NeedsMoreInfo": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "acuity",
+        "missingFields",
+        "reason"
+      ],
+      "properties": {
+        "status": {
+          "const": "needs_more_info"
+        },
+        "acuity": {
+          "type": "null"
+        },
+        "missingFields": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "enum": [
+              "location",
+              "chiefComplaint",
+              "patientCount",
+              "patientAge",
+              "patientSex",
+              "conscious",
+              "breathingNormally",
+              "severeBleeding",
+              "chestPain",
+              "traumaMechanism",
+              "hazards",
+              "callerRelation"
+            ]
+          }
+        },
+        "reason": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 200
+        }
+      }
+    }
+  }
+}
