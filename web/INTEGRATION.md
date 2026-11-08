@@ -1,7 +1,7 @@
 # Frontend integration handoff
 
 Implemented November 7, 2026 from `plan/09-frontend-recommendation-integration.md`.
-Tested application commit: `87485e7366df410bafd6fc0d87c93273422b7e90`.
+Tested application commit: `6d0e3d68333fb22d1075a6888c65e963590df92f` (including the verified Mapbox container sizing fix).
 The backend pipeline was integrated from `dc6d0ff`; current main's dashboard was incorporated before frontend changes.
 
 The main dashboard now subscribes to one validated `/api/events` snapshot stream. Incident selection, candidate selection, tracking and command feedback are local presentation state. Facts, acuity, recommendations, task assignments, queue status, crew, hospitals and map positions come from the backend. All candidates remain in backend order; unknown durations remain unknown. Assigned incidents show their task instead of subsequent advisory recommendations.
@@ -14,7 +14,7 @@ The map renders backend coordinates and only draws routes supplied on active tas
 
 Passed against the integrated application:
 
-- Contract fixtures, recommendation scheduler/provider regressions, frontend selection/duration/command race checks, rendered triage state checks, TypeScript, full ESLint and the production build.
+- Contract fixtures, recommendation scheduler/provider regressions, frontend selection/duration/command race checks, rendered triage state checks, TypeScript, full ESLint and the production build. The shared checkout’s newer 40-request fixture also passed contracts and fallback parity after merging.
 - The disposable production HTTP suite: all three scripted scenarios, complete SSE snapshots, acceptance, busy-unit queueing, duplicate commands, stale/mismatch validation, dispatcher overrides, voice ETA consistency, phase changes, reset cancellation and restart recovery.
 - Browser: empty state, streamed facts/transcript and final assessment, explicit mismatch confirmation invalidated by refresh, acceptance, reload and a second browser view without extra incidents, queue selection, busy-unit assignment (21-minute total arrival in both assignment and unit detail), tracking cleared by reset, and connection-loss warning with disabled controls.
 - Render tests: loading/intake, missing information, ready, stale and error states; every candidate; unavailable and mismatch guards; unknown ETA; effective dispatcher acuity; accepted task precedence over advisory output.
@@ -43,10 +43,10 @@ Use one combined app on port 3000. The shared checkout retains its existing `moc
 3. Start **Breathing difficulty**, select its queue row, and inspect busy-unit waiting time versus total arrival. Assigning a busy selectable unit creates a queued task.
 4. Use **Reset** to clear the demonstration. No phone or crew-notification integration is implied.
 
-## Remaining runtime dependencies
+## Map verification and remaining runtime dependencies
 
-No Mapbox token is configured, so the no-map path was browser-verified. Actual tile/marker rendering still needs a valid public token. Marker reconciliation, coordinate conversion and route filtering are implemented, but visual map verification remains pending that token.
+The isolated worktree had no map token, so the no-map path was browser-verified. A public token became available in the shared app during final verification. The full map was then verified on port 3000: all three fleet markers, both backend hospital fixtures, the staged incident marker, selected-unit/incident framing, and incident-marker removal on reset. This exposed and fixed Mapbox’s unlayered CSS overriding the container positioning utility. The final production build passed again with explicit full-canvas sizing.
 
 The trained Qwen artifact/runtime was not available for this integration test. Verify its weights/adapter, exact served ID and compatible endpoint before switching profiles, then repeat the same application smoke check. Scheduler soft/hard deadlines remain four/eight seconds. Slow or failed providers produce explicitly labelled fallback; scheduler regression tests cover timely replacement and late results after acceptance.
 
-Voice deployment, geocoding, trained-model hosting and authoritative vehicle simulation remain separate milestones. Browser checks used disposable state in the recommendation worktree; shared model/plan edits and the shared app's existing state were preserved.
+Voice deployment, geocoding, trained-model hosting and authoritative vehicle simulation remain separate milestones. Most browser checks used disposable state in the recommendation worktree. The final map check started one fictional incident in the previously empty shared app and reset it afterward. Shared model/plan edits were preserved. One combined app is running on port 3000 with `MODEL_MODE=mock`; isolated test processes were stopped.
