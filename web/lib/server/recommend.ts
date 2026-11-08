@@ -72,7 +72,7 @@ export function createRecommendationScheduler({
   function isCurrent(job: Snapshot, state: DispatchState): boolean {
     const call = state.calls[job.callId];
     const task = call?.taskId ? state.tasks[call.taskId] : null;
-    return currentTicket(job) && !!call && call.status !== "closed"
+    return currentTicket(job) && !!call && call.intakeComplete !== false && call.status !== "closed"
       && call.taskId === job.taskId && (!job.taskId || task?.status === "active" || task?.status === "queued")
       && call.factsRevision === job.factsRevision && state.fleetRevision === job.fleetRevision
       && incidentInputKey(call) === job.incidentKey && fleetInputKey(state) === job.fleetKey;
@@ -227,7 +227,7 @@ export function createRecommendationScheduler({
     if (!currentTicket(ticket)) return;
     const state = store.getState();
     const call = state.calls[ticket.callId];
-    if (!call || call.status === "closed" || (call.taskId && !ticket.allowAssigned)) {
+    if (!call || call.intakeComplete === false || call.status === "closed" || (call.taskId && !ticket.allowAssigned)) {
       releaseTicket(ticket);
       return;
     }
@@ -284,6 +284,11 @@ export function createRecommendationScheduler({
 
   function schedule(callId: string, { immediate = false } = {}) {
     const call = store.getState().calls[callId];
+    if (call?.intakeComplete === false) {
+      discardCall(callId);
+      drain();
+      return;
+    }
     if (!call || call.status === "closed" || (call.taskId && !immediate)) return;
 
     discardCall(callId);

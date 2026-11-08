@@ -47,6 +47,7 @@ function startScenario(scenario: ScenarioFixture, speed: number): { conversation
             callerNumber: scenario.callerNumber,
             locationText: step.locationText,
             facts: step.facts,
+            intakeComplete: i === scenario.steps.length - 1,
           },
           {
             // First step carries the fixture coords (stand-in for geocoding).

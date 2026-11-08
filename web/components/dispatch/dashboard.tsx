@@ -50,16 +50,14 @@ export function DispatchDashboard() {
             <Mark />
             <span className="text-[15px] font-medium tracking-tight">Kairos</span>
           </span>
-          <span
+          {s.connection !== "open" && <span
             role="status"
-            className={`text-xs ${s.connection === "open" ? "text-success" : "text-urgent"}`}
+            className="text-xs text-urgent"
           >
-            {s.connection === "open"
-              ? "Connected"
-              : s.connection === "connecting"
+            {s.connection === "connecting"
                 ? "Connecting…"
                 : "Reconnecting…"}
-          </span>
+          </span>}
         </div>
         {call && (
           <Card key={call.id}>

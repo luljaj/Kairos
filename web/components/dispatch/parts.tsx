@@ -78,7 +78,7 @@ export function KeySignals({ call }: { call: Call }) {
 
 export function LiveCaption({ call }: { call: Call }) {
   const [open, setOpen] = useState(false);
-  const lines = open ? call.transcript : call.transcript.slice(-2);
+  const lines = call.transcript;
   return (
     <div className="flex flex-col gap-2">
       <div className="flex items-center justify-between">
@@ -87,14 +87,18 @@ export function LiveCaption({ call }: { call: Call }) {
           variant="ghost"
           size="xs"
           aria-expanded={open}
+          aria-controls={`transcript-${call.id}`}
           onClick={() => setOpen(!open)}
         >
-          {open ? "Collapse" : `All ${call.transcript.length}`}
+          {open ? "Hide" : `Show (${call.transcript.length})`}
         </Button>
       </div>
-      <div
-        className="flex max-h-48 flex-col gap-2 overflow-y-auto"
-        aria-live="polite"
+      {open && <div
+        id={`transcript-${call.id}`}
+        className="flex h-40 flex-col gap-2 overflow-y-auto overscroll-contain"
+        tabIndex={0}
+        role="region"
+        aria-label="Call transcript"
       >
         {lines.map((line, i) => (
           <p
@@ -112,7 +116,7 @@ export function LiveCaption({ call }: { call: Call }) {
             No transcript received.
           </p>
         )}
-      </div>
+      </div>}
     </div>
   );
 }

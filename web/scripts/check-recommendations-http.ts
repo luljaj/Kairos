@@ -298,7 +298,7 @@ async function checkHooksAndSave(sse: Awaited<ReturnType<typeof connect>>) {
   const afterEdit = recommendation(state, state.calls[id])!;
   assert.equal(afterEdit.factsRevision, initial.factsRevision);
 
-  const voice = { conversationId: "voice-repeat", facts: { chiefComplaint: "Headache" } };
+  const voice = { conversationId: "voice-repeat", intakeComplete: true, facts: { chiefComplaint: "Headache" } };
   const voiceHeaders = { [TOOL_SECRET_HEADER]: secret };
   const intake = UpdateIncidentResult.parse(await post("/api/voice/tools/update-incident", voice, voiceHeaders));
   const voiceId = intake.callId;

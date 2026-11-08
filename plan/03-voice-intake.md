@@ -89,6 +89,7 @@ When the model can't decide, the latest recommendation is `needs_more_info` and 
 conversationId   string   dynamic variable (system conversation ID)       required
 callerNumber     string   dynamic variable (system caller ID)             optional
 locationText     string   address as read back to the caller              optional
+intakeComplete   boolean  true on the final intake update; false while gathering
 facts            object   optional; only keys the caller actually stated:
   chiefComplaint   string    caller's own words, full updated complaint
   patientCount     integer
@@ -116,7 +117,7 @@ Order of questions:
 2. What happened (chief complaint), in the caller's words. Call `update_incident`.
 3. Is the person awake and responding? Breathing normally? Call `update_incident`. If the caller is the patient, skip "awake" (send `conscious: true`).
 4. At most two follow-ups from [Questions that change the outcome](#questions-that-change-the-outcome), only from the row matching the complaint (see [question budget](#keep-it-short-question-budget)). Age if it matters (chest pain) or comes up naturally. Call `update_incident` after each answer that changes something.
-5. Then call `get_assignment`.
+5. Send `update_incident` with `intakeComplete: true` and any final facts, then call `get_assignment`. Earlier intake updates omit this field or send false. The backend waits for this explicit completion signal before requesting its first assessment, so pauses between answers do not generate repeated suggestions.
 
 Rules:
 

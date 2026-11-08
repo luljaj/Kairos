@@ -4,7 +4,7 @@ import { TOOL_SECRET_HEADER } from "@/lib/contracts";
 import { appendTranscript, applyIncidentChanges, createCall, findCallByConversation } from "./incidents";
 import { incidentInputKey } from "./candidates";
 import { ensureRecommendationsStarted, scheduleAwaitingRecommendations, scheduleRecommendation } from "./recommend";
-import { getState, mutate } from "./store";
+import { getState, mutate, touch } from "./store";
 
 /** Constant-time-ish check of the shared secret. Unset secret = reject everything. */
 export function checkToolSecret(req: Request): boolean {
@@ -34,8 +34,14 @@ export function updateIncident(
         conversationId: body.conversationId,
         callerNumber: body.callerNumber ?? null,
       });
+      call.intakeComplete = false;
     } else if (body.callerNumber && !call.callerNumber) {
       call.callerNumber = body.callerNumber;
+    }
+    const completed = body.intakeComplete === true && call.intakeComplete === false;
+    if (body.intakeComplete !== undefined && body.intakeComplete !== call.intakeComplete) {
+      call.intakeComplete = body.intakeComplete;
+      touch(call, now);
     }
     applyIncidentChanges(state, call, {
       now,
@@ -54,7 +60,7 @@ export function updateIncident(
           : undefined,
     });
     if (extra?.transcript) appendTranscript(call, extra.transcript, now);
-    return { id: call.id, changed: before !== incidentInputKey(call) };
+    return { id: call.id, changed: completed || before !== incidentInputKey(call) };
   });
   if (result === false) throw new Error("unreachable: updateIncident always mutates");
   ensureRecommendationsStarted();

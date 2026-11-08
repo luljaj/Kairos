@@ -95,6 +95,8 @@ export const Call = z.strictObject({
   conversationId: z.string().nullable(),
   callerNumber: z.string().nullable(),
   status: CallStatus,
+  /** False while voice intake is collecting details; absent on older saved calls. */
+  intakeComplete: z.boolean().optional(),
   location: CallLocation,
   facts: IncidentFacts,
   /** Bumps only when a fact or location.coords changes value. */

@@ -121,12 +121,15 @@ async function main() {
       await pause(20);
       const call = Object.values(getState().calls).find((call) => call.conversationId === started.conversationId)!;
       assert.ok(call, "named script creates an incident");
+      assert.equal(call.intakeComplete, false);
+      assert.equal(call.recommendationSetId, null);
       assert.equal(call.facts.patientAge, null, "follow-up details arrive later");
       assert.deepEqual(call.location.coords, fixture.location.coords);
       await pause(450);
       const expected = Object.assign({}, ...fixture.steps.map((step) => step.facts));
       for (const [key, value] of Object.entries(expected)) assert.equal(call.facts[key as keyof typeof call.facts], value);
       assert.equal(call.transcript.length, 2);
+      assert.equal(call.intakeComplete, true);
       assert.equal(call.taskId, null, "scripts do not assign a unit automatically");
       assert.equal(Object.keys(getState().calls).length, index + 1, "premade calls append without replacing earlier calls");
     }

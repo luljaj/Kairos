@@ -234,6 +234,31 @@ async function checkScheduler() {
   {
     const h = harness();
     const call = addCall(h.state);
+    call.intakeComplete = false;
+    h.scheduler.ensureStarted();
+    for (let i = 0; i < 3; i++) {
+      call.facts.notes = `Intake update ${i}`;
+      call.factsRevision++;
+      h.scheduler.schedule(call.id);
+      h.scheduler.scheduleAwaiting();
+      h.scheduler.schedule(call.id, { immediate: true });
+      h.tick(5000);
+    }
+    assert.equal(h.calls.length, 0, "no requests during intake, even across long pauses");
+    assert.deepEqual(h.state.recommendations, {});
+    call.intakeComplete = true;
+    h.scheduler.schedule(call.id);
+    h.tick(1500);
+    assert.equal(h.calls.length, 1);
+    await h.resolve(0);
+    h.tick(10000);
+    assert.equal(h.calls.length, 1);
+    assert.equal(Object.keys(h.state.recommendations).length, 1);
+    assert.equal(h.calls[0].request.incident.facts.notes, "Intake update 2");
+  }
+  {
+    const h = harness();
+    const call = addCall(h.state);
     h.scheduler.schedule(call.id, { immediate: true });
     h.tick(1000);
     call.facts.chiefComplaint = "sore throat";

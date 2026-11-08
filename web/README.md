@@ -39,7 +39,7 @@ MODEL_MODE=mock ./node_modules/.bin/next dev -H 127.0.0.1 -p 3001
 
 ## Recommendation modes
 
-Automatic updates debounce for 1.5 seconds. The scheduler runs one model request at a time. It publishes a deterministic fallback after four seconds in the queue or four seconds of inference. A valid current model response may replace it before the eight-second inference cutoff. Accepting a recommendation preserves the assignment if a model response arrives afterward.
+Voice intake waits until `update-incident` receives `intakeComplete: true` with the final details before scheduling an assessment. Configure the ElevenLabs tool to send this field once information gathering is finished; intermediate updates omit it or send false. Scripted calls set it automatically on their last step. Pauses during intake and fleet updates do not trigger assessments while intake is incomplete. After intake, fact edits and fleet changes still refresh stale recommendations; automatic updates debounce for 1.5 seconds. The scheduler runs one model request at a time. It publishes a deterministic fallback after four seconds in the queue or four seconds of inference. A valid current model response may replace it before the eight-second inference cutoff. Accepting a recommendation preserves the assignment if a model response arrives afterward.
 
 `MODEL_MODE=mock` and `MODEL_MODE=fallback` use the deterministic demo rubric locally. To enable a provider, set `MODEL_MODE=model` and use one of these profiles in `.env.local`.
 

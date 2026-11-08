@@ -13,6 +13,8 @@ export const UpdateIncidentBody = z.object({
   callerNumber: z.string().nullish(),
   locationText: z.string().nullish(),
   facts: IncidentFacts.partial().optional(),
+  /** Send true with the final intake update to request an assessment once. */
+  intakeComplete: z.boolean().optional(),
 });
 export type UpdateIncidentBody = z.infer<typeof UpdateIncidentBody>;
 
