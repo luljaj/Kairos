@@ -52,7 +52,7 @@ const sameCoords = (a: LatLng | null, b: LatLng | null) =>
 /**
  * Merge a partial update. Omitted keys are left alone; explicit `null` sets unknown.
  * Bumps `factsRevision` only when a fact or `location.coords` actually changes
- * (and then marks the call's latest recommendation stale). Returns whether anything changed.
+ * and marks the latest recommendation stale on any input change.
  */
 export function applyIncidentChanges(
   state: DispatchState,
@@ -83,16 +83,17 @@ export function applyIncidentChanges(
     if (loc.coords !== undefined && !sameCoords(loc.coords, call.location.coords)) {
       call.location.coords = loc.coords;
       changed = factsChanged = true;
+      const task = call.taskId ? state.tasks[call.taskId] : null;
+      // An assigned incident is also a route waypoint for other calls' ETAs.
+      if (task?.status === "active" || task?.status === "queued") fleetChanged(state);
     }
   }
 
-  if (factsChanged) {
-    call.factsRevision++;
-    const latest = call.recommendationSetId ? state.recommendations[call.recommendationSetId] : null;
-    if (latest && latest.status !== "stale") latest.status = "stale";
-    // TODO(pipeline): schedule debounced recommendation run (plan/02 "Recommendation pipeline").
+  if (factsChanged) call.factsRevision++;
+  if (changed) {
+    markRecommendationStale(state, call);
+    touch(call, changes.now);
   }
-  if (changed) touch(call, changes.now);
   return changed;
 }
 
@@ -104,4 +105,19 @@ export function appendTranscript(
   if (entries.length === 0) return;
   for (const e of entries) call.transcript.push({ ...e, at: now });
   touch(call, now);
+}
+
+export function markRecommendationStale(state: DispatchState, call: Call): boolean {
+  const latest = call.recommendationSetId ? state.recommendations[call.recommendationSetId] : null;
+  if (!latest || latest.status === "stale") return false;
+  latest.status = "stale";
+  return true;
+}
+
+/** Invalidate open recommendations whose fleet estimates need a refresh. */
+export function fleetChanged(state: DispatchState): void {
+  state.fleetRevision++;
+  for (const call of Object.values(state.calls)) {
+    if (!call.taskId && call.status !== "closed") markRecommendationStale(state, call);
+  }
 }

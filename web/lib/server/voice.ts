@@ -2,6 +2,8 @@
 import type { GetAssignmentResult, UpdateIncidentBody } from "@/lib/contracts";
 import { TOOL_SECRET_HEADER } from "@/lib/contracts";
 import { appendTranscript, applyIncidentChanges, createCall, findCallByConversation } from "./incidents";
+import { incidentInputKey } from "./candidates";
+import { ensureRecommendationsStarted, scheduleAwaitingRecommendations, scheduleRecommendation } from "./recommend";
 import { getState, mutate } from "./store";
 
 /** Constant-time-ish check of the shared secret. Unset secret = reject everything. */
@@ -21,9 +23,11 @@ export function updateIncident(
     transcript?: { role: "agent" | "caller"; text: string }[];
   },
 ): string {
+  const beforeFleet = getState().fleetRevision;
   const result = mutate((state) => {
     const now = new Date().toISOString();
     let call = findCallByConversation(state, body.conversationId);
+    const before = call ? incidentInputKey(call) : null;
     if (!call) {
       call = createCall(state, {
         now,
@@ -50,13 +54,17 @@ export function updateIncident(
           : undefined,
     });
     if (extra?.transcript) appendTranscript(call, extra.transcript, now);
-    return call.id;
+    return { id: call.id, changed: before !== incidentInputKey(call) };
   });
   if (result === false) throw new Error("unreachable: updateIncident always mutates");
-  return result;
+  ensureRecommendationsStarted();
+  if (getState().fleetRevision !== beforeFleet) scheduleAwaitingRecommendations();
+  else if (result.changed) scheduleRecommendation(result.id);
+  return result.id;
 }
 
 export function getAssignment(conversationId: string): GetAssignmentResult {
+  ensureRecommendationsStarted();
   const state = getState();
   const call = findCallByConversation(state, conversationId);
   const task = call?.taskId ? state.tasks[call.taskId] : undefined;

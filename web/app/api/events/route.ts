@@ -1,5 +1,6 @@
 /** SSE: full state snapshot on connect and after every change (throttled to 10/s). */
 import { connection } from "next/server";
+import { ensureRecommendationsStarted } from "@/lib/server/recommend";
 import { getState, subscribe } from "@/lib/server/store";
 
 const MIN_INTERVAL_MS = 100;
@@ -7,6 +8,7 @@ const PING_MS = 15_000;
 
 export async function GET(req: Request) {
   await connection(); // opt out of prerendering (Cache Components)
+  ensureRecommendationsStarted();
   const encoder = new TextEncoder();
   let cleanup = () => {};
 

@@ -3,9 +3,8 @@
  * re-checks its preconditions against current state. See plan/02 "Commands".
  */
 import {
-  REQUIRED_CARE_LEVEL,
+  IsoTime,
   careLevelOf,
-  meetsCareLevel,
   selectability,
   type Acuity,
   type Ambulance,
@@ -17,7 +16,14 @@ import {
   type Task,
 } from "@/lib/contracts";
 import { initialState } from "./fixtures";
-import { applyIncidentChanges, createCall } from "./incidents";
+import { applyIncidentChanges, createCall, fleetChanged, markRecommendationStale } from "./incidents";
+import { capabilityMismatch, incidentInputKey, sortForDisplay } from "./candidates";
+import { estimateArrival, nearestHospital } from "./eta";
+import {
+  cancelCallRecommendation, ensureRecommendationsStarted, resetRecommendations,
+  scheduleAwaitingRecommendations, scheduleRecommendation,
+} from "./recommend";
+import { cancelScriptedCalls } from "./scripted";
 import { getState, mutate, newId, rememberCommand, replaceState, seenCommand, touch } from "./store";
 
 type HandlerOk = { queued?: boolean; createdId?: string };
@@ -32,8 +38,14 @@ export function applyCommand(cmd: Command): CommandResult {
   const previous = seenCommand(cmd.commandId);
   if (previous) return previous;
 
+  const state = getState();
+  const beforeFleet = state.fleetRevision;
+  const editedCall = cmd.type === "edit_incident" ? state.calls[cmd.callId] : null;
+  const beforeIncident = editedCall ? incidentInputKey(editedCall) : null;
   let result: CommandResult;
   if (cmd.type === "reset_demo") {
+    resetRecommendations();
+    cancelScriptedCalls();
     replaceState(initialState());
     result = { ok: true, revision: getState().revision };
   } else {
@@ -53,6 +65,33 @@ export function applyCommand(cmd: Command): CommandResult {
   }
 
   rememberCommand(cmd.commandId, result);
+  if (!result.ok) return result;
+
+  ensureRecommendationsStarted();
+  switch (cmd.type) {
+    case "create_manual_call":
+      if (result.createdId) scheduleRecommendation(result.createdId);
+      break;
+    case "edit_incident":
+      if (editedCall && beforeIncident !== incidentInputKey(editedCall)) scheduleRecommendation(editedCall.id);
+      break;
+    case "request_recommendation":
+      scheduleRecommendation(cmd.callId, { immediate: true });
+      break;
+    case "accept_recommendation":
+    case "manual_assign":
+      if (result.createdId) cancelCallRecommendation(state.tasks[result.createdId].callId);
+      break;
+    case "cancel_task":
+      cancelCallRecommendation(state.tasks[cmd.taskId].callId);
+      break;
+    case "advance_phase":
+      if (state.tasks[cmd.taskId].status === "completed") {
+        cancelCallRecommendation(state.tasks[cmd.taskId].callId);
+      }
+      break;
+  }
+  if (state.fleetRevision !== beforeFleet) scheduleAwaitingRecommendations();
   return result;
 }
 
@@ -78,8 +117,9 @@ function handle(state: DispatchState, cmd: Exclude<Command, { type: "reset_demo"
       const set = call.recommendationSetId ? state.recommendations[call.recommendationSetId] : null;
       if (set) {
         for (const c of set.candidates) {
-          c.capabilityMismatch = !meetsCareLevel(c.careLevel, REQUIRED_CARE_LEVEL[cmd.acuity]);
+          c.capabilityMismatch = capabilityMismatch(c.careLevel, cmd.acuity);
         }
+        set.candidates = sortForDisplay(set.candidates);
       }
       touch(call, now);
       return {};
@@ -90,22 +130,27 @@ function handle(state: DispatchState, cmd: Exclude<Command, { type: "reset_demo"
       if (!set) return err("not_found", `recommendation ${cmd.recommendationSetId} not found`);
       const call = state.calls[set.callId];
       if (!call) return err("not_found", `call ${set.callId} not found`);
-      if (call.recommendationSetId !== set.id || set.status === "stale") {
+      if (call.taskId || call.status === "closed") return err("conflict", "call is closed or already assigned");
+      if (call.recommendationSetId !== set.id || set.status === "stale"
+          || set.factsRevision !== call.factsRevision || set.fleetRevision !== state.fleetRevision) {
         return err("stale", "recommendation is out of date; a fresh one is coming");
       }
       if (set.status !== "ready") return err("conflict", `recommendation status is ${set.status}`);
-      if (call.taskId) return err("conflict", "call already has a task");
       const cand = set.candidates.find((c) => c.ambulanceId === cmd.ambulanceId);
       if (!cand) return err("not_found", `ambulance ${cmd.ambulanceId} is not a candidate`);
       if (!cand.selectable) return err("not_selectable", cand.unavailableReason ?? "unit not selectable");
-      if (cand.capabilityMismatch && !cmd.confirmMismatch) {
-        return err("mismatch_unconfirmed", "unit care level is below what this acuity needs; confirm to send");
-      }
       const amb = state.ambulances[cmd.ambulanceId];
       if (!amb) return err("not_found", `ambulance ${cmd.ambulanceId} not found`);
+      const sel = selectability(amb, state.crew);
+      if (!sel.selectable) return err("not_selectable", sel.unavailableReason ?? "unit not selectable");
+      const mismatch = isMismatch(state, amb, call.acuity?.value ?? set.acuity);
+      if (mismatch && !cmd.confirmMismatch) {
+        return err("mismatch_unconfirmed", "unit care level is below what this acuity needs; confirm to send");
+      }
       const task = assign(state, call, amb, now, {
+        etaAt: assignmentEta(state, call, amb),
         recommendationId: set.id,
-        override: cand.capabilityMismatch
+        override: mismatch
           ? { reason: "capability_mismatch_confirmed", note: null }
           : cmd.ambulanceId !== set.recommendedAmbulanceId
             ? { reason: "dispatcher_choice", note: null }
@@ -117,7 +162,7 @@ function handle(state: DispatchState, cmd: Exclude<Command, { type: "reset_demo"
     case "manual_assign": {
       const call = state.calls[cmd.callId];
       if (!call) return err("not_found", `call ${cmd.callId} not found`);
-      if (call.taskId) return err("conflict", "call already has a task");
+      if (call.taskId || call.status === "closed") return err("conflict", "call is closed or already assigned");
       const amb = state.ambulances[cmd.ambulanceId];
       if (!amb) return err("not_found", `ambulance ${cmd.ambulanceId} not found`);
       const sel = selectability(amb, state.crew);
@@ -127,6 +172,7 @@ function handle(state: DispatchState, cmd: Exclude<Command, { type: "reset_demo"
         return err("mismatch_unconfirmed", "unit care level is below what this acuity needs; confirm to send");
       }
       const task = assign(state, call, amb, now, {
+        etaAt: assignmentEta(state, call, amb),
         recommendationId: null,
         override: mismatch
           ? { reason: "capability_mismatch_confirmed", note: null }
@@ -171,12 +217,13 @@ function handle(state: DispatchState, cmd: Exclude<Command, { type: "reset_demo"
       return {};
     }
 
-    case "request_recommendation":
-      // TODO(pipeline): lib/server/recommend.ts — candidates, model/fallback, apply.
-      // Copy ModelResponseReady.acuityReason into RecommendationSet.acuityReason; the rules
-      // fallback must fill it too (templates: model/data/generate.py::acuity_reason).
-      // Guided decoding: send model/schemas/model-response.json with `uniqueItems` stripped.
-      return err("not_implemented", "recommendation pipeline not built yet");
+    case "request_recommendation": {
+      const call = state.calls[cmd.callId];
+      if (!call) return err("not_found", `call ${cmd.callId} not found`);
+      if (call.status === "closed") return err("conflict", "call is closed");
+      markRecommendationStale(state, call);
+      return {};
+    }
 
     case "move_queued_task":
       return err("not_implemented", "queue reordering is a stretch goal");
@@ -186,18 +233,15 @@ function handle(state: DispatchState, cmd: Exclude<Command, { type: "reset_demo"
 // --- helpers -----------------------------------------------------------------
 
 function isMismatch(state: DispatchState, amb: Ambulance, acuity: Acuity | null): boolean {
-  if (!acuity) return false;
-  return !meetsCareLevel(careLevelOf(amb, state.crew), REQUIRED_CARE_LEVEL[acuity]);
+  return capabilityMismatch(careLevelOf(amb, state.crew), acuity);
 }
 
-/** Fleet changed: open recommendation sets are stale (plan/02). */
-function fleetChanged(state: DispatchState) {
-  state.fleetRevision++;
-  for (const set of Object.values(state.recommendations)) {
-    const call = state.calls[set.callId];
-    if (call && !call.taskId && set.status !== "stale") set.status = "stale";
-  }
-  // TODO(pipeline): re-run candidates for calls awaiting a decision (debounced).
+function assignmentEta(state: DispatchState, call: Call, ambulance: Ambulance): string | null {
+  const { arrivalInSeconds } = estimateArrival(state, ambulance, call.location.coords);
+  if (arrivalInSeconds === null) return null;
+  const arrival = new Date(Date.parse(state.simClock) + arrivalInSeconds * 1000);
+  if (!Number.isFinite(arrival.getTime())) return null;
+  return IsoTime.safeParse(arrival.toISOString()).data ?? null;
 }
 
 /** Start the task now if the unit is free, otherwise append to its queue. */
@@ -206,7 +250,7 @@ function assign(
   call: Call,
   amb: Ambulance,
   now: string,
-  opts: { recommendationId: string | null; override: Task["override"] },
+  opts: { etaAt: string | null; recommendationId: string | null; override: Task["override"] },
 ): Task {
   const task: Task = {
     id: newId("task"),
@@ -219,7 +263,7 @@ function assign(
     hospital: null,
     route: null, // TODO(routing): Mapbox route from release point to incident
     phaseEndsAt: null,
-    etaAt: null,
+    etaAt: opts.etaAt,
     acceptedFromRecommendationId: opts.recommendationId,
     override: opts.override,
     createdAt: now,
@@ -227,8 +271,11 @@ function assign(
   };
   state.tasks[task.id] = task;
 
-  if (amb.status === "available" && !amb.activeTaskId) startTask(amb, task, now);
-  else amb.queuedTaskIds.push(task.id);
+  if (amb.status === "available" && !amb.activeTaskId && amb.queuedTaskIds.length === 0) {
+    startTask(amb, task, now);
+  } else {
+    amb.queuedTaskIds.push(task.id);
+  }
   touch(amb, now);
 
   call.taskId = task.id;
@@ -241,7 +288,7 @@ function assign(
 function startTask(amb: Ambulance, task: Task, now: string) {
   task.status = "active";
   task.phase = "en_route";
-  // TODO(sim): phaseEndsAt/etaAt from route duration and SIM_SPEED.
+  // TODO(sim): set phaseEndsAt when the phase starts.
   touch(task, now);
   amb.status = "busy";
   amb.activeTaskId = task.id;
@@ -279,20 +326,13 @@ export function advancePhase(state: DispatchState, task: Task, now: string) {
         touch(call, now);
       }
       if (amb) releaseUnit(state, amb, now);
-      fleetChanged(state);
       break;
     default:
       return;
   }
   task.phaseEndsAt = null;
+  task.route = null; // The previous phase route no longer describes the current leg.
   touch(task, now);
   if (amb) touch(amb, now);
-}
-
-function nearestHospital(state: DispatchState, from: { lat: number; lng: number } | null) {
-  if (state.hospitals.length === 0) return null;
-  const d = (h: (typeof state.hospitals)[number]) =>
-    from ? (h.coords.lat - from.lat) ** 2 + (h.coords.lng - from.lng) ** 2 : 0;
-  const h = [...state.hospitals].sort((a, b) => d(a) - d(b))[0];
-  return { name: h.name, coords: { ...h.coords } };
+  fleetChanged(state);
 }
