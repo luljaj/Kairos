@@ -42,6 +42,14 @@ export type ModelRequest = z.infer<typeof ModelRequest>;
 
 export const ModelResponseReady = z.strictObject({
   status: z.literal("ready"),
+  /**
+   * Why this acuity: the deciding fact(s) and rubric row, ending with the level
+   * and required care, e.g. "Unconscious after a fall (conscious = false), so
+   * Delta; ALS required." Must come BEFORE `acuity` (guided decoding follows
+   * property order, so the model commits to the evidence first). See
+   * model/CONTRACT_CHANGES.md.
+   */
+  acuityReason: z.string().min(1).max(200),
   acuity: Acuity,
   summary: z.string().min(1).max(200),
   recommendedAmbulanceId: z.string().min(1),
@@ -91,5 +99,16 @@ export function checkModelResponse(req: ModelRequest, res: ModelResponse): strin
   if (!sent.includes(res.recommendedAmbulanceId)) {
     problems.push(`recommendedAmbulanceId ${res.recommendedAmbulanceId} not among candidates`);
   }
+  const named = levelsNamed(res.acuityReason);
+  if (named.length !== 1 || named[0] !== res.acuity) {
+    problems.push(`acuityReason names [${named.join(", ")}] but acuity is ${res.acuity}`);
+  }
   return problems;
+}
+
+const LEVELS = Acuity.options;
+
+/** Acuity levels mentioned in a reason (whole words). The reason must name exactly the chosen one. */
+export function levelsNamed(text: string): Acuity[] {
+  return LEVELS.filter((l) => new RegExp(`\\b${l}\\b`).test(text));
 }

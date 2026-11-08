@@ -238,6 +238,8 @@ export const RecommendationSet = z.strictObject({
   /** e.g. "qwen3-4b-base" or adapter name */
   modelId: z.string().nullable(),
   status: RecommendationStatus,
+  /** Model (or fallback) explanation of the acuity; shown under the acuity chip. */
+  acuityReason: z.string().nullable(),
   acuity: Acuity.nullable(),
   summary: z.string().nullable(),
   missingFields: z.array(MissingField),

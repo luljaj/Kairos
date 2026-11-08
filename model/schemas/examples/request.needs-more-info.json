@@ -1,0 +1,102 @@
+{
+  "requestId": "req-example-more-info",
+  "incident": {
+    "location": {
+      "text": "Corner of Main St and Oak Ave (fictional)",
+      "confidence": "approximate"
+    },
+    "facts": {
+      "chiefComplaint": "My mom collapsed",
+      "patientCount": null,
+      "patientAge": null,
+      "patientSex": null,
+      "conscious": null,
+      "breathingNormally": null,
+      "severeBleeding": null,
+      "chestPain": null,
+      "traumaMechanism": null,
+      "hazards": null,
+      "callerRelation": "family",
+      "notes": null
+    }
+  },
+  "candidates": [
+    {
+      "ambulanceId": "amb-1",
+      "careLevel": "BLS",
+      "crew": [
+        {
+          "role": "driver",
+          "qualifications": [
+            "nys_emt",
+            "hf_driver_cleared"
+          ],
+          "monthsOfService": 14
+        },
+        {
+          "role": "crew_chief",
+          "qualifications": [
+            "nys_emt",
+            "hf_crew_chief_cleared"
+          ],
+          "monthsOfService": 30
+        }
+      ],
+      "availableInSeconds": 0,
+      "travelSeconds": 240,
+      "arrivalInSeconds": 240
+    },
+    {
+      "ambulanceId": "amb-2",
+      "careLevel": "ALS",
+      "crew": [
+        {
+          "role": "driver",
+          "qualifications": [
+            "nys_emt",
+            "hf_driver_cleared"
+          ],
+          "monthsOfService": 22
+        },
+        {
+          "role": "crew_chief",
+          "qualifications": [
+            "nys_paramedic",
+            "hf_als_cleared",
+            "hf_crew_chief_cleared"
+          ],
+          "monthsOfService": 41
+        }
+      ],
+      "availableInSeconds": 0,
+      "travelSeconds": 360,
+      "arrivalInSeconds": 360
+    },
+    {
+      "ambulanceId": "amb-3",
+      "careLevel": "ALS",
+      "crew": [
+        {
+          "role": "driver",
+          "qualifications": [
+            "nys_aemt",
+            "hf_driver_cleared"
+          ],
+          "monthsOfService": 9
+        },
+        {
+          "role": "crew_chief",
+          "qualifications": [
+            "nys_paramedic",
+            "hf_als_cleared",
+            "hf_crew_chief_cleared"
+          ],
+          "monthsOfService": 66
+        }
+      ],
+      "availableInSeconds": 900,
+      "travelSeconds": 420,
+      "arrivalInSeconds": 1320
+    }
+  ]
+}

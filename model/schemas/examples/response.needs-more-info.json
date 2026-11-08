@@ -1,0 +1,9 @@
+{
+  "status": "needs_more_info",
+  "acuity": null,
+  "missingFields": [
+    "conscious",
+    "breathingNormally"
+  ],
+  "reason": "A collapse cannot be assessed without knowing whether she is awake and breathing normally."
+}

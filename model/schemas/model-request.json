@@ -1,0 +1,96 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "model-request.json",
+  "title": "ModelRequest",
+  "description": "Backend -> model. Arrival times are computed by the backend; the model never invents them. Only selectable ambulances are sent (fleet is always 3).",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["requestId", "incident", "candidates"],
+  "properties": {
+    "requestId": { "type": "string", "minLength": 1 },
+    "incident": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["location", "facts"],
+      "properties": {
+        "location": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["text", "confidence"],
+          "properties": {
+            "text": { "type": ["string", "null"] },
+            "confidence": { "enum": ["confirmed", "approximate", null] }
+          }
+        },
+        "facts": { "$ref": "#/$defs/IncidentFacts" }
+      }
+    },
+    "candidates": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 3,
+      "items": { "$ref": "#/$defs/Candidate" }
+    }
+  },
+  "$defs": {
+    "IncidentFacts": {
+      "description": "DRAFT intake fields; voice owner may still change them. null = unknown.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "chiefComplaint", "patientCount", "patientAge", "patientSex", "conscious",
+        "breathingNormally", "severeBleeding", "chestPain", "traumaMechanism",
+        "hazards", "callerRelation", "notes"
+      ],
+      "properties": {
+        "chiefComplaint": { "type": ["string", "null"] },
+        "patientCount": { "type": ["integer", "null"], "minimum": 1 },
+        "patientAge": { "type": ["integer", "null"], "minimum": 0, "maximum": 120 },
+        "patientSex": { "enum": ["male", "female", "other", null] },
+        "conscious": { "type": ["boolean", "null"] },
+        "breathingNormally": { "type": ["boolean", "null"] },
+        "severeBleeding": { "type": ["boolean", "null"] },
+        "chestPain": { "type": ["boolean", "null"] },
+        "traumaMechanism": { "type": ["string", "null"] },
+        "hazards": { "type": ["string", "null"] },
+        "callerRelation": { "enum": ["self", "family", "bystander", "other", null] },
+        "notes": { "type": ["string", "null"] }
+      }
+    },
+    "Candidate": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["ambulanceId", "careLevel", "crew", "availableInSeconds", "travelSeconds", "arrivalInSeconds"],
+      "properties": {
+        "ambulanceId": { "type": "string", "minLength": 1 },
+        "careLevel": { "enum": ["ALS", "BLS"] },
+        "crew": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["role", "qualifications", "monthsOfService"],
+            "properties": {
+              "role": { "enum": ["driver", "crew_chief", "attendant"] },
+              "qualifications": {
+                "type": "array",
+                "uniqueItems": true,
+                "items": {
+                  "enum": [
+                    "nys_emt", "nys_aemt", "nys_paramedic",
+                    "hf_driver_cleared", "hf_crew_chief_cleared", "hf_als_cleared"
+                  ]
+                }
+              },
+              "monthsOfService": { "type": "integer", "minimum": 0 }
+            }
+          }
+        },
+        "availableInSeconds": { "type": ["number", "null"], "minimum": 0, "description": "Current + queued work. 0 if free." },
+        "travelSeconds": { "type": ["number", "null"], "minimum": 0, "description": "From projected release point to incident." },
+        "arrivalInSeconds": { "type": ["number", "null"], "minimum": 0, "description": "available + travel; null if either is unknown." }
+      }
+    }
+  }
+}

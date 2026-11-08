@@ -1,0 +1,286 @@
+{
+  "url": "https://broomecountyny.gov/sites/default/files/dept/transit/BCT_GTFS.zip",
+  "note": "Default Python user agent returned 403; explicit research user agent retried.",
+  "files": [
+    "trips.txt",
+    "agency.txt",
+    "calendar.txt",
+    "calendar_dates.txt",
+    "fare_attributes.txt",
+    "fare_rules.txt",
+    "feed_info.txt",
+    "frequencies.txt",
+    "routes.txt",
+    "shapes.txt",
+    "stop_times.txt",
+    "stops.txt",
+    "transfers.txt"
+  ],
+  "tables": {
+    "trips.txt": {
+      "rows": 834,
+      "columns": [
+        "route_id",
+        "service_id",
+        "trip_id",
+        "trip_headsign",
+        "direction_id",
+        "block_id",
+        "shape_id",
+        "wheelchair_accessible",
+        "bikes_allowed"
+      ]
+    },
+    "agency.txt": {
+      "rows": 1,
+      "columns": [
+        "agency_id",
+        "agency_name",
+        "agency_url",
+        "agency_timezone",
+        "agency_lang",
+        "agency_phone",
+        "agency_fare_url"
+      ]
+    },
+    "calendar.txt": {
+      "rows": 9,
+      "columns": [
+        "service_id",
+        "monday",
+        "tuesday",
+        "wednesday",
+        "thursday",
+        "friday",
+        "saturday",
+        "sunday",
+        "start_date",
+        "end_date"
+      ],
+      "records": [
+        {
+          "service_id": "mtwtf",
+          "monday": "1",
+          "tuesday": "1",
+          "wednesday": "1",
+          "thursday": "1",
+          "friday": "1",
+          "saturday": "0",
+          "sunday": "0",
+          "start_date": "20260820",
+          "end_date": "20271231"
+        },
+        {
+          "service_id": "sat",
+          "monday": "0",
+          "tuesday": "0",
+          "wednesday": "0",
+          "thursday": "0",
+          "friday": "0",
+          "saturday": "1",
+          "sunday": "0",
+          "start_date": "20260820",
+          "end_date": "20271231"
+        },
+        {
+          "service_id": "sun",
+          "monday": "0",
+          "tuesday": "0",
+          "wednesday": "0",
+          "thursday": "0",
+          "friday": "0",
+          "saturday": "0",
+          "sunday": "1",
+          "start_date": "20260820",
+          "end_date": "20271231"
+        },
+        {
+          "service_id": "mtwtf_BU",
+          "monday": "1",
+          "tuesday": "1",
+          "wednesday": "1",
+          "thursday": "1",
+          "friday": "1",
+          "saturday": "0",
+          "sunday": "0",
+          "start_date": "20260824",
+          "end_date": "20261208"
+        },
+        {
+          "service_id": "mtwtf_SB",
+          "monday": "1",
+          "tuesday": "1",
+          "wednesday": "1",
+          "thursday": "1",
+          "friday": "1",
+          "saturday": "0",
+          "sunday": "0",
+          "start_date": "20260824",
+          "end_date": "20261214"
+        },
+        {
+          "service_id": "mtwtf_BHS-PM",
+          "monday": "1",
+          "tuesday": "1",
+          "wednesday": "1",
+          "thursday": "1",
+          "friday": "1",
+          "saturday": "0",
+          "sunday": "0",
+          "start_date": "20260910",
+          "end_date": "20261222"
+        },
+        {
+          "service_id": "mttf_BHS-AM",
+          "monday": "1",
+          "tuesday": "1",
+          "wednesday": "0",
+          "thursday": "1",
+          "friday": "1",
+          "saturday": "0",
+          "sunday": "0",
+          "start_date": "20260910",
+          "end_date": "20261222"
+        },
+        {
+          "service_id": "w_BHS-AM",
+          "monday": "0",
+          "tuesday": "0",
+          "wednesday": "1",
+          "thursday": "0",
+          "friday": "0",
+          "saturday": "0",
+          "sunday": "0",
+          "start_date": "20260910",
+          "end_date": "20261222"
+        },
+        {
+          "service_id": "mtwtf_NO_BHS",
+          "monday": "1",
+          "tuesday": "1",
+          "wednesday": "1",
+          "thursday": "1",
+          "friday": "1",
+          "saturday": "0",
+          "sunday": "0",
+          "start_date": "20260910",
+          "end_date": "20261222"
+        }
+      ]
+    },
+    "calendar_dates.txt": {
+      "rows": 28,
+      "columns": [
+        "service_id",
+        "date",
+        "exception_type"
+      ],
+      "date_min": "20260907",
+      "date_max": "20271225"
+    },
+    "fare_attributes.txt": {
+      "rows": 0,
+      "columns": []
+    },
+    "fare_rules.txt": {
+      "rows": 0,
+      "columns": []
+    },
+    "feed_info.txt": {
+      "rows": 1,
+      "columns": [
+        "feed_publisher_name",
+        "feed_publisher_url",
+        "feed_lang",
+        "feed_start_date",
+        "feed_end_date",
+        "feed_version",
+        "feed_contact_email",
+        "feed_contact_url"
+      ],
+      "records": [
+        {
+          "feed_publisher_name": "B.C. Transit",
+          "feed_publisher_url": "https://gobroomecounty.com/transit",
+          "feed_lang": "en",
+          "feed_start_date": "20260821",
+          "feed_end_date": "20271231",
+          "feed_version": "20260822",
+          "feed_contact_email": "ronald.hirst@broomecountyny.gov",
+          "feed_contact_url": "https://broomecountyny.gov/transit/gtfs"
+        }
+      ]
+    },
+    "frequencies.txt": {
+      "rows": 0,
+      "columns": []
+    },
+    "routes.txt": {
+      "rows": 23,
+      "columns": [
+        "route_id",
+        "agency_id",
+        "route_short_name",
+        "route_long_name",
+        "route_desc",
+        "route_type",
+        "route_url",
+        "route_color",
+        "route_text_color"
+      ]
+    },
+    "shapes.txt": {
+      "rows": 22687,
+      "columns": [
+        "shape_id",
+        "shape_pt_lat",
+        "shape_pt_lon",
+        "shape_pt_sequence",
+        "shape_dist_traveled"
+      ]
+    },
+    "stop_times.txt": {
+      "rows": 27977,
+      "columns": [
+        "trip_id",
+        "arrival_time",
+        "departure_time",
+        "stop_id",
+        "stop_sequence",
+        "stop_headsign",
+        "pickup_type",
+        "drop_off_type",
+        "shape_dist_traveled",
+        "timepoint"
+      ]
+    },
+    "stops.txt": {
+      "rows": 797,
+      "columns": [
+        "stop_id",
+        "stop_code",
+        "stop_name",
+        "stop_desc",
+        "stop_lat",
+        "stop_lon",
+        "zone_id",
+        "stop_url",
+        "location_type",
+        "parent_station",
+        "stop_timezone",
+        "wheelchair_boarding"
+      ]
+    },
+    "transfers.txt": {
+      "rows": 60,
+      "columns": [
+        "from_stop_id",
+        "to_stop_id",
+        "transfer_type",
+        "min_transfer_time",
+        "from_route_id",
+        "to_route_id"
+      ]
+    }
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "status": "ready",
+  "acuityReason": "Unconscious after a fall down stairs (conscious = false), so Delta; ALS required.",
+  "acuity": "Delta",
+  "summary": "67-year-old man unconscious after a fall down stairs, breathing normally.",
+  "recommendedAmbulanceId": "amb-2",
+  "candidates": [
+    {
+      "ambulanceId": "amb-2",
+      "crewSuitable": true,
+      "reason": "ALS crew, arrives in about 6 minutes."
+    },
+    {
+      "ambulanceId": "amb-1",
+      "crewSuitable": false,
+      "reason": "BLS only; patient is unconscious and needs ALS. Arrives in about 4 minutes."
+    },
+    {
+      "ambulanceId": "amb-3",
+      "crewSuitable": true,
+      "reason": "ALS crew, but busy; arrives in about 22 minutes."
+    }
+  ]
+}
