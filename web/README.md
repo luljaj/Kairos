@@ -2,6 +2,10 @@
 
 One Next.js 16 app (App Router, TypeScript), run as **one long-lived Node process**. State lives in server memory and is snapshotted to `data/state.json` (gitignored). Plans: `../plan/01-contracts.md`, `../plan/02-state-and-backend.md`.
 
+## Integrated dashboard
+
+The main screen now uses the backend recommendation pipeline. Start fictional scenarios from **Demo incident**, select incidents from the queue, and assign a displayed candidate. See [frontend integration handoff](INTEGRATION.md) for tested behavior, live-provider evidence and remaining runtime dependencies. The `/debug` screen remains available for diagnostics.
+
 ## Run
 
 From `web/`, install with the pinned pnpm version and create `.env.local` from `.env.example` on first setup.
@@ -41,8 +45,10 @@ Use `MODEL_RESPONSE_FORMAT=json_schema` by default. Compatible servers also supp
 ./node_modules/.bin/next typegen
 ./node_modules/.bin/tsx scripts/check-contracts.ts
 ./node_modules/.bin/tsx scripts/check-recommendations.ts
+./node_modules/.bin/tsx scripts/check-dispatch-ui.ts
+./node_modules/.bin/tsx scripts/check-dispatch-render.tsx
 ./node_modules/.bin/tsc --noEmit --incremental false
-./node_modules/.bin/eslint lib/server scripts/check-recommendations.ts scripts/check-recommendations-http.ts app/api/events/route.ts
+./node_modules/.bin/eslint
 ./node_modules/.bin/next build
 ./node_modules/.bin/tsx scripts/check-recommendations-http.ts
 ```
