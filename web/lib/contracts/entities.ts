@@ -139,6 +139,17 @@ export type CrewMember = z.infer<typeof CrewMember>;
 export const AmbulanceStatus = z.enum(["available", "busy", "out_of_service"]);
 export type AmbulanceStatus = z.infer<typeof AmbulanceStatus>;
 
+export const Route = z.strictObject({
+  /** GeoJSON order: [lng, lat]. */
+  geometry: z.array(z.tuple([z.number(), z.number()])),
+  durationSeconds: Seconds,
+  distanceMeters: z.number().min(0),
+  /** true when routing failed and the straight-line fallback was used. */
+  estimated: z.boolean(),
+});
+export type Route = z.infer<typeof Route>;
+
+
 export const Ambulance = z.strictObject({
   id: AmbulanceId,
   revision: z.int().min(0),
@@ -150,6 +161,11 @@ export const Ambulance = z.strictObject({
   /** Queue order lives here only. */
   queuedTaskIds: z.array(TaskId),
   homeStation: LatLng,
+  /** Available for dispatch while driving home; optional for legacy snapshots. */
+  returnTrip: z.strictObject({
+    route: Route.nullable(),
+    endsAt: IsoTime.nullable(),
+  }).nullable().optional(),
 });
 export type Ambulance = z.infer<typeof Ambulance>;
 
@@ -170,15 +186,6 @@ export type TaskStatus = z.infer<typeof TaskStatus>;
 export const TaskPhase = z.enum(["en_route", "on_scene", "transporting", "completed"]);
 export type TaskPhase = z.infer<typeof TaskPhase>;
 
-export const Route = z.strictObject({
-  /** GeoJSON order: [lng, lat]. */
-  geometry: z.array(z.tuple([z.number(), z.number()])),
-  durationSeconds: Seconds,
-  distanceMeters: z.number().min(0),
-  /** true when routing failed and the straight-line fallback was used. */
-  estimated: z.boolean(),
-});
-export type Route = z.infer<typeof Route>;
 
 export const TaskOverride = z.strictObject({
   reason: z.enum(["dispatcher_choice", "capability_mismatch_confirmed"]),

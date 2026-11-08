@@ -78,7 +78,15 @@ export function fleetInputKey(state: DispatchState): string {
     unit.activeTaskId ? [unit.activeTaskId, ...unit.queuedTaskIds] : unit.queuedTaskIds,
   ));
   return JSON.stringify([
-    units.map((a) => [a.id, a.status, pointKey(a.position), a.crewIds, a.activeTaskId, a.queuedTaskIds]),
+    units.map((a) => {
+      const task = a.activeTaskId ? state.tasks[a.activeTaskId] : null;
+      // Progress along an already-timed route must not discard every in-flight model result.
+      // Its deadline, destination and queue below define this unit's availability.
+      const moving = (task?.status === "active" && task.route && task.phaseEndsAt)
+        || (a.returnTrip?.route && a.returnTrip.endsAt);
+      return [a.id, a.status, moving ? null : pointKey(a.position), a.crewIds, a.activeTaskId, a.queuedTaskIds,
+        a.returnTrip?.endsAt ?? null, a.returnTrip ? pointKey(a.homeStation) : null];
+    }),
     byId(Object.values(state.crew)).map((c) => [c.id, c.role, c.qualifications, c.monthsOfService]),
     [...workIds].sort().map((id) => {
       const task = state.tasks[id];

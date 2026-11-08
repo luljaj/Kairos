@@ -189,7 +189,7 @@ export function DispatchDashboard() {
           </CardContent>
         </Card>
       </aside>
-      <section className="dispatch-right" aria-label="Dispatch assessment">
+      <section className="dispatch-right" aria-label="Map controls and status">
         <div className="flex justify-end">
           <Button
             variant="secondary"
@@ -240,9 +240,9 @@ export function DispatchDashboard() {
             </CardContent>
           </Card>
         )}
-        <div className="dispatch-triage">
-          <TriageCard key={call?.id ?? "empty"} s={s} />
-        </div>
+      </section>
+      <section className="dispatch-triage" aria-label="Dispatch assessment">
+        <TriageCard key={call?.id ?? "empty"} s={s} className="w-full max-w-[560px]" />
       </section>
     </main>
   );

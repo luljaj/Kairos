@@ -25,7 +25,7 @@ export function unitStatus(unit: Ambulance, state: DispatchState): string {
   const task = unit.activeTaskId ? state.tasks[unit.activeTaskId] : null;
   return task?.phase
     ? fieldLabel(task.phase.replaceAll("_", " "))
-    : fieldLabel(unit.status);
+    : unit.returnTrip ? "Returning to squadroom" : fieldLabel(unit.status);
 }
 
 export function selectedCall(

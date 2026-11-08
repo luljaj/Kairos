@@ -292,13 +292,15 @@
   opacity: 0.35;
 }
 
-/* Each operational column scrolls independently over the map. */
+/* Floating controls and the original bottom-centered proposal card. */
 .dispatch-map { position: absolute; inset: 0; background: radial-gradient(ellipse at center, #20272c, #101317); }
 .dispatch-left, .dispatch-right { position: absolute; top: 0; bottom: 0; display: flex; flex-direction: column; gap: 12px; padding: 16px; overflow-y: auto; scrollbar-width: thin; }
 .dispatch-left { left: 0; width: 384px; }
-.dispatch-right { right: 0; width: 424px; }
+.dispatch-right { right: 0; bottom: auto; width: 352px; max-height: 45%; pointer-events: none; }
+.dispatch-right > * { pointer-events: auto; }
 .dispatch-left > *, .dispatch-right > * { flex-shrink: 0; }
-.dispatch-triage { margin-top: auto; }
+.dispatch-triage { position: absolute; left: 384px; right: 16px; bottom: 24px; display: flex; justify-content: center; pointer-events: none; }
+.dispatch-triage > * { pointer-events: auto; max-height: calc(100dvh - 112px); overflow-y: auto; scrollbar-width: thin; }
 .map-notice { position: absolute; bottom: 12px; left: 50%; transform: translateX(-50%); max-width: 240px; border-radius: 8px; padding: 8px; background: #101317dd; text-align: center; font-size: 11px; color: #bec5ce; }
 .dm-unit[data-status="out_of_service"] { opacity: .45; }
 .dm-incident { border: 0; background: transparent; cursor: pointer; }
@@ -306,8 +308,30 @@
   .dispatch { overflow-y: auto; }
   .dispatch-map { position: relative; height: 260px; }
   .dispatch-left, .dispatch-right { position: relative; width: 100%; overflow: visible; }
-  .dispatch-right { padding-top: 0; }
+  .dispatch-right { padding-top: 0; max-height: none; }
+  .dispatch-triage { position: relative; inset: auto; padding: 0 16px 24px; }
+  .dispatch-triage > * { max-height: none; }
   .map-notice { width: 240px; }
 }
 /* Mapbox's unlayered position:relative overrides Tailwind utilities. */
 .dispatch-map > .mapboxgl-map { position: absolute; inset: 0; width: 100%; height: 100%; }
+
+/* Parked units share one expandable station marker. */
+.dm-station { position: relative; z-index: 5; font: 12px/1.4 var(--font-sans), sans-serif; }
+.dm-station-button, .dm-station-units button {
+  color: #f5f7fa; background: #182422; border: 1px solid #647f77;
+  border-radius: 8px; padding: 9px 12px; cursor: pointer;
+  box-shadow: 0 4px 14px #0005; white-space: nowrap;
+}
+.dm-station-button { font-weight: 600; }
+.dm-station-button:disabled { cursor: default; }
+.dm-station[data-tracked="true"] .dm-station-button { border-color: #f2c46d; }
+.dm-station-units {
+  position: absolute; bottom: calc(100% + 6px); left: 50%; transform: translateX(-50%);
+  display: grid; gap: 4px; min-width: 170px; padding: 6px;
+  background: #101b19; border: 1px solid #647f77; border-radius: 10px;
+}
+.dm-station-units[hidden] { display: none; }
+.dm-station-units button { text-align: left; box-shadow: none; }
+.dm-station-units button:hover, .dm-station-units button[aria-pressed="true"] { background: #30453e; }
+.dm-station button:focus-visible { outline: 2px solid #f2c46d; outline-offset: 2px; }

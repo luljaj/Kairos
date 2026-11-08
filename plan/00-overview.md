@@ -12,6 +12,7 @@ This replaces the single `___plan.md`. Each file below is one part that one owne
 | [04-dashboard.md](04-dashboard.md) | Next.js UI, map, cards, dispatch pill | Friend |
 | [05-model-finetune.md](05-model-finetune.md) | Self-contained brief for the training agent | Agent |
 | [06-schedule-and-demo.md](06-schedule-and-demo.md) | Hour-by-hour plan, demo script, fallbacks, pitch | Both |
+| [08-recommendation-pipeline.md](08-recommendation-pipeline.md) | Backend implementation and local app / Empire or MacBook model integration | Luka |
 
 ## Scope (unchanged)
 
@@ -80,5 +81,5 @@ plan/                         # these documents
 
 - Exact intake fields: friend to confirm or change the draft in 01.
 - Whether ElevenLabs phone calls can reach server tools mid-call in our account setup (spike, hour 0–3).
-- ~~Where model inference runs~~ — Empire AI Alpha, one `1g.10gb` H100 MIG slice (10 GB), reached over an SSH port forward; max 2 slices and 6 h per job. Details in 05.
+- Model inference: Empire AI Alpha over an SSH port forward, or a compatible MacBook server if the trained artifact and local runtime pass verification. The Next.js app stays on the laptop. Empire uses a `1g.10gb` H100 MIG slice with a six-hour job limit; details in 05 and the integration plan in 08.
 - Demo acuity rubric in 05 needs a human read-through; it is simplified and not clinical.

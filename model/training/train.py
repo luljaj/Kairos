@@ -25,14 +25,15 @@ def sha(p: Path) -> str:
     return hashlib.sha256(p.read_bytes()).hexdigest()
 
 
-def to_pc(path: Path):
+def to_pc(path: Path, template_kwargs: dict):
     """messages -> conversational prompt/completion so TRL masks the prompt."""
     from datasets import Dataset
     rows = []
+    extras = {"chat_template_kwargs": template_kwargs} if template_kwargs else {}
     for line in path.open():
         r = json.loads(line)
         m = r["messages"]
-        rows.append({"prompt": m[:2], "completion": m[2:]})
+        rows.append({"prompt": m[:2], "completion": m[2:], **extras})
     return Dataset.from_list(rows)
 
 
@@ -49,19 +50,22 @@ def main():
     ap.add_argument("--bs", type=int, default=1)
     ap.add_argument("--grad-accum", type=int, default=16)
     ap.add_argument("--max-len", type=int, default=2560)
-    ap.add_argument("--bf16-lora", action="store_true", help="full BF16 base (does NOT fit a 10 GB slice)")
+    ap.add_argument("--bf16-lora", action="store_true", help="full BF16 base (only use with small models on a 10 GB slice)")
     ap.add_argument("--resume", action="store_true")
+    ap.add_argument("--init-adapter", help="initialize LoRA weights from a saved adapter and start a new run")
     ap.add_argument("--reload-only", action="store_true", help="only run the save/reload check on runs/<run-id>/adapter")
     ap.add_argument("--save-steps", type=int, default=100)
     a = ap.parse_args()
 
     import torch
-    from peft import LoraConfig
+    from huggingface_hub import try_to_load_from_cache
+    from peft import LoraConfig, PeftModel
     from transformers import AutoModelForCausalLM, AutoTokenizer, BitsAndBytesConfig
     from trl import SFTConfig, SFTTrainer
 
     run = ROOT / "runs" / a.run_id
     run.mkdir(parents=True, exist_ok=True)
+    template_kwargs = {"enable_thinking": False} if a.base == "Qwen/Qwen3-1.7B" else {}
     kw = dict(dtype=torch.bfloat16, attn_implementation="sdpa", device_map={"": 0})
     if not a.bf16_lora:  # QLoRA default: 10 GB MIG slice
         kw["quantization_config"] = BitsAndBytesConfig(load_in_4bit=True, bnb_4bit_quant_type="nf4",
@@ -69,36 +73,41 @@ def main():
                                                        bnb_4bit_use_double_quant=True)
     if a.reload_only:
         tok = AutoTokenizer.from_pretrained(a.base)
-        return reload_check(a, kw, run, tok, to_pc(Path(a.data) / "val.jsonl"))
+        return reload_check(a, kw, run, tok, to_pc(Path(a.data) / "val.jsonl", template_kwargs))
     data = Path(a.data)
-    train_ds, val_ds = to_pc(data / "train.jsonl"), to_pc(data / "val.jsonl")
+    train_ds = to_pc(data / "train.jsonl", template_kwargs)
+    val_ds = to_pc(data / "val.jsonl", template_kwargs)
     val_ds = val_ds.select(range(min(100, len(val_ds))))  # in-training eval is slow on 1/7 H100
 
     tok = AutoTokenizer.from_pretrained(a.base)
     def ntok(msgs):
-        return len(tok(tok.apply_chat_template(msgs, tokenize=False), add_special_tokens=False)["input_ids"])
+        formatted = tok.apply_chat_template(msgs, tokenize=False, **template_kwargs)
+        return len(tok(formatted, add_special_tokens=False)["input_ids"])
     lens = [ntok(r["prompt"] + r["completion"]) for r in train_ds.select(range(200))]
     print(f"token length sample: max={max(lens)} mean={sum(lens)/len(lens):.0f}", flush=True)
 
     model = AutoModelForCausalLM.from_pretrained(a.base, **kw)
 
-    try:
-        from huggingface_hub import model_info
-        base_rev = model_info(a.base).sha
-    except Exception:
-        base_rev = None
+    cached_config = None if Path(a.base).is_dir() else try_to_load_from_cache(a.base, "config.json")
+    base_rev = Path(cached_config).parent.name if isinstance(cached_config, str) else None
     try:
         git = subprocess.check_output(["git", "-C", str(ROOT), "rev-parse", "HEAD"], text=True).strip()
     except Exception:
         git = None
     cfg = {**vars(a), "base_revision": base_rev, "git": git,
            "data_sha256": {s: sha(data / f"{s}.jsonl") for s in ("train", "val", "test")},
-           "prompt_sha256": sha(ROOT / "prompt.md"), "token_len_sample_max": max(lens),
+           "prompt_sha256": sha(ROOT / "prompt.md"), "training_script_sha256": sha(Path(__file__)),
+           "token_len_sample_max": max(lens),
            "gpu": torch.cuda.get_device_name(0) if torch.cuda.is_available() else None,
            "started": time.strftime("%Y-%m-%dT%H:%M:%S")}
     (run / "config.json").write_text(json.dumps(cfg, indent=2))
 
-    peft_cfg = LoraConfig(r=a.r, lora_alpha=a.alpha, lora_dropout=0.05, target_modules="all-linear", task_type="CAUSAL_LM")
+    peft_cfg = None
+    if a.init_adapter:
+        model = PeftModel.from_pretrained(model, a.init_adapter, is_trainable=True)
+    else:
+        peft_cfg = LoraConfig(r=a.r, lora_alpha=a.alpha, lora_dropout=0.05,
+                              target_modules="all-linear", task_type="CAUSAL_LM")
     sft = SFTConfig(
         output_dir=str(run / "ckpt"), num_train_epochs=a.epochs, max_steps=a.max_steps,
         per_device_train_batch_size=a.bs, per_device_eval_batch_size=a.bs, gradient_accumulation_steps=a.grad_accum,
@@ -136,7 +145,8 @@ def reload_check(a, kw, run, tok, val_ds):
     base = AutoModelForCausalLM.from_pretrained(a.base, **kw)
     m = PeftModel.from_pretrained(base, str(run / "adapter")).eval()
     ex = val_ds[0]
-    text_in = tok.apply_chat_template(ex["prompt"], add_generation_prompt=True, tokenize=False)
+    text_in = tok.apply_chat_template(ex["prompt"], add_generation_prompt=True, tokenize=False,
+                                      **ex.get("chat_template_kwargs", {}))
     ids = tok(text_in, return_tensors="pt", add_special_tokens=False)["input_ids"].to(m.device)
     with torch.no_grad():
         out = m.generate(ids, max_new_tokens=400, do_sample=False)

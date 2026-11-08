@@ -6,6 +6,16 @@ One Next.js 16 app (App Router, TypeScript), run as **one long-lived Node proces
 
 The main screen now uses the backend recommendation pipeline. Start fictional scenarios from **Demo incident**, select incidents from the queue, and assign a displayed candidate. See [frontend integration handoff](INTEGRATION.md) for tested behavior, live-provider evidence and remaining runtime dependencies. The `/debug` screen remains available for diagnostics.
 
+Hospital markers and new simulated transport destinations use real facilities:
+
+| Hospital | Address | Map coordinates (latitude, longitude) |
+| --- | --- | --- |
+| [Guthrie Lourdes Hospital](https://www.guthrie.org/locations/guthrie-lourdes-hospital) | 169 Riverside Drive, Binghamton, NY 13905 | 42.09204, -75.93631 |
+| [UHS Binghamton General Hospital](https://www.nyuhs.org/location-search/uhs-binghamton-general-hospital) | 10–42 Mitchell Avenue, Binghamton, NY 13903 | 42.0881397, -75.9145967 |
+| [UHS Wilson Medical Center](https://www.nyuhs.org/location-search/uhs-wilson-medical-center) | 33–57 Harrison Street, Johnson City, NY 13790 | 42.11425, -75.95851 |
+
+Names and addresses were checked against the linked hospital websites on November 7, 2026. Lourdes coordinates come from its location page's geographic metadata; Binghamton General coordinates come from UHS's embedded directions link; Wilson's campus point comes from [OpenStreetMap via Mapcarta](https://mapcarta.com/22635144). These are campus map points, not verified ambulance entrances. Transport selection still uses the demo's nearest-hospital estimate. The hospital catalog refreshes in restored sessions and during development reloads; existing calls and accepted task destinations remain intact.
+
 ## Run
 
 From `web/`, install with the pinned pnpm version and create `.env.local` from `.env.example` on first setup.
@@ -105,3 +115,13 @@ curl -X POST localhost:3000/api/voice/tools/update-incident -H "x-tool-secret: $
 - State has `fleetRevision` (recorded on recommendation sets) and `hospitals`.
 - `get-assignment` returns estimated minutes when known. Pending calls can return `missingFields`.
 - `/api/commands` and `/api/demo/*` are unauthenticated; anyone with the tunnel URL can call them.
+
+### Vehicle simulation
+
+Assignments now start a shared server simulation automatically. Units follow road routes, stop on scene, transport to a hospital, then pick up queued calls. `SIM_SPEED` controls simulated seconds per real second (default 6); your existing `.env.local` value takes precedence. Run `pnpm simulation:check` for lifecycle regression checks. See [movement restoration](INTEGRATION.md#movement-and-map-restoration) for commit history and routing fallback behavior.
+
+### Harpur’s Ferry home base
+
+All three units use the squadroom on East Access Road beside Decker Student Health Services, at **42.0853645, -75.9646999**. Coordinates come from the station place pin in [Harpur’s Ferry’s contact map](https://harpursferry.org/contact); the [university resource listing](https://www.binghamton.edu/student-conduct/binghamton-student-code.pdf) identifies East Access Road. These are the station pin coordinates, not the map viewport center.
+
+After completing or cancelling the last active job, a unit drives home using the same routing and simulation as incident trips. Queued calls take priority. Returning units remain available, and a new assignment interrupts the return from their current position. Return routes persist across restarts; existing snapshots receive the corrected home station automatically. At least two cars parked at base collapse into a squadroom button; open it to select an individual car.

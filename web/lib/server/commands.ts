@@ -15,10 +15,13 @@ import {
   type DispatchState,
   type Task,
 } from "@/lib/contracts";
+import { advancePhase, releaseUnit, startTask } from "./task-lifecycle";
+export { advancePhase } from "./task-lifecycle";
+import { ensureSimulationStarted, resetSimulation } from "./simulation";
 import { initialState } from "./fixtures";
 import { applyIncidentChanges, createCall, fleetChanged, markRecommendationStale } from "./incidents";
 import { capabilityMismatch, incidentInputKey, sortForDisplay } from "./candidates";
-import { estimateArrival, nearestHospital } from "./eta";
+import { estimateArrival } from "./eta";
 import {
   cancelCallRecommendation, ensureRecommendationsStarted, resetRecommendations,
   scheduleAwaitingRecommendations, scheduleRecommendation,
@@ -44,6 +47,7 @@ export function applyCommand(cmd: Command): CommandResult {
   const beforeIncident = editedCall ? incidentInputKey(editedCall) : null;
   let result: CommandResult;
   if (cmd.type === "reset_demo") {
+    resetSimulation();
     resetRecommendations();
     cancelScriptedCalls();
     replaceState(initialState());
@@ -67,6 +71,7 @@ export function applyCommand(cmd: Command): CommandResult {
   rememberCommand(cmd.commandId, result);
   if (!result.ok) return result;
 
+  ensureSimulationStarted();
   ensureRecommendationsStarted();
   switch (cmd.type) {
     case "create_manual_call":
@@ -261,7 +266,7 @@ function assign(
     phase: null,
     acuityAtAcceptance: call.acuity?.value ?? null,
     hospital: null,
-    route: null, // TODO(routing): Mapbox route from release point to incident
+    route: null, // The simulation requests a route when the task becomes active.
     phaseEndsAt: null,
     etaAt: opts.etaAt,
     acceptedFromRecommendationId: opts.recommendationId,
@@ -283,56 +288,4 @@ function assign(
   touch(call, now);
   fleetChanged(state);
   return task;
-}
-
-function startTask(amb: Ambulance, task: Task, now: string) {
-  task.status = "active";
-  task.phase = "en_route";
-  // TODO(sim): set phaseEndsAt when the phase starts.
-  touch(task, now);
-  amb.status = "busy";
-  amb.activeTaskId = task.id;
-}
-
-/** Unit finished or dropped its active task: start the next queued one, else free it. */
-function releaseUnit(state: DispatchState, amb: Ambulance, now: string) {
-  amb.activeTaskId = null;
-  const nextId = amb.queuedTaskIds.shift();
-  const next = nextId ? state.tasks[nextId] : undefined;
-  if (next) startTask(amb, next, now);
-  else amb.status = "available";
-  touch(amb, now);
-}
-
-/** Demo control and (later) the sim tick's phase transition. */
-export function advancePhase(state: DispatchState, task: Task, now: string) {
-  const amb = state.ambulances[task.ambulanceId];
-  const call = state.calls[task.callId];
-  switch (task.phase) {
-    case "en_route":
-      task.phase = "on_scene";
-      if (amb && call?.location.coords) amb.position = { ...call.location.coords };
-      break;
-    case "on_scene":
-      task.phase = "transporting";
-      task.hospital ??= nearestHospital(state, call?.location.coords ?? amb?.position ?? null);
-      break;
-    case "transporting":
-      task.phase = "completed";
-      task.status = "completed";
-      if (amb && task.hospital) amb.position = { ...task.hospital.coords };
-      if (call) {
-        call.status = "closed";
-        touch(call, now);
-      }
-      if (amb) releaseUnit(state, amb, now);
-      break;
-    default:
-      return;
-  }
-  task.phaseEndsAt = null;
-  task.route = null; // The previous phase route no longer describes the current leg.
-  touch(task, now);
-  if (amb) touch(amb, now);
-  fleetChanged(state);
 }

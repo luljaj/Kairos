@@ -11,7 +11,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import { DispatchState, type CommandResult } from "@/lib/contracts";
-import { initialState } from "./fixtures";
+import { fleetFixture, initialState } from "./fixtures";
 
 const SNAPSHOT_PATH = path.join(process.cwd(), "data", "state.json");
 const PERSIST_DEBOUNCE_MS = 500;
@@ -56,7 +56,31 @@ export function getStore(): Store {
     seenCommands: new Map(),
     persistTimer: null,
   };
-  return globalThis.__dispatch;
+  const store = globalThis.__dispatch;
+  // Reference locations follow fixtures for restored snapshots and HMR as well.
+  let referenceChanged = false;
+  for (const fixture of fleetFixture.ambulances) {
+    const unit = store.state.ambulances[fixture.id];
+    if (unit && JSON.stringify(unit.homeStation) !== JSON.stringify(fixture.homeStation)) {
+      unit.homeStation = { ...fixture.homeStation };
+      if (unit.status === "available" && !unit.activeTaskId && !unit.queuedTaskIds.length) {
+        unit.returnTrip = { route: null, endsAt: null };
+      }
+      touch(unit, store.state.simClock);
+      referenceChanged = true;
+    }
+  }
+  if (JSON.stringify(store.state.hospitals) !== JSON.stringify(fleetFixture.hospitals)) {
+    store.state.hospitals = structuredClone(fleetFixture.hospitals);
+    referenceChanged = true;
+  }
+  if (referenceChanged) {
+    store.state.fleetRevision++;
+    store.state.revision++;
+    notify(store);
+    schedulePersist(store);
+  }
+  return store;
 }
 
 export function getState(): DispatchState {

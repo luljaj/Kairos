@@ -79,43 +79,49 @@ def http_system(base_url, model, guided, api_key, timeout=60, system=None):
 
 
 def score(req, gold_lab, text):
+    gold_ready = gold_lab["status"] == "ready"
     m = {"schema_valid": False, "coverage": False, "status_match": False, "acuity_exact": False,
-         "acuity_within1": False, "rec_match": None, "suit_acc": None, "reasons_grounded": None,
-         "pred_status": None, "pred_acuity": None}
+         "acuity_within1": False, "rec_match": False if gold_ready else None,
+         "suit_acc": 0.0 if gold_ready else None, "reasons_grounded": None,
+         "pred_status": None, "pred_acuity": None, "kind": gold_lab.get("kind")}
     try:
         resp = json.loads(text) if isinstance(text, str) else text
-    except Exception:
+    except json.JSONDecodeError:
         return m
     m["schema_valid"] = RES_V.is_valid(resp)
     if not isinstance(resp, dict):
         return m
     m["pred_status"] = resp.get("status")
     m["pred_acuity"] = resp.get("acuity")
-    m["status_match"] = resp.get("status") == gold_lab["status"]
+    if not m["schema_valid"]:
+        return m
+    if resp["status"] == "ready":
+        ar = resp["acuityReason"]
+        m["reason_consistent"] = reason_names_level(ar, resp["acuity"])
+        m["reason_grounded"] = rubric.numbers_grounded(ar, req)
+    if resp["status"] != gold_lab["status"]:
+        return m
+    m["status_match"] = True
     ga = gold_lab.get("acuity")
-    pa = resp.get("acuity")
+    pa = resp["acuity"]
     m["acuity_exact"] = pa == ga
     if ga in rubric.ACUITY_ORDER and pa in rubric.ACUITY_ORDER:
         m["acuity_within1"] = abs(rubric.ACUITY_ORDER.index(ga) - rubric.ACUITY_ORDER.index(pa)) <= 1
     else:
         m["acuity_within1"] = pa == ga
-    ids = [c["ambulanceId"] for c in req["candidates"]]
-    if gold_lab["status"] == "needs_more_info":
-        m["coverage"] = m["schema_valid"] and resp.get("status") == "needs_more_info"
+    if not gold_ready:
+        m["coverage"] = True
         return m
-    cs = resp.get("candidates") if isinstance(resp.get("candidates"), list) else []
-    pids = [c.get("ambulanceId") for c in cs if isinstance(c, dict)]
-    m["coverage"] = sorted(pids) == sorted(ids) and resp.get("recommendedAmbulanceId") in ids
-    m["rec_match"] = resp.get("recommendedAmbulanceId") == gold_lab["recommendedAmbulanceId"]
-    ar = resp.get("acuityReason")
-    m["reason_consistent"] = isinstance(ar, str) and reason_names_level(ar, resp.get("acuity"))
-    m["reason_grounded"] = isinstance(ar, str) and rubric.numbers_grounded(ar, req)
+    ids = [c["ambulanceId"] for c in req["candidates"]]
+    cs = resp["candidates"]
+    pids = [c["ambulanceId"] for c in cs]
+    m["coverage"] = sorted(pids) == sorted(ids) and resp["recommendedAmbulanceId"] in ids
+    m["rec_match"] = resp["recommendedAmbulanceId"] == gold_lab["recommendedAmbulanceId"]
     allowed = rubric.allowed_numbers(req)
-    good = [c for c in cs if isinstance(c, dict) and c.get("ambulanceId") in gold_lab["suitable"]]
-    m["suit_acc"] = (sum(c.get("crewSuitable") == gold_lab["suitable"][c["ambulanceId"]] for c in good) / len(ids))
-    texts = [c.get("reason", "") for c in good if isinstance(c.get("reason"), str)]
+    good = {c["ambulanceId"]: c for c in cs if c["ambulanceId"] in gold_lab["suitable"]}
+    m["suit_acc"] = sum(c["crewSuitable"] == gold_lab["suitable"][cid] for cid, c in good.items()) / len(ids)
+    texts = [c["reason"] for c in good.values()]
     m["reasons_grounded"] = (sum(rubric.numbers_grounded(t, req, allowed) for t in texts) / len(texts)) if texts else 0.0
-    m["kind"] = gold_lab.get("kind")
     return m
 
 
@@ -124,7 +130,7 @@ def aggregate(rows):
         xs = [r[k] for r in (sub or rows) if r.get(k) is not None]
         return round(sum(map(float, xs)) / len(xs), 4) if xs else None
     lat = sorted(r["latency_ms"] for r in rows if r.get("latency_ms") is not None)
-    nmi_pred = [r for r in rows if r["pred_status"] == "needs_more_info"]
+    nmi_pred = [r for r in rows if r["schema_valid"] and r["pred_status"] == "needs_more_info"]
     nmi_gold = [r for r in rows if r["gold_status"] == "needs_more_info"]
     exc = [r for r in rows if r.get("kind") == "experience_exception"]
     agg = {
@@ -132,7 +138,7 @@ def aggregate(rows):
         "schema_valid": mean("schema_valid"), "coverage": mean("coverage"),
         "acuity_exact": mean("acuity_exact"), "acuity_within1": mean("acuity_within1"),
         "nmi_precision": round(sum(r["gold_status"] == "needs_more_info" for r in nmi_pred) / len(nmi_pred), 4) if nmi_pred else None,
-        "nmi_recall": round(sum(r["pred_status"] == "needs_more_info" for r in nmi_gold) / len(nmi_gold), 4) if nmi_gold else None,
+        "nmi_recall": round(sum(r["status_match"] for r in nmi_gold) / len(nmi_gold), 4) if nmi_gold else None,
         "rec_match": mean("rec_match"), "acuity_reason_consistent": mean("reason_consistent"),
         "acuity_reason_grounded": mean("reason_grounded"), "suit_acc": mean("suit_acc"), "reasons_grounded": mean("reasons_grounded"),
         "exception_cases": len(exc), "exception_rec_match": mean("rec_match", exc) if exc else None,
@@ -167,12 +173,12 @@ def main():
 
     def run(it):
         req = it["meta"]["request"]
-        t0 = time.time()
+        t0 = time.perf_counter()
         try:
             out, err = sysfn(req), None
         except Exception as e:  # noqa
             out, err = "", repr(e)
-        ms = (time.time() - t0) * 1000
+        ms = (time.perf_counter() - t0) * 1000
         s = score(req, it["meta"]["label"], out)
         s.update(latency_ms=ms if a.system == "http" else None, gold_status=it["meta"]["label"]["status"],
                  gold_acuity=it["meta"]["label"].get("acuity"), family=it["meta"].get("family"),

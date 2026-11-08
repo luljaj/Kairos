@@ -2,6 +2,8 @@
 
 Owner: Luka. Lives in `web/lib/server/` and `web/app/api/`.
 
+Implementation detail: [08-recommendation-pipeline.md](08-recommendation-pipeline.md) refines this plan for a local app with Empire SSH or MacBook inference, provider-specific transport, and a four-second fallback / eight-second hard deadline.
+
 ## Runtime
 
 - One Next.js app, run as one long-lived Node process: `pnpm build && pnpm start` on the demo laptop. Development with `pnpm dev` works but HMR can create a second store; guard with a `globalThis` singleton.
@@ -44,7 +46,7 @@ globalThis.__dispatch ??= { state: loadSnapshotOrFixtures(), listeners: new Set(
 | `create_manual_call` | `location, facts` | for the busy-dispatcher first call and testing |
 | `reset_demo` | — | — |
 
-Accepting a stale recommendation returns `error: "stale"`; the UI shows the fresh set. If the chosen ambulance became busy since the set was made, accept still succeeds but the task is queued, and the response says so.
+Accepting a stale recommendation returns `error: "stale"`; the UI shows the fresh set. If the fleet changed since the set was made, refresh before accepting. A current recommendation may include a busy ambulance; accepting it queues the task and the response says so.
 
 ## Recommendation pipeline
 
@@ -56,7 +58,7 @@ Trigger when a call has `location.coords` and at least `chiefComplaint`, and the
    - Projected release point = hospital of the last task, or current position if free.
    - `travelSeconds` = route duration from release point to incident (routing below).
    - `arrivalInSeconds` = sum; `null` if either part is `null`.
-2. **Judgement.** Send selectable candidates (sorted by arrival; at most 3) to the model client. Timeout 8 s.
+2. **Judgement.** Send selectable candidates (sorted by arrival; at most 3) to the model client. Publish fallback after 4 s, abort at 8 s, and apply a late valid model result only if still current and unassigned (see 08).
 3. **Fallback** (model error, timeout, invalid JSON, or `MODEL_MODE=fallback`): deterministic rules:
    - acuity from a keyword/boolean rule table (same table as the demo rubric in 05),
    - `needs_more_info` if `conscious` and `breathingNormally` are both null,
@@ -77,7 +79,7 @@ MODEL_BASE_URL = http://…/v1           // vLLM OpenAI-compatible server
 MODEL_NAME = qwen3-4b-dispatch-lora | Qwen/Qwen3-4B-Instruct-2507
 ```
 
-Calls `/chat/completions` with the system prompt and JSON request from 05, `temperature: 0`, JSON response format if the server supports it. Validates with the zod response schema. Records `latencyMs` and `modelId`. `mock` returns fixture responses keyed by scenario for UI work.
+Calls `/chat/completions`. Compatible servers use the verbatim serving prompt, compact JSON request, and direct response schema from `model/SERVING.md`, with `temperature: 0`. The optional OpenAI provider uses its own private schema adapter. See 08 for configuration and transport differences. Validates with the zod response schema. Records `latencyMs` and `modelId`. `mock` returns fixture responses keyed by scenario for UI work.
 
 ## Routing
 
@@ -104,6 +106,7 @@ Queued-task duration estimate for `availableInSeconds`: travel + 8 min + transpo
 ```text
 MAPBOX_TOKEN, NEXT_PUBLIC_MAPBOX_TOKEN
 MODEL_MODE, MODEL_BASE_URL, MODEL_NAME, MODEL_API_KEY
+MODEL_PROVIDER, MODEL_RESPONSE_FORMAT  # planned backend transport options, see 08
 VOICE_TOOL_SECRET
 SIM_SPEED
 ```

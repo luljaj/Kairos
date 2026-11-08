@@ -1,16 +1,19 @@
 """Build runs/<run-id>/eval.md from eval JSONs written by evaluate.py.
 
 python eval/report.py --run runs/r1 --files runs/r1/eval-*.json
-File naming convention: eval-<system>-<set>.json, system in {base, ft, ftshort, rules} (ftshort = fine-tuned with --short-prompt), set in {test, paraphrase, demo}.
+File naming convention: eval-<system>-<set>.json, with ft reserved for the selected serving mode.
 """
 import argparse
 import json
 from pathlib import Path
 
 COLS = [("schema_valid", "schema"), ("coverage", "coverage"), ("acuity_exact", "acuity"), ("acuity_within1", "acuity±1"),
-        ("nmi_precision", "nmi P"), ("nmi_recall", "nmi R"), ("rec_match", "rec"), ("acuity_reason_consistent", "why=level"), ("suit_acc", "suit"),
+        ("nmi_precision", "nmi P"), ("nmi_recall", "nmi R"), ("rec_match", "rec"),
+        ("acuity_reason_consistent", "why=level"), ("acuity_reason_grounded", "why grounded"), ("suit_acc", "suit"),
         ("reasons_grounded", "grounded"), ("exception_rec_match", "exception rec"), ("latency_p50_ms", "p50 ms"),
         ("latency_p95_ms", "p95 ms")]
+SPLITS = ("test", "paraphrase", "demo")
+SYSTEMS = ("base", "baseunguided", "ft", "ftguided", "ftunguided", "ftshort", "rules")
 
 
 def fmt(v):
@@ -23,32 +26,52 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--run", required=True)
     ap.add_argument("--files", nargs="+", required=True)
+    ap.add_argument("--latency-path", default="sequential requests to the serving endpoint")
     a = ap.parse_args()
     res = {}
     for f in a.files:
         d = json.loads(Path(f).read_text())
         sysname, sset = Path(f).stem.split("-")[1:3]
-        res[(sset, sysname)] = d["metrics"]
+        res[(sset, sysname)] = d
     out = ["# Evaluation", "",
            "**Labels come from a synthetic demo rubric (model/rubric.py + concept-labelled scenarios). These results "
            "say the model learned the rubric, not that it is clinically right.**", ""]
-    for sset in ("test", "paraphrase", "demo"):
-        rows = [(s, res[(sset, s)]) for s in ("base", "ft", "ftshort", "rules") if (sset, s) in res]
+    gates = {}
+    for sset in SPLITS:
+        rows = [(s, res[(sset, s)]) for s in SYSTEMS if (sset, s) in res]
         if not rows:
             continue
-        out += [f"## {sset} (n={rows[0][1]['n']})", "",
-                "| system | " + " | ".join(c[1] for c in COLS) + " | gate |",
-                "|---|" + "---|" * (len(COLS) + 1)]
-        for s, m in rows:
-            out.append(f"| {s} | " + " | ".join(fmt(m.get(k)) for k, _ in COLS) + f" | {'pass' if m.get('gate_pass') else 'fail'} |")
+        out += [f"## {sset}", "",
+                "| system | decoding | n | " + " | ".join(c[1] for c in COLS) + " |",
+                "|" + "---|" * (len(COLS) + 3)]
+        for s, result in rows:
+            m, meta = result["metrics"], result["meta"]
+            decoding = ("guided" if meta["guided"] else "unguided") if meta["system"] == "http" else "—"
+            out.append(f"| {s} | {decoding} | {m['n']} | " + " | ".join(fmt(m.get(k)) for k, _ in COLS) + " |")
         out.append("")
-    ft_p, rules_p = res.get(("paraphrase", "ft"), {}), res.get(("paraphrase", "rules"), {})
-    if ft_p:
-        ok = ft_p["acuity_exact"] >= 0.85 and ft_p["acuity_exact"] > rules_p.get("acuity_exact", 0) + 0.10
-        out += [f"**Paraphrase gate** (ft acuity ≥ 85% and clearly above rules): {'PASS' if ok else 'FAIL'} "
-                f"(ft {fmt(ft_p['acuity_exact'])} vs rules {fmt(rules_p.get('acuity_exact'))}).", ""]
-    out += ["Gate: schema-valid ≥ 99%, recommendation ≥ 95%, acuity exact ≥ 90%, p95 ≤ 2 s (serving path: vLLM FP8 on one "
-            "H100 MIG 1g.10gb slice, sequential requests).", ""]
+        ft = res.get((sset, "ft"))
+        if ft is None:
+            continue
+        if sset == "paraphrase":
+            rules = res.get((sset, "rules"))
+            ft_acu = ft["metrics"]["acuity_exact"]
+            rules_acu = rules["metrics"]["acuity_exact"] if rules else None
+            gates[sset] = rules_acu is not None and ft_acu >= 0.85 and ft_acu > rules_acu + 0.10
+            out += [f"**Paraphrase gate {'passed' if gates[sset] else 'failed'}.** "
+                    f"Fine-tuned acuity {fmt(ft_acu)} versus rules {fmt(rules_acu)}.", ""]
+        else:
+            gates[sset] = ft["metrics"]["gate_pass"]
+            out += [f"**{sset.capitalize()} gate {'passed' if gates[sset] else 'failed'}.**", ""]
+    if len(gates) == len(SPLITS):
+        out += [f"**Overall demo gate {'passed' if all(gates.values()) else 'failed'}.**", ""]
+    out += [
+        "Test and demo require ≥99% schema validity, ≥95% recommendation accuracy, ≥90% exact acuity and ≤2 s p95. "
+        "The paraphrase gate requires ≥85% exact acuity and more than a 10 percentage point lead over rules.",
+        "",
+        f"Latency was measured with {a.latency_path}. Recommendation accuracy includes all gold ready cases. "
+        "The why=level metric covers schema-valid ready outputs and targets ≥98%. The ftshort rows use the one-line prompt.",
+        "",
+    ]
     p = Path(a.run) / "eval.md"
     p.write_text("\n".join(out))
     print(p.read_text())

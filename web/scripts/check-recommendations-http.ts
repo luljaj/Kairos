@@ -14,7 +14,7 @@ const port = 3001;
 const origin = `http://${host}:${port}`;
 const snapshotPath = "data/state.json";
 const secret = crypto.randomUUID();
-const requestTimeoutMs = 5000;
+const requestTimeoutMs = 15_000;
 type CommandBody = Command extends infer C ? C extends Command ? Omit<C, "commandId"> : never : never;
 
 async function waitFor<T>(label: string, predicate: () => T | undefined, ms = 10_000): Promise<T> {
@@ -187,7 +187,7 @@ async function checkFlow(sse: Awaited<ReturnType<typeof connect>>) {
   assert.deepEqual(await command(accept, commandId), accepted);
   const conflict = await command(accept);
   assert.ok(!conflict.ok && conflict.error === "conflict");
-  const assigned = await sse.wait("accepted task over SSE", (state) => !!state.tasks[taskId]);
+  const assigned = await sse.wait("accepted task with route over SSE", (state) => !!state.tasks[taskId]?.route);
   assertUniqueTask(assigned, assigned.calls[fallCall.id], taskId);
 
   const unit = assigned.ambulances[accept.ambulanceId];
@@ -195,10 +195,15 @@ async function checkFlow(sse: Awaited<ReturnType<typeof connect>>) {
   const assignment = GetAssignmentResult.parse(await post("/api/voice/tools/get-assignment", { conversationId: fall },
     { [TOOL_SECRET_HEADER]: secret }));
   assert.ok(task.etaAt);
-  assert.deepEqual(assignment, {
+  assert.deepEqual({ ...assignment, etaMinutes: 0 }, {
     state: "assigned", unitName: unit.name, queued: false,
-    etaMinutes: Math.round((Date.parse(task.etaAt) - Date.parse(assigned.simClock)) / 60_000),
+    etaMinutes: 0,
   });
+  assert.ok(assignment.state === "assigned" && assignment.etaMinutes !== null);
+  assert.ok(Math.abs(assignment.etaMinutes - Math.round((Date.parse(task.etaAt) - Date.parse(assigned.simClock)) / 60_000)) <= 1);
+  await sse.wait("assigned ambulance moving", (snapshot) =>
+    snapshot.tasks[taskId]?.phase === "en_route"
+    && JSON.stringify(snapshot.ambulances[unit.id].position) !== JSON.stringify(unit.position));
 
   const busy = await scripted("busy-first-call", 3);
   const busyReady = await sse.wait("Bravo recommendation", (state) => recommendation(state, callFor(state, busy))?.acuity === "Bravo");
@@ -212,7 +217,8 @@ async function checkFlow(sse: Awaited<ReturnType<typeof connect>>) {
   assertUniqueTask(queueState, queueState.calls[busyCall.id], queuedId);
   const queuedEta = queueState.tasks[queuedId].etaAt;
   assert.ok(queuedEta && Date.parse(queuedEta) > Date.parse(task.etaAt));
-  assert.equal(Date.parse(queuedEta), Date.parse(queueState.simClock) + candidate.arrivalInSeconds! * 1000);
+  // Recommendations and acceptance are separate snapshots of a moving simulation.
+  assert.ok(Math.abs(Date.parse(queuedEta) - (Date.parse(busyReady.simClock) + candidate.arrivalInSeconds! * 1000)) < 10_000);
 
   const breathing = await scripted("breathing-charlie", 3);
   let state = await sse.wait("Charlie recommendation", (snapshot) => {
@@ -228,11 +234,11 @@ async function checkFlow(sse: Awaited<ReturnType<typeof connect>>) {
     const stale = await command({ type: "accept_recommendation", recommendationSetId: old.id, ambulanceId: "amb-2" });
     assert.ok(!stale.ok && stale.error === "stale");
     state = await sse.wait(`fleet refresh after ${phase}`, (snapshot) =>
-      snapshot.tasks[taskId]?.phase === phase && snapshot.fleetRevision === expectedRevision
+      snapshot.tasks[taskId]?.phase === phase && snapshot.fleetRevision >= expectedRevision
       && recommendation(snapshot, snapshot.calls[breathingId])?.status === "ready"
       && snapshot.recommendations[old.id]?.status === "stale");
     current = recommendation(state, state.calls[breathingId])!;
-    assert.equal(current.fleetRevision, expectedRevision);
+    assert.equal(current.fleetRevision, state.fleetRevision);
     assert.notEqual(current.id, old.id);
   }
   const closedRefresh = await command({ type: "request_recommendation", callId: fallCall.id });

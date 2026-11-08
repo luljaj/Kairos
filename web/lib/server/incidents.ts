@@ -84,6 +84,12 @@ export function applyIncidentChanges(
       call.location.coords = loc.coords;
       changed = factsChanged = true;
       const task = call.taskId ? state.tasks[call.taskId] : null;
+      if (task?.status === "active" && task.phase === "en_route") {
+        task.route = null;
+        task.phaseEndsAt = null;
+        task.etaAt = null;
+        touch(task, changes.now);
+      }
       // An assigned incident is also a route waypoint for other calls' ETAs.
       if (task?.status === "active" || task?.status === "queued") fleetChanged(state);
     }

@@ -9,3 +9,6 @@ runs/*
 wandb/
 logs/
 data/generated_raw/
+
+# agent handoff state (local only)
+HANDOFF.md

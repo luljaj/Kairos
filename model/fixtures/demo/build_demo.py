@@ -1,4 +1,4 @@
-"""30 hand-checked demo scenarios (eval only, never train) -> fixtures/demo/demo.jsonl
+"""30 hand-checked demo scenarios and 10 paraphrases (eval only) -> fixtures/demo/demo.jsonl
 
 Fleet mirrors plan/00-overview.md: Medic 1 BLS closest, Medic 2 ALS mid, Medic 3 ALS farther / often busy.
 Each case states the EXPECTED acuity and recommendation by hand; the script asserts rubric.py agrees,
@@ -6,14 +6,14 @@ so a rubric change that breaks the demo fails loudly.
 TODO when web/fixtures/scenarios/ exists: re-sync complaints and fleet numbers with it.
 """
 import json
+import random
 import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT))
 sys.path.insert(0, str(ROOT / "data"))
-import rubric  # noqa: E402
-from generate import SYSTEM  # noqa: E402
+from generate import SYSTEM, build_response, verify  # noqa: E402
 
 M1 = [{"role": "driver", "qualifications": ["nys_emt", "hf_driver_cleared"], "monthsOfService": 14},
       {"role": "crew_chief", "qualifications": ["nys_emt", "hf_crew_chief_cleared"], "monthsOfService": 30}]
@@ -105,24 +105,57 @@ CASES = [
                              conscious=True, breathingNormally=False, callerRelation="family"), FLEET_BUSY, "Delta", "amb-3"),
 ]
 
+# Reuse the original facts and expected answers. Supply concepts explicitly so the
+# keyword baseline cannot change the gold label just because the wording changes.
+PARAPHRASES = [
+    ("main-fall-early", {"chiefComplaint": "Dad took a tumble down the stairs and won't talk to me"},
+     {"fracture", "unresponsive_hint"}),
+    ("third-call-chest-sweaty", {"chiefComplaint": "My husband says it feels like a weight on his chest and his skin is clammy"},
+     {"chest_pain", "chest_extra"}),
+    ("arrest-cpr", {"chiefComplaint": "His chest isn't moving and we're doing compressions"},
+     {"arrest"}),
+    ("choking-blue", {"chiefComplaint": "Food is wedged in my son's throat, he can't make a sound and his lips have gone purple"},
+     {"choking", "no_air"}),
+    ("bls-only-alpha", {"chiefComplaint": "I feel like I'm burning up and it hurts to swallow"},
+     {"minor"}),
+    ("ankle", {"chiefComplaint": "I turned my ankle under me and now I can't stand on that leg"},
+     {"fracture"}),
+    ("diabetic", {"chiefComplaint": "My grandpa checks his glucose for his condition and the meter reads LOW"},
+     {"diabetic"}),
+    ("seizure-stopped", {"chiefComplaint": "She went stiff and her whole body jerked over and over. It ended and she's awake now"},
+     {"seizure"}),
+    ("overdose-awake", {"chiefComplaint": "My roommate swallowed way more of their medication than the bottle says to take"},
+     {"overdose"}),
+    ("roof-fall", {"chiefComplaint": "My neighbor came off the top of his house while clearing the gutters",
+                   "traumaMechanism": "Dropped from gutter height to the ground"},
+     {"major_trauma"}),
+]
+
 
 def main():
-    from generate import build_response  # templated prose for a reference answer
-    import random
     out, bad = [], []
-    for cid, over, fleet, acu, rec in CASES:
+    originals = {cid: (over, fleet, acu, rec) for cid, over, fleet, acu, rec in CASES}
+    cases = [(*case, None) for case in CASES]
+    for source, wording, sig in PARAPHRASES:
+        over, fleet, acu, rec = originals[source]
+        cases.append((f"{source}-paraphrase", {**over, **wording}, fleet, acu, rec, sig))
+    for cid, over, fleet, acu, rec, sig in cases:
         facts = {**BASE, **over}
         req = {"requestId": f"req-demo-{cid}", "incident": {"location": {"text": "14 Riverside Dr (fictional)",
                                                                            "confidence": "confirmed"}, "facts": facts},
                "candidates": json.loads(json.dumps(fleet))}
-        lab = rubric.label(req)
+        resp, lab = build_response(random.Random(cid), req, {"gist": "reported", "name": cid}, sig=sig)
         if lab.get("acuity") != acu or lab.get("recommendedAmbulanceId") != rec:
             bad.append((cid, acu, rec, lab.get("acuity"), lab.get("recommendedAmbulanceId"), lab["rule"]))
-        resp, _ = build_response(random.Random(cid), req, {"gist": "reported", "name": cid})
+        if issue := verify(req, resp, lab):
+            bad.append((cid, issue))
+        meta = {"split": "demo", "family": cid, "category": "demo", "label": lab, "request": req}
+        if sig is not None:
+            meta.update(concepts=sorted(sig), paraphrase_of=cid.removesuffix("-paraphrase"))
         out.append({"messages": [{"role": "system", "content": SYSTEM},
                                  {"role": "user", "content": json.dumps(req, separators=(",", ":"))},
                                  {"role": "assistant", "content": json.dumps(resp, separators=(",", ":"))}],
-                    "meta": {"split": "demo", "family": cid, "category": "demo", "label": lab, "request": req}})
+                    "meta": meta})
     if bad:
         for b in bad:
             print("MISMATCH", b)

@@ -54,8 +54,14 @@ let html = render();
 assert.match(html, /dispatcher/);
 assert.match(html, /Suggested acuity: Charlie/);
 assert.match(html, /Deterministic fallback/);
-for (const unit of Object.values(state.ambulances))
-  assert.ok(html.includes(unit.name));
+assert.match(html, /1 of 3/);
+assert.match(html, /Previous option/);
+assert.match(html, /Next option/);
+for (const candidate of candidates) {
+  const optionHtml = render({ candidate });
+  assert.ok(optionHtml.includes(state.ambulances[candidate.ambulanceId].name));
+  assert.match(optionHtml, new RegExp(`${candidates.indexOf(candidate) + 1} of 3`));
+}
 disabled(render({ canAct: false }));
 disabled(render({ set: { ...set, status: "stale" } }));
 disabled(render({ candidate: { ...candidates[0], selectable: false } }));
@@ -68,6 +74,7 @@ html = render({
       arrivalInSeconds: null,
     })),
   },
+  candidate: { ...candidates[0], arrivalInSeconds: null },
 });
 assert.match(html, /Unknown/);
 assert.match(
