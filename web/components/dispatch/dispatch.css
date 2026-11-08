@@ -1,36 +1,13 @@
-/* ---------------------------------------------------------------------------
-   Dispatch prototype — scoped theme + materials. Everything here is scoped to
-   .dispatch so nothing leaks into the production app.
-   --------------------------------------------------------------------------- */
+/* Operator dashboard — materials, motion and map markers. Theme tokens live in app/globals.css (.dark). */
 
 .dispatch {
   --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
-  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
-
-  /* Dark, slightly cool neutrals. Cards are translucent: the map reads through. */
-  --background: oklch(0.14 0.004 260);
-  --foreground: oklch(0.97 0 0);
-  --card: oklch(0.2 0.006 260 / 0.58);
-  --card-foreground: oklch(0.97 0 0);
-  --muted: oklch(1 0 0 / 0.06);
-  --muted-foreground: oklch(0.97 0 0 / 0.56);
-  --secondary: oklch(1 0 0 / 0.08);
-  --secondary-foreground: oklch(0.97 0 0);
-  --accent: oklch(1 0 0 / 0.08);
-  --accent-foreground: oklch(0.97 0 0);
-  --primary: oklch(0.97 0 0);
-  --primary-foreground: oklch(0.16 0 0);
-  --border: oklch(1 0 0 / 0.09);
-  --input: oklch(1 0 0 / 0.12);
-  --ring: oklch(1 0 0 / 0.35);
-  --radius: 0.875rem;
 
   position: fixed;
   inset: 0;
   overflow: hidden;
   background: var(--background);
   color: var(--foreground);
-  font-family: var(--font-geist-sans), system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
 }
 
@@ -45,24 +22,8 @@
     0 18px 50px -12px oklch(0 0 0 / 0.55);
 }
 
-.material-thick {
-  background: oklch(0.16 0.005 260 / 0.78);
-  -webkit-backdrop-filter: blur(40px) saturate(1.6);
-  backdrop-filter: blur(40px) saturate(1.6);
-}
-
-.material-scrim {
-  background: linear-gradient(
-    to right,
-    oklch(0.1 0.004 260 / 0.94) 0%,
-    oklch(0.1 0.004 260 / 0.86) 70%,
-    oklch(0.1 0.004 260 / 0) 100%
-  );
-}
-
 @media (prefers-reduced-transparency: reduce) {
-  .dispatch [data-slot="card"],
-  .material-thick {
+  .dispatch [data-slot="card"] {
     background: oklch(0.19 0.005 260);
     backdrop-filter: none;
     -webkit-backdrop-filter: none;

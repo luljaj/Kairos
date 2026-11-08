@@ -9,7 +9,6 @@ import { Progress } from "@/components/ui/progress";
 import {
   ACUITY_TONE,
   CALLS,
-  UNITS,
   unitById,
   type Acuity,
   type Call,
@@ -77,15 +76,6 @@ export function Clock({ className }: { className?: string }) {
     <span className={cn("num", className)} suppressHydrationWarning>
       {now?.toLocaleTimeString("en-US", { hour12: false }) ?? "--:--:--"}
     </span>
-  );
-}
-
-export function SectionLabel({ children, action }: { children: React.ReactNode; action?: React.ReactNode }) {
-  return (
-    <div className="flex items-center justify-between gap-2 px-1">
-      <span className="text-xs font-medium text-muted-foreground">{children}</span>
-      {action}
-    </div>
   );
 }
 
@@ -185,26 +175,6 @@ export function LiveTranscript({ call, elapsed, maxLines }: { call: Call; elapse
   );
 }
 
-export function ExtractedFacts({ call, elapsed, columns = 1 }: { call: Call; elapsed: number; columns?: 1 | 2 }) {
-  const facts = call.facts.filter((f) => f.at <= elapsed);
-  return (
-    <dl className={cn("grid gap-x-6 gap-y-2", columns === 2 ? "grid-cols-2" : "grid-cols-1")}>
-      {facts.map((f) => (
-        <div key={f.label} className="enter flex items-baseline justify-between gap-3 text-[13px]">
-          <dt className="text-muted-foreground">{f.label}</dt>
-          <dd className={cn("font-medium", f.flag && "text-critical")}>{f.value}</dd>
-        </div>
-      ))}
-      {call.missing?.map((m) => (
-        <div key={m} className="flex items-baseline justify-between gap-3 text-[13px]">
-          <dt className="text-muted-foreground">{m}</dt>
-          <dd className="text-muted-foreground/60">Unknown</dd>
-        </div>
-      ))}
-    </dl>
-  );
-}
-
 const STAGE: Record<Call["stage"], string> = {
   intake: "Intake",
   gathering: "Gathering details",
@@ -247,7 +217,6 @@ export function FleetRow({
   live: UnitLive;
   tracked?: boolean;
   onClick?: () => void;
-  dense?: boolean;
 }) {
   const u = unitById(live.id);
   const mins = minutesLeft(live);
@@ -434,4 +403,3 @@ export function Mark() {
 
 export const ACTIVE_CALL = CALLS[0];
 export const OTHER_CALLS = CALLS.slice(1);
-export { UNITS };

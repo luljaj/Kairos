@@ -6,7 +6,7 @@
  */
 
 import { useCallback, useState } from "react";
-import { TRIAGE, unitById } from "./data";
+import { TRIAGE } from "./data";
 import { useDispatchSim } from "./sim";
 
 /** Shared operator state every variant drives: sim, triage choice, tracking. */
@@ -16,7 +16,6 @@ export function useDispatchUi() {
   const [index, setIndexRaw] = useState(0);
   const [dir, setDir] = useState(1);
   const [sent, setSent] = useState<{ unitId: string; queued: boolean } | null>(null);
-  const [selectedCallId, setSelectedCallId] = useState("call-0412");
 
   const setIndex = useCallback(
     (i: number) => {
@@ -37,9 +36,6 @@ export function useDispatchUi() {
   const track = useCallback((id: string | null) => setTrackedId((cur) => (cur === id ? null : id)), []);
 
   const proposal = sent ? null : TRIAGE[index];
-  const assignedLabel = sent
-    ? `${unitById(sent.unitId).name} ${sent.queued ? "queued" : "en route"}`
-    : undefined;
 
   return {
     sim,
@@ -53,9 +49,6 @@ export function useDispatchUi() {
     proposal,
     sent,
     send,
-    assignedLabel,
-    selectedCallId,
-    setSelectedCallId,
   };
 }
 

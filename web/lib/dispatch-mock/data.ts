@@ -152,7 +152,7 @@ export const HOSPITALS: Hospital[] = [
   { id: "general", name: "UHS Binghamton General Hospital", short: "Binghamton General", coords: [-75.9149, 42.08677], er: true },
   { id: "wilson", name: "UHS Wilson Medical Center", short: "Wilson Medical", coords: [-75.95324, 42.10837], er: true },
 ];
-export const HOSPITAL = HOSPITALS[0];
+
 
 export type TriageOption = {
   unitId: string;
