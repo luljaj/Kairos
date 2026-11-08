@@ -1,5 +1,5 @@
-import { DebugDashboard } from "@/components/DebugDashboard";
+import { DispatchDashboard } from "@/components/dispatch/dashboard";
 
 export default function Home() {
-  return <DebugDashboard />;
+  return <DispatchDashboard />;
 }

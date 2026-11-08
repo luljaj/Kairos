@@ -1,0 +1,293 @@
+/* Operator dashboard — materials, motion and map markers. Theme tokens live in app/globals.css (.dark). */
+
+.dispatch {
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  background: var(--background);
+  color: var(--foreground);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Materials ---------------------------------------------------------------- */
+
+/* Translucent cards: thicker blur on bigger surfaces; a bright top edge = light on glass. */
+.dispatch [data-slot="card"] {
+  -webkit-backdrop-filter: blur(28px) saturate(1.7);
+  backdrop-filter: blur(28px) saturate(1.7);
+  box-shadow:
+    inset 0 1px 0 0 oklch(1 0 0 / 0.08),
+    0 18px 50px -12px oklch(0 0 0 / 0.55);
+}
+
+@media (prefers-reduced-transparency: reduce) {
+  .dispatch [data-slot="card"] {
+    background: oklch(0.19 0.005 260);
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+}
+
+/* Numbers align in columns without switching to a monospace face. */
+.dispatch .num {
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.01em;
+}
+.dispatch .display {
+  font-weight: 300;
+  letter-spacing: -0.035em;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Entrances --------------------------------------------------------------- */
+
+.enter {
+  transition:
+    opacity 260ms var(--ease-out),
+    transform 260ms var(--ease-out),
+    filter 260ms var(--ease-out);
+  @starting-style {
+    opacity: 0;
+    transform: translateY(6px);
+    filter: blur(4px);
+  }
+}
+
+/* Floating surfaces materialize: blur + scale together, from their anchor. */
+.materialize {
+  transform-origin: bottom center;
+  transition:
+    opacity 320ms var(--ease-out),
+    transform 320ms var(--ease-out),
+    filter 320ms var(--ease-out);
+  @starting-style {
+    opacity: 0;
+    transform: translateY(12px) scale(0.97);
+    filter: blur(8px);
+  }
+}
+
+/* Swapping option content: blur bridges the two states into one motion. */
+.swap {
+  animation: swap-in 220ms var(--ease-out);
+}
+@keyframes swap-in {
+  from {
+    opacity: 0;
+    filter: blur(3px);
+    transform: translateX(var(--swap-from, 0px));
+  }
+}
+
+.press {
+  transition: transform 140ms var(--ease-out);
+}
+.press:active {
+  transform: scale(0.98);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .enter,
+  .materialize {
+    transition: opacity 200ms ease;
+    @starting-style {
+      opacity: 0;
+      transform: none;
+      filter: none;
+    }
+  }
+  .swap {
+    animation: fade-in 160ms ease;
+  }
+}
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+}
+
+/* Live indicator: a breathing dot, small enough to never pull focus. */
+.live-dot {
+  position: relative;
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  border-radius: 999px;
+  background: var(--critical);
+}
+.live-dot::after {
+  content: "";
+  position: absolute;
+  inset: -3px;
+  border-radius: inherit;
+  border: 1px solid var(--critical);
+  animation: ring 1.8s var(--ease-out) infinite;
+}
+@keyframes ring {
+  from {
+    transform: scale(0.6);
+    opacity: 0.9;
+  }
+  to {
+    transform: scale(1.8);
+    opacity: 0;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .live-dot::after {
+    animation: none;
+    opacity: 0;
+  }
+}
+
+/* Map markers ------------------------------------------------------------- */
+
+/* No `position` on marker roots: Mapbox positions them absolutely. */
+.dm-unit {
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border: 0;
+  padding: 0;
+  background: transparent;
+  cursor: pointer;
+  color: oklch(0.16 0 0);
+}
+.dm-unit-ring {
+  position: absolute;
+  inset: 4px;
+  border-radius: 999px;
+  background: oklch(0.97 0 0);
+  box-shadow:
+    0 0 0 4px oklch(1 0 0 / 0.14),
+    0 6px 16px oklch(0 0 0 / 0.5);
+  transition:
+    transform 200ms var(--ease-out),
+    box-shadow 200ms var(--ease-out);
+}
+.dm-unit-arrow {
+  position: relative;
+  display: grid;
+  place-items: center;
+  will-change: transform;
+}
+.dm-unit-label {
+  position: absolute;
+  top: calc(100% + 2px);
+  left: 50%;
+  translate: -50% 0;
+  padding: 2px 6px;
+  border-radius: 6px;
+  font: 500 11px/1.2 var(--font-geist-sans), system-ui, sans-serif;
+  color: oklch(0.97 0 0);
+  background: oklch(0.12 0 0 / 0.66);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  white-space: nowrap;
+}
+.dm-unit[data-status="available"] .dm-unit-ring {
+  background: oklch(0.32 0.01 260);
+  box-shadow:
+    0 0 0 1px oklch(1 0 0 / 0.3),
+    0 6px 16px oklch(0 0 0 / 0.5);
+}
+.dm-unit[data-status="available"] {
+  color: var(--success);
+}
+.dm-unit[data-tracked="true"] .dm-unit-ring {
+  transform: scale(1.18);
+  box-shadow:
+    0 0 0 6px oklch(1 0 0 / 0.22),
+    0 0 0 18px oklch(1 0 0 / 0.06),
+    0 8px 20px oklch(0 0 0 / 0.5);
+}
+@media (hover: hover) and (pointer: fine) {
+  .dm-unit:hover .dm-unit-ring {
+    transform: scale(1.1);
+  }
+}
+
+.dm-incident {
+  width: 18px;
+  height: 18px;
+  --tone: var(--critical);
+}
+.dm-incident[data-tone="urgent"] {
+  --tone: var(--urgent);
+}
+.dm-incident-core {
+  position: absolute;
+  inset: 4px;
+  border-radius: 999px;
+  background: var(--tone);
+  box-shadow: 0 0 0 2px oklch(0.1 0 0 / 0.6);
+}
+.dm-incident-pulse {
+  position: absolute;
+  inset: -14px;
+  border-radius: 999px;
+  border: 1px solid var(--tone);
+  animation: ring 2.4s var(--ease-out) infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .dm-incident-pulse {
+    animation: none;
+    opacity: 0.4;
+  }
+}
+
+.dm-hospital {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  pointer-events: none;
+}
+.dm-hospital-icon {
+  display: grid;
+  place-items: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 7px;
+  color: oklch(0.16 0 0);
+  background: oklch(0.97 0 0);
+  box-shadow:
+    0 0 0 3px oklch(1 0 0 / 0.12),
+    0 6px 14px oklch(0 0 0 / 0.45);
+}
+.dm-hospital-label {
+  font: 500 11px/1 var(--font-geist-sans), system-ui, sans-serif;
+  color: oklch(0.97 0 0 / 0.85);
+  text-shadow: 0 1px 6px oklch(0 0 0 / 0.9);
+  white-space: nowrap;
+}
+
+.dm-eta {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  padding: 6px 9px;
+  border-radius: 10px;
+  font: 400 11px/1.2 var(--font-geist-sans), system-ui, sans-serif;
+  color: oklch(0.97 0 0 / 0.6);
+  background: oklch(0.14 0 0 / 0.62);
+  -webkit-backdrop-filter: blur(16px) saturate(1.6);
+  backdrop-filter: blur(16px) saturate(1.6);
+  box-shadow:
+    inset 0 1px 0 oklch(1 0 0 / 0.1),
+    0 8px 20px oklch(0 0 0 / 0.4);
+  animation: swap-in 260ms var(--ease-out);
+}
+.dm-eta strong {
+  font-weight: 500;
+  font-size: 15px;
+  color: oklch(0.97 0 0);
+  font-variant-numeric: tabular-nums;
+}
+
+.dispatch .mapboxgl-ctrl-logo {
+  opacity: 0.35;
+}
