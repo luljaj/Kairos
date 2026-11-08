@@ -9,6 +9,7 @@ import { scheduleAwaitingRecommendations } from "./recommend";
 
 export const SIM_TICK_MS = 250;
 export const SCENE_SECONDS = 480;
+const SIM_VERSION = "return-to-squadroom-v1";
 type Store = {
   getState: () => DispatchState;
   mutate: (fn: (state: DispatchState) => void | false) => unknown;
@@ -152,13 +153,16 @@ export function createSimulation(
 
 declare global {
   var __simulation: {
+    version?: string;
     engine: ReturnType<typeof createSimulation>;
     timer: ReturnType<typeof setInterval>;
   } | undefined;
 }
 
 export function ensureSimulationStarted() {
-  if (globalThis.__simulation) return;
+  if (globalThis.__simulation?.version === SIM_VERSION) return;
+  // HMR preserves globals: retire an older engine without resetting dispatch state.
+  resetSimulation();
   const engine = createSimulation({ getState, mutate }, getRoute, scheduleAwaitingRecommendations);
   const configured = Number(process.env.SIM_SPEED ?? 6);
   const speed = Number.isFinite(configured) && configured >= 0 ? configured : 6;
@@ -171,7 +175,7 @@ export function ensureSimulationStarted() {
     engine.tick(elapsed * speed);
   }, SIM_TICK_MS);
   timer.unref();
-  globalThis.__simulation = { engine, timer };
+  globalThis.__simulation = { version: SIM_VERSION, engine, timer };
 }
 
 export function resetSimulation() {

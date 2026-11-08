@@ -6,6 +6,7 @@ import { createSimulation, SCENE_SECONDS } from "@/lib/server/simulation";
 import { startTask, releaseUnit } from "@/lib/server/task-lifecycle";
 import { fleetInputKey } from "@/lib/server/candidates";
 import { coordinates } from "@/lib/simulation/geometry";
+import { estimateAvailability } from "@/lib/server/eta";
 
 const flush = async () => { await new Promise((resolve) => setImmediate(resolve)); };
 const route: Route = { geometry: [[-75.948, 42.1105], [-75.94, 42.11], [-75.9235, 42.096]], durationSeconds: 10, distanceMeters: 2500, estimated: false };
@@ -75,6 +76,49 @@ async function main() {
   resumed.tick(2);
   assert.notDeepEqual(saved.ambulances["amb-2"].position, unit.position);
 
+  // The final job closes at the hospital; the available unit then drives home.
+  h.sim.tick(10);
+  h.sim.tick(SCENE_SECONDS); await flush();
+  h.sim.tick(10); await flush();
+  assert.equal(queued.status, "completed");
+  assert.equal(unit.activeTaskId, null);
+  assert.equal(unit.status, "available");
+  assert.ok(unit.returnTrip?.route && unit.returnTrip.endsAt);
+  assert.deepEqual(unit.returnTrip.route.geometry.at(-1), coordinates(unit.homeStation));
+  assert.deepEqual(unit.homeStation, { lat: 42.0853645, lng: -75.9646999 });
+  assert.equal(estimateAvailability(state, unit).availableInSeconds, 0);
+  const returnKey = fleetInputKey(state);
+  const hospitalPosition = { ...unit.position };
+  h.sim.tick(5);
+  assert.notDeepEqual(unit.position, hospitalPosition, "return journey moves without active tasks");
+  assert.notDeepEqual(unit.position, unit.homeStation, "does not teleport home");
+  assert.equal(fleetInputKey(state), returnKey, "return motion does not starve inference");
+  const savedReturn = DispatchState.parse(structuredClone(state));
+  const resumeReturn = createSimulation({ getState: () => savedReturn, mutate: (fn) => fn(savedReturn) });
+  resumeReturn.tick(5);
+  assert.deepEqual(savedReturn.ambulances[unit.id].position, unit.homeStation);
+  assert.equal(savedReturn.ambulances[unit.id].returnTrip, null);
+
+  const rerouteFrom = { ...unit.position };
+  const diverted = h.assign();
+  assert.equal(unit.returnTrip, null, "dispatch interrupts the return");
+  h.sim.tick(0); await flush();
+  assert.deepEqual(diverted.route?.geometry[0], coordinates(rerouteFrom));
+
+  // Late return directions cannot overwrite a new assignment or a reset.
+  for (const action of ["assign", "reset"] as const) {
+    let resolve!: (r: Route) => void;
+    const late = harness(() => new Promise<Route>((done) => { resolve = done; }));
+    const current = late.store.getState();
+    const returning = current.ambulances["amb-2"];
+    releaseUnit(current, returning, current.simClock);
+    late.sim.tick(0);
+    if (action === "assign") late.assign();
+    else { late.sim.reset(); late.replace(); }
+    resolve(route); await flush();
+    assert.ok(!late.store.getState().ambulances["amb-2"].returnTrip?.route);
+  }
+
   // A route response arriving after reset/cancellation/location edits must be discarded.
   for (const action of ["reset", "cancel", "edit"] as const) {
     let resolve!: (r: Route) => void;
@@ -102,7 +146,7 @@ async function main() {
   assert.equal(unknownTask.route, null);
   assert.equal(unknownTask.phase, "en_route");
   assert.deepEqual(coordinates(unknown.store.getState().ambulances["amb-2"].position), coordinates(initial));
-  console.log("Simulation: movement, scene/transport, queue pickup, snapshot resume, recommendation stability, late-route guards and unknown locations passed.");
+  console.log("Simulation: movement, scene/transport, queue pickup, return home, return interruption/resume, recommendation stability, late-route guards and unknown locations passed.");
 }
 
 main().catch((error) => { console.error(error); process.exitCode = 1; });
