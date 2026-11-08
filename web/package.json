@@ -14,9 +14,11 @@
     "demo:check": "tsx scripts/check-demo-fleet.ts",
     "recommendations:check": "tsx scripts/check-recommendations.ts",
     "recommendations:http": "tsx scripts/check-recommendations-http.ts",
-    "dispatch:check": "tsx scripts/check-dispatch-ui.ts && tsx scripts/check-dispatch-render.tsx"
+    "dispatch:check": "tsx scripts/check-dispatch-ui.ts && tsx scripts/check-dispatch-render.tsx",
+    "call": "tsx scripts/call.mts"
   },
   "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.32.2",
     "class-variance-authority": "^0.7.1",
     "cn": "0.5.2",
     "lucide-react": "^1.70.0",

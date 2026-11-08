@@ -1,5 +1,5 @@
 import { UpdateIncidentBody } from "@/lib/contracts";
-import { checkToolSecret, updateIncident } from "@/lib/server/voice";
+import { checkToolSecret, ingestIncident } from "@/lib/server/voice";
 
 export async function POST(req: Request) {
   if (!checkToolSecret(req)) return Response.json({ ok: false, error: "unauthorized" }, { status: 401 });
@@ -9,6 +9,6 @@ export async function POST(req: Request) {
   if (!parsed.success) {
     return Response.json({ ok: false, error: "invalid", issues: parsed.error.issues }, { status: 400 });
   }
-  const callId = updateIncident(parsed.data);
+  const callId = await ingestIncident(parsed.data);
   return Response.json({ ok: true, callId });
 }
