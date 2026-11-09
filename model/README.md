@@ -2,6 +2,8 @@
 
 Fine-tuned dispatch assessment model based on `Qwen/Qwen3-4B-Instruct-2507`.
 
+Training is complete and the hackathon cluster endpoint has stopped. Download the saved adapters, checkpoints, datasets and run records from the [training artifact archive](ARTIFACTS.md), which also explains restoration and the selected `r3-4b` model.
+
 - [Training stack and experiment history](../docs/training.md)
 - [Benchmark methodology and selected results](../docs/benchmarks.md)
 - [Serving configuration](SERVING.md)
